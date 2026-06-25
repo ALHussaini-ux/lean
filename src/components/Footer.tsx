@@ -127,7 +127,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                 Telangana, India
               </li>
               <li className="pt-2">
-                <span className="text-neutral-500">Contact:</span> hello@leanscale.co
+                <span className="text-neutral-500">Contact:</span> hello@leansystem.co
               </li>
               <li>
                 <span className="text-neutral-500">Service Hours:</span> 24/7 Autonomous Systems Monitoring

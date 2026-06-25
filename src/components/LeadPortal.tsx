@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, MessageSquare, Mail, Calendar, ArrowRight } from 'lucide-react';
+import { Check, Mail, Calendar, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import AramcoButton from './AramcoButton';
 
@@ -44,61 +44,36 @@ export default function LeadPortal() {
             DIRECT CONTACT OPTIONS
           </h3>
 
-          {/* Option 1: WhatsApp */}
-          <div className="bg-white border border-neutral-200 p-5 rounded-sm hover:border-brand-orange transition-all duration-300 shadow-sm flex items-start gap-4">
-            <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-              <MessageSquare className="w-5 h-5" />
-            </div>
-            <div className="space-y-2 flex-grow">
-              <span className="text-[10px] font-sans font-bold tracking-wider text-neutral-400 block uppercase">OPTION 1</span>
-              <h4 className="font-sans font-bold text-base text-brand-navy">Contact via WhatsApp</h4>
-              <p className="font-body text-neutral-500 text-xs">
-                Text us directly with your project description. Usually responds within 1 hour.
-              </p>
-              <div className="pt-2">
-                <a 
-                  href="https://wa.me/919121294949?text=Hello%20LEAN,%20I'm%20interested%20in%20your%20real%20estate%20growth%20systems."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs font-sans font-bold text-emerald-600 hover:text-emerald-700 transition-colors uppercase tracking-wider"
-                >
-                  Text us: +91 91212 94949
-                  <ArrowRight className="w-3 h-3" />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Option 2: Email */}
+          {/* Option 1: Email */}
           <div className="bg-white border border-neutral-200 p-5 rounded-sm hover:border-brand-orange transition-all duration-300 shadow-sm flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
               <Mail className="w-5 h-5" />
             </div>
             <div className="space-y-2 flex-grow">
-              <span className="text-[10px] font-sans font-bold tracking-wider text-neutral-400 block uppercase">OPTION 2</span>
+              <span className="text-[10px] font-sans font-bold tracking-wider text-neutral-400 block uppercase">OPTION 1</span>
               <h4 className="font-sans font-bold text-base text-brand-navy">Direct Email Inquiry</h4>
               <p className="font-body text-neutral-500 text-xs">
                 Send us your briefs, layouts, or project files. We respond within 24 hours.
               </p>
               <div className="pt-2">
                 <a 
-                  href="mailto:hello@leanscale.co"
+                  href="mailto:hello@leansystem.co"
                   className="inline-flex items-center gap-2 text-xs font-sans font-bold text-blue-600 hover:text-blue-700 transition-colors uppercase tracking-wider"
                 >
-                  hello@leanscale.co
+                  hello@leansystem.co
                   <ArrowRight className="w-3 h-3" />
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Option 3: Calendar Booking */}
+          {/* Option 2: Calendar Booking */}
           <div className="bg-white border border-neutral-200 p-5 rounded-sm hover:border-brand-orange transition-all duration-300 shadow-sm flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
               <Calendar className="w-5 h-5" />
             </div>
             <div className="space-y-2 flex-grow">
-              <span className="text-[10px] font-sans font-bold tracking-wider text-neutral-400 block uppercase">OPTION 3</span>
+              <span className="text-[10px] font-sans font-bold tracking-wider text-neutral-400 block uppercase">OPTION 2</span>
               <h4 className="font-sans font-bold text-base text-brand-navy">Calendar Booking</h4>
               <p className="font-body text-neutral-500 text-xs">
                 Instantly schedule a 30-minute free growth consultation call with our pipeline architect.
