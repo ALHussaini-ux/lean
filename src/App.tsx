@@ -1,0 +1,947 @@
+import React, { useState, useEffect } from 'react';
+import { Page } from './types';
+import { SERVICES, PRICING_TIERS, COMPANY_VALUES, GENERAL_FAQS, PRICING_FAQS } from './data';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import LeadCalculator from './components/LeadCalculator';
+import LeadPortal from './components/LeadPortal';
+import AramcoButton from './components/AramcoButton';
+import Hero3DBackground from './components/Hero3DBackground';
+import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+
+export default function App() {
+  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const [expandedPricingFaq, setExpandedPricingFaq] = useState<number | null>(null);
+
+  // Content-Brief specified Carousel Slides representing real estate growth infrastructure elements
+  const HERO_SLIDES = [
+    {
+      category: 'REAL ESTATE GROWTH SYSTEMS',
+      title: 'Generate qualified leads, automate customer replies, and close deals with systems built for developers.',
+      subheading: 'We help you attract interested buyers, respond instantly to enquiries, and track every lead. Modern systems replace outdated marketing methods.',
+      ctaText: 'Schedule a Demo',
+      action: () => handleCTA('get-started')
+    },
+    {
+      category: 'LEAD GENERATION PIPELINE',
+      title: 'Google and Meta Ads campaigns optimized specifically for Indian real estate.',
+      subheading: 'Qualified buyers searching for your project, not random clicks. Focus budget on people with high intent to purchase.',
+      ctaText: 'Explore Service Tiers',
+      action: () => handleCTA('services')
+    },
+    {
+      category: 'WHATSAPP AUTOMATION',
+      title: 'Brochure dispatch within 60 seconds and site visit scheduling 24/7.',
+      subheading: 'Outperform slow human responses. WhatsApp bots engage prospects immediately when their interest is highest.',
+      ctaText: 'Explore Service Tiers',
+      action: () => handleCTA('services')
+    },
+    {
+      category: 'INFRASTRUCTURE YOU CONTROL',
+      title: 'Predictable growth pipeline built into your business, not bolted onto it.',
+      subheading: 'Own your landing pages, ad accounts, and databases. We set up systems that empower you, with no vendor lock-in.',
+      ctaText: 'Build Your System',
+      action: () => handleCTA('get-started')
+    }
+  ];
+
+  // Auto-advance slider every 5 seconds
+  useEffect(() => {
+    if (currentPage !== 'home') return;
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [currentPage, currentSlide]);
+
+  // Robust real estate stats banner
+  const STATS = [
+    { value: '99.2%', label: 'AUTOMATION UPTIME' },
+    { value: '48s', label: 'MEDIAN RESPONSE TIME' },
+    { value: '2.2x', label: 'LEAD-TO-DEAL RATIO' },
+    { value: '₹4.2Cr', label: 'CLIENT COMMISSIONS PIPELINE' }
+  ];
+
+  const handleCTA = (page: Page, hash?: string) => {
+    setCurrentPage(page);
+    if (hash) {
+      setTimeout(() => {
+        const el = document.getElementById(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 150);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const toggleFaq = (index: number) => {
+    setExpandedFaq(expandedFaq === index ? null : index);
+  };
+
+  const togglePricingFaq = (index: number) => {
+    setExpandedPricingFaq(expandedPricingFaq === index ? null : index);
+  };
+
+  return (
+    <div id="lean-app" className="min-h-screen bg-white text-brand-dark flex flex-col justify-between selection:bg-brand-orange selection:text-white">
+      
+      {/* 1. STICKY HEADER */}
+      <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
+
+      {/* Main Content Area with Transitions */}
+      <main className="flex-grow">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentPage}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+          >
+
+            {/* ==================== 1. HOME VIEW ==================== */}
+            {currentPage === 'home' && (
+              <div id="home-view" className="space-y-24 pb-24">
+                
+                {/* HERO SECTION WITH THREE.JS PARTICLE FIELDS & DETAILED CONTENT */}
+                <section 
+                  id="home-hero" 
+                  className="relative h-screen min-h-[650px] flex flex-col justify-between text-white px-6 md:px-16 lg:px-24 pt-32 pb-12 overflow-hidden bg-brand-dark"
+                >
+                  <Hero3DBackground activeTab={currentSlide} />
+
+                  {/* Dark photorealistic overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-black/40 to-black/50 pointer-events-none z-[2]" />
+                  
+                  {/* Left-Aligned content block representing current carousel slide */}
+                  <div className="max-w-4xl z-10 space-y-5 mt-auto mb-6 pl-0 md:pl-6">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={currentSlide}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.4 }}
+                        className="space-y-4"
+                      >
+                        <span className="text-[10px] md:text-xs tracking-[0.25em] font-sans font-bold text-brand-orange uppercase block">
+                          {HERO_SLIDES[currentSlide].category}
+                        </span>
+
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.8rem] font-sans font-black text-white tracking-tight leading-[1.12] max-w-3xl">
+                          {HERO_SLIDES[currentSlide].title}
+                        </h1>
+
+                        <p className="font-body text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl">
+                          {HERO_SLIDES[currentSlide].subheading}
+                        </p>
+
+                        <div className="pt-4">
+                          <AramcoButton
+                            onClick={HERO_SLIDES[currentSlide].action}
+                            variant="white"
+                          >
+                            {HERO_SLIDES[currentSlide].ctaText}
+                          </AramcoButton>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Horizontal indicator slider tabs */}
+                  <div className="w-full max-w-7xl mx-auto border-t border-white/10 pt-4 z-10 pl-0 md:pl-6">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
+                      {HERO_SLIDES.map((slide, idx) => {
+                        const isActive = currentSlide === idx;
+                        return (
+                          <button
+                            key={idx}
+                            onClick={() => setCurrentSlide(idx)}
+                            className="text-left group cursor-pointer focus:outline-none relative pb-4 transition-all duration-300"
+                          >
+                            <span className={`text-[10px] md:text-[11px] font-sans font-bold tracking-[0.1em] uppercase transition-all duration-300 block ${
+                              isActive ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-200'
+                            }`}>
+                              {slide.category.split(' ')[0]} {slide.category.split(' ')[1] || ''}
+                            </span>
+                            
+                            {isActive && (
+                              <motion.div
+                                layoutId="activeHeroSlideUnderline"
+                                className="absolute bottom-0 left-0 right-0 h-[3px] bg-brand-orange rounded-full"
+                                transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                              />
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </section>
+
+                {/* STATS HIGHLIGHTS BANNER */}
+                <section id="stats-banner" className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
+                  <div className="bg-brand-dark text-white p-6 md:p-8 rounded-sm border border-neutral-800 shadow-2xl grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 divide-y divide-neutral-800 md:divide-y-0 md:divide-x divide-neutral-800">
+                    {STATS.map((stat, idx) => (
+                      <div key={idx} className="text-center md:px-4 space-y-1.5 pt-4 md:pt-0">
+                        <span className="text-2xl md:text-3xl font-sans font-black text-brand-orange tracking-tight block">
+                          {stat.value}
+                        </span>
+                        <span className="text-[10px] md:text-xs font-sans font-bold text-neutral-400 tracking-wider block">
+                          {stat.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* WHAT WE DO SECTION */}
+                <section id="what-we-do" className="bg-brand-light py-20 border-y border-neutral-200">
+                  <div className="max-w-7xl mx-auto px-6">
+                    
+                    <div className="text-center mb-16 space-y-2">
+                      <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
+                        WHAT WE DO
+                      </span>
+                      <h2 className="text-2xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
+                        Five Integrated Services
+                      </h2>
+                      <p className="font-body text-brand-gray text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+                        Designed to transform how you generate and convert real estate leads.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {SERVICES.map((srv, idx) => (
+                        <div
+                          key={idx}
+                          id={`service-card-${idx}`}
+                          className="bg-white border border-neutral-200 p-8 rounded-sm shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                        >
+                          <div className="space-y-6">
+                            <div className="w-10 h-10 rounded-full bg-brand-orange text-white flex items-center justify-center font-sans font-black text-xs tracking-wider select-none">
+                              {srv.number}
+                            </div>
+
+                            <div className="space-y-2">
+                              <h3 className="font-sans font-extrabold text-lg text-brand-navy group-hover:text-brand-orange transition-colors duration-200">
+                                {srv.title}
+                              </h3>
+                              <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
+                                {srv.description}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="mt-6 pt-4 border-t border-neutral-100">
+                            <ul className="space-y-1.5 font-body text-[11px] sm:text-xs text-neutral-500">
+                              {srv.details.map((detail, dIdx) => (
+                                <li key={dIdx} className="flex items-center gap-1.5">
+                                  <span className="text-brand-orange text-xs">✓</span>
+                                  {detail}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                  </div>
+                </section>
+
+                {/* HOW IT WORKS SECTION (TIMELINE) */}
+                <section id="how-it-works" className="max-w-7xl mx-auto px-6 scroll-mt-24">
+                  <div className="text-center mb-16 space-y-2">
+                    <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
+                      ROADMAP TO SUCCESS
+                    </span>
+                    <h2 className="text-2xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
+                      How It Works
+                    </h2>
+                    <p className="font-body text-brand-gray text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+                      Simple process. Four weeks to lead generation system live.
+                    </p>
+                  </div>
+
+                  {/* Visual Roadmap Grid / Cards */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
+                    
+                    {/* Step 1 */}
+                    <div className="bg-white border border-neutral-200 p-8 rounded-sm shadow-sm space-y-6 relative hover:border-brand-orange transition-all duration-300">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-sans font-extrabold text-neutral-400 uppercase tracking-widest">
+                          WEEK 01
+                        </span>
+                        <span className="text-[10px] font-sans font-bold bg-brand-navy/5 text-brand-navy py-1 px-3 rounded-full uppercase tracking-wider">
+                          Days 1-7
+                        </span>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <h3 className="font-sans font-black text-xl text-brand-navy uppercase">
+                          Setup & Launch
+                        </h3>
+                        <p className="font-body text-neutral-500 text-xs sm:text-sm leading-relaxed">
+                          We establish search channels, construct landing frameworks, and set up your direct WhatsApp triggers.
+                        </p>
+                      </div>
+
+                      <div className="border-t border-neutral-100 pt-4 space-y-3">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">What We Do</span>
+                          <p className="text-xs font-body text-brand-gray">Setup Google Search campaigns, build conversion project page, configure WhatsApp instant reply system.</p>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">Your Role</span>
+                          <p className="text-xs font-body text-brand-gray">Provide project details, brochure, high-quality images, and API/ad accounts access.</p>
+                        </div>
+                        <div className="space-y-1 pt-1">
+                          <span className="text-[10px] font-sans font-bold text-brand-orange uppercase block">Result</span>
+                          <p className="text-xs font-body font-semibold text-brand-navy">System live and ready to capture leads.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Step 2 */}
+                    <div className="bg-white border border-brand-orange p-8 rounded-sm shadow-md space-y-6 relative hover:shadow-lg transition-all duration-300 ring-1 ring-brand-orange/20">
+                      <div className="absolute top-0 right-8 transform -translate-y-1/2 bg-brand-orange text-white text-[9px] font-sans font-bold tracking-widest uppercase py-1 px-3 rounded-full">
+                        ACTIVE CAPTURE
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-sans font-extrabold text-brand-orange uppercase tracking-widest">
+                          WEEKS 02-03
+                        </span>
+                        <span className="text-[10px] font-sans font-bold bg-brand-orange/10 text-brand-orange py-1 px-3 rounded-full uppercase tracking-wider">
+                          Days 8-21
+                        </span>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <h3 className="font-sans font-black text-xl text-brand-navy uppercase">
+                          Lead Generation
+                        </h3>
+                        <p className="font-body text-neutral-500 text-xs sm:text-sm leading-relaxed">
+                          Campaigns are published. Buyer parameters pour into your customized routing database in real time.
+                        </p>
+                      </div>
+
+                      <div className="border-t border-neutral-100 pt-4 space-y-3">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">What We Do</span>
+                          <p className="text-xs font-body text-brand-gray">Launch campaigns, capture leads, monitor WhatsApp replies, track buyer feedback.</p>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">Your Role</span>
+                          <p className="text-xs font-body text-brand-gray">Sales team contacts leads within 1 hour of site visit booking.</p>
+                        </div>
+                        <div className="space-y-1 pt-1">
+                          <span className="text-[10px] font-sans font-bold text-brand-orange uppercase block">Result</span>
+                          <p className="text-xs font-body font-semibold text-brand-navy">Steady stream of qualified leads and site visit reservations.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Step 3 */}
+                    <div className="bg-white border border-neutral-200 p-8 rounded-sm shadow-sm space-y-6 relative hover:border-brand-orange transition-all duration-300">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-sans font-extrabold text-neutral-400 uppercase tracking-widest">
+                          WEEK 04+
+                        </span>
+                        <span className="text-[10px] font-sans font-bold bg-brand-navy/5 text-brand-navy py-1 px-3 rounded-full uppercase tracking-wider">
+                          Ongoing
+                        </span>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <h3 className="font-sans font-black text-xl text-brand-navy uppercase">
+                          Optimize & Scale
+                        </h3>
+                        <p className="font-body text-neutral-500 text-xs sm:text-sm leading-relaxed">
+                          We weed out non-converting keywords, double down on high-intent targets, and scale predictable metrics.
+                        </p>
+                      </div>
+
+                      <div className="border-t border-neutral-100 pt-4 space-y-3">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">What We Do</span>
+                          <p className="text-xs font-body text-brand-gray">Analyze search queries, A/B test ad copy, optimize WhatsApp flows, scale successful channels.</p>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">Your Role</span>
+                          <p className="text-xs font-body text-brand-gray">Weekly review of cost per lead and sales conversions.</p>
+                        </div>
+                        <div className="space-y-1 pt-1">
+                          <span className="text-[10px] font-sans font-bold text-brand-orange uppercase block">Result</span>
+                          <p className="text-xs font-body font-semibold text-brand-navy">Improved lead quality, reduced CPL, and predictable sales pipeline.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </section>
+
+                {/* WHAT SUCCESS LOOKS LIKE SECTION */}
+                <section id="success-indicators" className="bg-neutral-900 text-white py-20 border-y border-neutral-800">
+                  <div className="max-w-7xl mx-auto px-6">
+                    
+                    <div className="text-center mb-16 space-y-2">
+                      <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
+                        COMPARATIVE METRICS
+                      </span>
+                      <h2 className="text-2xl md:text-4xl font-sans font-black text-white tracking-tight">
+                        What Success Looks Like
+                      </h2>
+                      <p className="font-body text-neutral-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+                        An honest side-by-side comparison between LEAN systems and outdated marketing models.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto">
+                      
+                      {/* Left: SUCCESS */}
+                      <div className="bg-neutral-950 border border-emerald-500/20 rounded-sm p-6 md:p-8 space-y-6 shadow-xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
+                        <h3 className="font-sans font-extrabold text-lg text-emerald-400 flex items-center gap-2 uppercase tracking-wide">
+                          <Check className="w-5 h-5 shrink-0" />
+                          SUCCESS WITH LEAN
+                        </h3>
+                        
+                        <ul className="space-y-4">
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xs shrink-0 font-bold">✓</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-200">Direct Webhook Lead Flow</h4>
+                              <p className="text-xs text-neutral-400 leading-relaxed font-body">Prospective buyers receive WhatsApp brochure parameters in under 60 seconds.</p>
+                            </div>
+                          </li>
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xs shrink-0 font-bold">✓</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-200">Steady Qualified Site Visits</h4>
+                              <p className="text-xs text-neutral-400 leading-relaxed font-body">Calendar bookings populate automatically from pre-vetted ad clickers.</p>
+                            </div>
+                          </li>
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xs shrink-0 font-bold">✓</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-200">Transparent Attribution</h4>
+                              <p className="text-xs text-neutral-400 leading-relaxed font-body">You know exactly which search query, ad asset, and routing pipeline closed the deal.</p>
+                            </div>
+                          </li>
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xs shrink-0 font-bold">✓</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-200">Total Infrastructure Ownership</h4>
+                              <p className="text-xs text-neutral-400 leading-relaxed font-body">You own landing files, databases, and ad accounts. No vendor locking.</p>
+                            </div>
+                          </li>
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xs shrink-0 font-bold">✓</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-200">High-Velocity Sales Conversion</h4>
+                              <p className="text-xs text-neutral-400 leading-relaxed font-body">Sales teams focus 100% on ready-to-buy prospects instead of hunting for phone numbers.</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {/* Right: NOT SUCCESS */}
+                      <div className="bg-neutral-950 border border-red-500/10 rounded-sm p-6 md:p-8 space-y-6 shadow-xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 rounded-full blur-2xl pointer-events-none" />
+                        <h3 className="font-sans font-extrabold text-lg text-red-400 flex items-center gap-2 uppercase tracking-wide">
+                          <X className="w-5 h-5 shrink-0" />
+                          NOT SUCCESS (OUTDATED METHODS)
+                        </h3>
+                        
+                        <ul className="space-y-4">
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-red-950/40 text-red-400 border border-red-500/20 flex items-center justify-center text-xs shrink-0 font-bold">✕</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-300">Human-Dependent Dispatch</h4>
+                              <p className="text-xs text-neutral-500 leading-relaxed font-body">Hours or days of delay before an executive manually sends project layout files.</p>
+                            </div>
+                          </li>
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-red-950/40 text-red-400 border border-red-500/20 flex items-center justify-center text-xs shrink-0 font-bold">✕</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-300">Raw Unqualified Bandwidth Drain</h4>
+                              <p className="text-xs text-neutral-500 leading-relaxed font-body">Sales executives cold-calling random contacts who just wanted to browse images.</p>
+                            </div>
+                          </li>
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-red-950/40 text-red-400 border border-red-500/20 flex items-center justify-center text-xs shrink-0 font-bold">✕</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-300">Blind Advertising Speculation</h4>
+                              <p className="text-xs text-neutral-500 leading-relaxed font-body">Spending lakhs on impressions with zero visibility on actual client site visits or sales.</p>
+                            </div>
+                          </li>
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-red-950/40 text-red-400 border border-red-500/20 flex items-center justify-center text-xs shrink-0 font-bold">✕</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-300">Absolute Vendor Lock-in</h4>
+                              <p className="text-xs text-neutral-500 leading-relaxed font-body">Standard agencies shut down your site and ad accounts the minute you cancel their contract.</p>
+                            </div>
+                          </li>
+                          <li className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-red-950/40 text-red-400 border border-red-500/20 flex items-center justify-center text-xs shrink-0 font-bold">✕</span>
+                            <div className="space-y-0.5">
+                              <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-300">Wasted Broker commissions</h4>
+                              <p className="text-xs text-neutral-500 leading-relaxed font-body">Paying huge brokerage commissions because you can\'t reach direct property buyers on your own.</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                    </div>
+                  </div>
+                </section>
+
+                {/* GENERAL FAQ SECTION (15 detailed, realistic Q&As!) */}
+                <section id="general-faqs" className="max-w-4xl mx-auto px-6 scroll-mt-24">
+                  <div className="text-center mb-12 space-y-2">
+                    <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
+                      HAVE QUESTIONS?
+                    </span>
+                    <h2 className="text-2xl md:text-3xl font-sans font-black text-brand-dark tracking-tight">
+                      Frequently Asked Questions
+                    </h2>
+                    <p className="font-body text-brand-gray text-xs sm:text-sm max-w-lg mx-auto">
+                      Direct, transparent answers regarding lead quality, timelines, ownership, and systems.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4 border-t border-neutral-200 pt-6">
+                    {GENERAL_FAQS.map((faq, idx) => {
+                      const isOpen = expandedFaq === idx;
+                      return (
+                        <div 
+                          key={idx}
+                          className="border-b border-neutral-200 pb-4 last:border-b-0"
+                        >
+                          <button
+                            onClick={() => toggleFaq(idx)}
+                            className="w-full flex items-center justify-between text-left py-3 group cursor-pointer focus:outline-none"
+                          >
+                            <span className="font-sans font-extrabold text-sm sm:text-base text-brand-navy group-hover:text-brand-orange transition-colors duration-200">
+                              {faq.q}
+                            </span>
+                            {isOpen ? (
+                              <ChevronUp className="w-4 h-4 text-brand-orange shrink-0 ml-4" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-neutral-400 group-hover:text-brand-orange shrink-0 ml-4" />
+                            )}
+                          </button>
+                          
+                          <AnimatePresence initial={false}>
+                            {isOpen && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="overflow-hidden"
+                              >
+                                <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed pt-2 pb-4 px-1 bg-brand-light/50 rounded-sm">
+                                  {faq.a}
+                                </p>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+
+                {/* BOTTOM CTA: DIRECT CONTACT CONVERSION */}
+                <section id="contact" className="border-t border-neutral-200 pt-16 scroll-mt-24">
+                  <LeadPortal />
+                </section>
+
+              </div>
+            )}
+
+            {/* ==================== 2. SERVICES VIEW ==================== */}
+            {currentPage === 'services' && (
+              <div id="services-view" className="space-y-24 pb-24 pt-28 md:pt-32">
+                
+                {/* Page Title */}
+                <div className="text-center max-w-2xl mx-auto px-6 space-y-2">
+                  <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
+                    OUR SERVICE PACKAGES
+                  </span>
+                  <h1 className="text-3xl md:text-5xl font-sans font-black text-brand-dark tracking-tight">
+                    Service Packages
+                  </h1>
+                  <p className="font-body text-brand-gray text-sm md:text-base leading-relaxed">
+                    Three tiers designed for different growth stages. Choose what fits your business.
+                  </p>
+                </div>
+
+                {/* Pricing Tiers Grid */}
+                <section id="pricing-tiers" className="max-w-7xl mx-auto px-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    {PRICING_TIERS.map((tier, idx) => (
+                      <div
+                        key={idx}
+                        id={`pricing-card-${idx}`}
+                        className={`bg-white border p-8 rounded-sm flex flex-col justify-between h-full relative ${
+                          tier.popular 
+                            ? 'border-brand-orange shadow-lg ring-1 ring-brand-orange/30' 
+                            : 'border-neutral-200 shadow-sm hover:border-brand-orange/50 transition-all'
+                        }`}
+                      >
+                        {tier.popular && (
+                          <div className="absolute top-0 right-6 transform -translate-y-1/2 bg-brand-orange text-white text-[10px] font-sans font-bold tracking-widest uppercase py-1 px-3 rounded-full">
+                            MOST POPULAR
+                          </div>
+                        )}
+
+                        <div className="space-y-6">
+                          <div className="space-y-1.5">
+                            <h3 className="font-sans font-extrabold text-lg text-brand-navy uppercase tracking-wider">{tier.name}</h3>
+                            <p className="font-sans text-brand-orange text-xs font-semibold leading-tight min-h-[32px]">{tier.tagline}</p>
+                            <p className="font-body text-neutral-500 text-xs leading-relaxed min-h-[64px]">{tier.description}</p>
+                          </div>
+
+                          {/* Price Tag */}
+                          <div className="py-4 border-y border-neutral-100 flex items-baseline gap-1.5">
+                            <span className="text-3xl sm:text-4xl font-sans font-black text-brand-navy tracking-tight">
+                              {tier.price}
+                            </span>
+                            <span className="text-xs text-neutral-500 font-body">/ {tier.billing}</span>
+                          </div>
+
+                          {/* What's Included features */}
+                          <div className="space-y-3 pt-2">
+                            <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase tracking-wider block">WHAT'S INCLUDED</span>
+                            <ul className="space-y-2">
+                              {tier.features.map((feat, fIdx) => (
+                                <li 
+                                  key={fIdx} 
+                                  className="flex items-start gap-2 text-xs text-brand-gray font-body"
+                                >
+                                  <span className="text-brand-orange font-bold text-xs shrink-0">✓</span>
+                                  <span className="leading-tight">{feat}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* Typical Results */}
+                          <div className="space-y-3 pt-4 border-t border-neutral-100 bg-brand-light/50 p-4 rounded-sm">
+                            <span className="text-[10px] font-sans font-bold text-brand-navy uppercase tracking-wider block">TYPICAL RESULTS</span>
+                            <ul className="space-y-1.5">
+                              {tier.typicalResults.map((res, rIdx) => (
+                                <li 
+                                  key={rIdx} 
+                                  className="flex items-start gap-2 text-[11px] text-neutral-600 font-body"
+                                >
+                                  <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                                  <span className="leading-tight">{res}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* Who It's For */}
+                          <div className="space-y-2 pt-2">
+                            <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase tracking-wider block">WHO IT'S FOR</span>
+                            <div className="flex flex-wrap gap-1.5">
+                              {tier.whoItsFor.map((dem, dIdx) => (
+                                <span 
+                                  key={dIdx} 
+                                  className="text-[9px] font-sans font-bold bg-neutral-100 text-neutral-600 px-2 py-0.5 rounded-sm uppercase"
+                                >
+                                  {dem}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                        </div>
+
+                        {/* CTA button */}
+                        <div className="pt-8 flex justify-center">
+                          <AramcoButton
+                            id={`pricing-cta-${idx}`}
+                            onClick={() => handleCTA('get-started')}
+                            variant={tier.popular ? "orange" : "dark"}
+                            className="w-full justify-between rounded-sm"
+                          >
+                            {tier.ctaText}
+                          </AramcoButton>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* TIER COMPARISON TABLE */}
+                <section id="comparison-table" className="max-w-5xl mx-auto px-6">
+                  <div className="text-center mb-10">
+                    <h2 className="text-xl md:text-2xl font-sans font-extrabold text-brand-dark uppercase tracking-widest">
+                      Tier Comparison Table
+                    </h2>
+                    <p className="text-xs font-body text-brand-gray mt-1">
+                      Review structural variations side-by-side to find your scale.
+                    </p>
+                  </div>
+
+                  <div className="overflow-x-auto border border-neutral-200 rounded-sm">
+                    <table className="w-full text-left border-collapse font-sans text-xs sm:text-sm">
+                      <thead>
+                        <tr className="bg-brand-navy text-white uppercase tracking-wider text-[10px]">
+                          <th className="p-4 border-b border-neutral-800">Parameters</th>
+                          <th className="p-4 border-b border-neutral-800">Starter</th>
+                          <th className="p-4 border-b border-neutral-800">Growth</th>
+                          <th className="p-4 border-b border-neutral-800">Premium</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-neutral-200 font-body text-neutral-700 bg-white">
+                        <tr>
+                          <td className="p-4 font-sans font-bold text-neutral-900 bg-brand-light/40">Monthly Fee</td>
+                          <td className="p-4 font-semibold text-brand-orange">₹20,000</td>
+                          <td className="p-4 font-semibold text-brand-orange">₹50,000</td>
+                          <td className="p-4 font-semibold text-brand-orange">₹100,000</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-sans font-bold text-neutral-900 bg-brand-light/40">Included Ad Spend Managed</td>
+                          <td className="p-4">Google Ads (up to ₹8k)</td>
+                          <td className="p-4">Google & Meta (up to ₹20k)</td>
+                          <td className="p-4">Google & Meta (Unlimited)</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-sans font-bold text-neutral-900 bg-brand-light/40">Landing Pages Provided</td>
+                          <td className="p-4">1 Project Page</td>
+                          <td className="p-4">Multi-Page + A/B Testing</td>
+                          <td className="p-4">Custom Bespoke Design</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-sans font-bold text-neutral-900 bg-brand-light/40">WhatsApp Automation</td>
+                          <td className="p-4">Auto-Reply Trigger</td>
+                          <td className="p-4">Advanced Flows + SMS</td>
+                          <td className="p-4">Full Funnel Drip + Email</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-sans font-bold text-neutral-900 bg-brand-light/40">Database & Reporting</td>
+                          <td className="p-4">Google Sheets</td>
+                          <td className="p-4">Airtable Conversion Board</td>
+                          <td className="p-4">Custom Analytics Dashboard</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-sans font-bold text-neutral-900 bg-brand-light/40">Strategy & Consultations</td>
+                          <td className="p-4">1 Monthly Call</td>
+                          <td className="p-4">Bi-weekly Syncs</td>
+                          <td className="p-4">Weekly Calls + Dedicated Account Mgr</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+
+                {/* PRICING FAQs */}
+                <section id="pricing-faqs" className="max-w-4xl mx-auto px-6">
+                  <div className="text-center mb-10">
+                    <h2 className="text-xl md:text-2xl font-sans font-extrabold text-brand-dark uppercase tracking-widest">
+                      Common Questions About Pricing
+                    </h2>
+                    <p className="text-xs font-body text-brand-gray mt-1">
+                      Direct policies concerning contracts, budgets, scaling, and custom arrangements.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4 border-t border-neutral-200 pt-6">
+                    {PRICING_FAQS.map((faq, idx) => {
+                      const isOpen = expandedPricingFaq === idx;
+                      return (
+                        <div 
+                          key={idx}
+                          className="border-b border-neutral-200 pb-4 last:border-b-0"
+                        >
+                          <button
+                            onClick={() => togglePricingFaq(idx)}
+                            className="w-full flex items-center justify-between text-left py-3 group cursor-pointer focus:outline-none"
+                          >
+                            <span className="font-sans font-extrabold text-sm text-brand-navy group-hover:text-brand-orange transition-colors duration-200">
+                              {faq.q}
+                            </span>
+                            {isOpen ? (
+                              <ChevronUp className="w-4 h-4 text-brand-orange shrink-0 ml-4" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-neutral-400 group-hover:text-brand-orange shrink-0 ml-4" />
+                            )}
+                          </button>
+                          
+                          <AnimatePresence initial={false}>
+                            {isOpen && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="overflow-hidden"
+                              >
+                                <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed pt-2 pb-4 px-1 bg-brand-light/50 rounded-sm">
+                                  {faq.a}
+                                </p>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+
+                {/* ROI BUSINESS CALCULATOR */}
+                <section id="roi-calculator" className="max-w-7xl mx-auto px-6 border-t border-neutral-200 pt-16">
+                  <div className="text-center mb-8 space-y-1">
+                    <span className="text-xs font-sans font-bold text-brand-orange uppercase tracking-widest">ROI SIMULATION</span>
+                    <h2 className="text-2xl font-sans font-extrabold text-brand-dark">Direct Growth Simulator</h2>
+                  </div>
+                  <LeadCalculator />
+                </section>
+
+              </div>
+            )}
+
+            {/* ==================== 3. ABOUT VIEW ==================== */}
+            {currentPage === 'about' && (
+              <div id="about-view" className="space-y-20 pb-20 pt-28 md:pt-32">
+                
+                {/* About Hero Title */}
+                <div className="text-center max-w-2xl mx-auto px-6 space-y-2">
+                  <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
+                    WHO WE ARE
+                  </span>
+                  <h1 className="text-3xl md:text-5xl font-sans font-black text-brand-dark tracking-tight">
+                    About LEAN
+                  </h1>
+                  <p className="font-body text-brand-gray text-sm md:text-base leading-relaxed">
+                    We help property developers replace outdated real estate marketing with direct, automated growth pipelines.
+                  </p>
+                </div>
+
+                {/* Editorial Columns */}
+                <section id="editorial-content" className="max-w-3xl mx-auto px-6">
+                  <div className="prose prose-neutral max-w-2xl mx-auto space-y-8 text-neutral-700 leading-relaxed font-body text-base">
+                    
+                    <p>
+                      At LEAN, we do not view real estate marketing as a creative campaign. We view it as an <strong>infrastructure engineering problem</strong>. Standard agencies focus on brand awareness, creative storytelling, and vanity metrics like impressions and clicks. We focus on system reliability, response latency, and qualified site visits.
+                    </p>
+
+                    {/* highlight box */}
+                    <div className="bg-brand-light border-l-4 border-brand-orange p-8 rounded-sm space-y-2 my-6">
+                      <h3 className="font-sans font-extrabold text-sm text-brand-navy tracking-wider uppercase">
+                        The Sub-60 Second Response Rule
+                      </h3>
+                      <p className="font-body text-xs sm:text-sm text-brand-gray leading-relaxed">
+                        Data from property developers confirms that contacting a prospective buyer within sixty seconds boosts response probability by over 300%. We bypass analog broker delays entirely using secure webhook parsers and automated WhatsApp pipelines.
+                      </p>
+                    </div>
+
+                    <p>
+                      Every system configured under the LEAN standard connects directly with standard database models and CRM pipelines, delivering structured lead parameters that map budget and project interest directly to property sales teams.
+                    </p>
+
+                  </div>
+                </section>
+
+                {/* WHAT MAKES US DIFFERENT (Pillars) */}
+                <section id="what-makes-us-different" className="bg-brand-light py-16 border-y border-neutral-200">
+                  <div className="max-w-5xl mx-auto px-6">
+                    <h2 className="text-center text-xl md:text-2xl font-sans font-bold text-brand-dark uppercase tracking-widest mb-12">
+                      What Makes Us Different
+                    </h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      
+                      {/* Column 1 */}
+                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors">
+                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 01</span>
+                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Built for Real Estate</h3>
+                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
+                          Hyderabad-based team specializing exclusively in property builder sales cycles, launching projects, and competitive dynamics in Indian real estate.
+                        </p>
+                      </div>
+
+                      {/* Column 2 */}
+                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors">
+                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 02</span>
+                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Systems Over Service</h3>
+                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
+                          We build infrastructure you control. You own the landing page, the ad accounts, and access your database directly. No vendor lock-in.
+                        </p>
+                      </div>
+
+                      {/* Column 3 */}
+                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors">
+                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 03</span>
+                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Results Focused</h3>
+                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
+                          Every lead tracked, every rupee evaluated. Direct integration from Google Search query parameters to closed sales commissions.
+                        </p>
+                      </div>
+
+                      {/* Column 4 */}
+                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors">
+                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 04</span>
+                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Affordable Scale</h3>
+                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
+                          Complete enterprise-level CRM integrations, custom automation servers, and campaign management for less than the cost of a junior in-house marketer.
+                        </p>
+                      </div>
+
+                      {/* Column 5 */}
+                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors md:col-span-2 lg:col-span-1">
+                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 05</span>
+                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Honest About Limitations</h3>
+                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
+                          We generate interest and book site visits. Property quality, pricing, location, and sales team follow-up are your responsibility. We will never pretend ads can sell an overpriced project.
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                </section>
+
+                {/* OUR MISSION */}
+                <section id="our-mission" className="max-w-3xl mx-auto px-6 text-center space-y-4">
+                  <h2 className="text-xs font-sans font-bold text-brand-orange tracking-widest uppercase">
+                    OUR CORE FOCUS
+                  </h2>
+                  <h3 className="font-sans font-black text-2xl md:text-3xl text-brand-navy leading-tight uppercase">
+                    Our Mission
+                  </h3>
+                  <p className="font-body text-brand-gray text-sm md:text-base leading-relaxed max-w-xl mx-auto">
+                    To build transparent, predictable growth systems for builders and developers, eliminating communication delays and delivering qualified buyers directly to property sales teams.
+                  </p>
+                </section>
+
+              </div>
+            )}
+
+            {/* ==================== 4. GET STARTED VIEW ==================== */}
+            {currentPage === 'get-started' && (
+              <div id="get-started-view" className="pt-28 md:pt-32 pb-20">
+                <LeadPortal />
+              </div>
+            )}
+
+          </motion.div>
+        </AnimatePresence>
+      </main>
+
+      {/* 6. FOOTER */}
+      <Footer setCurrentPage={setCurrentPage} />
+
+    </div>
+  );
+}

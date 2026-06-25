@@ -1,0 +1,8 @@
+{
+  "name": "Remix: LEAN",
+  "description": "Mobile-first real estate lead generation, client communications, and automation systems styled in the minimalist Aramco design language.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
