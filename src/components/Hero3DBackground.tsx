@@ -23,379 +23,353 @@ export default function Hero3DBackground({ activeTab }: Hero3DBackgroundProps) {
 
     // 1. Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-    camera.position.z = 22;
+    scene.background = new THREE.Color(0x1a1a2e); // Deep charcoal requested background
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+    camera.position.z = 20;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
     container.appendChild(renderer.domElement);
 
     // 2. Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
     dirLight.position.set(10, 20, 15);
     scene.add(dirLight);
 
-    // Point light for subtle orange glow
-    const orangeLight = new THREE.PointLight(0xff8c42, 2, 50);
-    orangeLight.position.set(0, 0, 5);
-    scene.add(orangeLight);
-
-    // Groups for each scene
-    const group1 = new THREE.Group(); // Lead Generation
-    const group2 = new THREE.Group(); // Pipeline Automation
-    const group3 = new THREE.Group(); // Performance Tracking
-    const group4 = new THREE.Group(); // Growth Systems
+    // Groups for each slide scene
+    const group1 = new THREE.Group(); // Slide 1: Real Estate (Buildings & Grid)
+    const group2 = new THREE.Group(); // Slide 2: Lead Generation (funnel)
+    const group3 = new THREE.Group(); // Slide 3: WhatsApp Automation (Broadcast/Rings)
+    const group4 = new THREE.Group(); // Slide 4: Infrastructure (Knot & Grid)
 
     scene.add(group1);
     scene.add(group2);
     scene.add(group3);
     scene.add(group4);
 
-    // Track current opacities for crossfading
-    const opacities = [1, 0, 0, 0]; // Start with active tab's opacity
+    // Track active transition opacities
+    const opacities = [0, 0, 0, 0];
+    opacities[activeTab] = 1.0; // Start with active tab fully opaque
 
-    // Helper to make materials transparent
-    const makeTransparent = (obj: THREE.Object3D) => {
-      obj.traverse((child) => {
-        if (child instanceof THREE.Mesh || child instanceof THREE.LineSegments || child instanceof THREE.Points || child instanceof THREE.Line) {
-          if (Array.isArray(child.material)) {
-            child.material.forEach((m) => {
-              m.transparent = true;
-              m.opacity = 0;
-            });
-          } else if (child.material) {
-            child.material.transparent = true;
-            child.material.opacity = 0;
-          }
-        }
-      });
-    };
+    // =========================================================================
+    // SLIDE 1: REAL ESTATE (Floating Skyscraper Wireframes & Grid)
+    // =========================================================================
+    // Navy blue grid lines (#0f3460)
+    const gridHelper = new THREE.GridHelper(60, 30, 0x0f3460, 0x0f3460);
+    gridHelper.position.y = -6;
+    group1.add(gridHelper);
 
-    // ==========================================
-    // SCENE 1: LEAD GENERATION (Particles converging)
-    // ==========================================
-    const particleCount = 1200;
-    const pGeometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const originalPositions = new Float32Array(particleCount * 3);
-    const pSpeeds = new Float32Array(particleCount);
-    const pAngles = new Float32Array(particleCount);
-    const pRadii = new Float32Array(particleCount);
-
-    for (let i = 0; i < particleCount; i++) {
-      // Scattered randomly on a spherical outer shell or random torus
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos((Math.random() * 2) - 1);
-      const r = 16 + Math.random() * 12; // Outer radius
-
-      const x = r * Math.sin(phi) * Math.cos(theta);
-      const y = r * Math.sin(phi) * Math.sin(theta);
-      const z = r * Math.cos(phi);
-
-      positions[i * 3] = x;
-      positions[i * 3 + 1] = y;
-      positions[i * 3 + 2] = z;
-
-      originalPositions[i * 3] = x;
-      originalPositions[i * 3 + 1] = y;
-      originalPositions[i * 3 + 2] = z;
-
-      pSpeeds[i] = 0.015 + Math.random() * 0.035;
-      pAngles[i] = Math.random() * Math.PI * 2;
-      pRadii[i] = r;
-    }
-
-    pGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    
-    // Create soft glowing circle sprite for premium look
-    const canvas = document.createElement('canvas');
-    canvas.width = 16;
-    canvas.height = 16;
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      const gradient = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
-      gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-      gradient.addColorStop(0.3, 'rgba(255, 140, 66, 0.8)');
-      gradient.addColorStop(1, 'rgba(255, 140, 66, 0)');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, 16, 16);
-    }
-    const pTexture = new THREE.CanvasTexture(canvas);
-
-    const pMaterial = new THREE.PointsMaterial({
-      size: 0.45,
-      map: pTexture,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-
-    const particleSystem = new THREE.Points(pGeometry, pMaterial);
-    group1.add(particleSystem);
-
-    // Central glowing attractor point
-    const coreGeo = new THREE.SphereGeometry(1.2, 32, 32);
-    const coreMat = new THREE.MeshBasicMaterial({
-      color: 0xff8c42,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-    });
-    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-    group1.add(coreMesh);
-
-    // Smaller inner core
-    const innerCoreGeo = new THREE.SphereGeometry(0.5, 16, 16);
-    const innerCoreMat = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-    });
-    const innerCoreMesh = new THREE.Mesh(innerCoreGeo, innerCoreMat);
-    group1.add(innerCoreMesh);
-
-    makeTransparent(group1);
-
-    // ==========================================
-    // SCENE 2: PIPELINE AUTOMATION (Nodes and flow lines)
-    // ==========================================
-    const nodeCount = 16;
-    const nodes: { mesh: THREE.Mesh; connections: number[]; pulseTimer: number }[] = [];
-    const nodePositions: THREE.Vector3[] = [];
-
-    // Arrange nodes in a neat workflow flow (layered from left to right)
-    for (let i = 0; i < nodeCount; i++) {
-      // Calculate column and row position
-      const col = Math.floor(i / 4); // 4 columns
-      const row = i % 4;             // 4 rows per column
-      
-      const x = -15 + col * 10 + (Math.random() - 0.5) * 2.5;
-      const y = -6 + row * 4 + (Math.random() - 0.5) * 1.5;
-      const z = (Math.random() - 0.5) * 4;
-
-      const pos = new THREE.Vector3(x, y, z);
-      nodePositions.push(pos);
-
-      const nGeo = new THREE.SphereGeometry(0.35, 16, 16);
-      const nMat = new THREE.MeshStandardMaterial({
-        color: 0xff8c42,
-        emissive: 0xff8c42,
-        emissiveIntensity: 0.5,
-        roughness: 0.2,
-        metalness: 0.8,
-      });
-      const nMesh = new THREE.Mesh(nGeo, nMat);
-      nMesh.position.copy(pos);
-      group2.add(nMesh);
-
-      nodes.push({
-        mesh: nMesh,
-        connections: [],
-        pulseTimer: 0,
-      });
-    }
-
-    // Connect nodes logically from left column to right column
-    for (let i = 0; i < nodeCount; i++) {
-      const col = Math.floor(i / 4);
-      if (col < 3) {
-        // Connect to 1 or 2 nodes in the next column
-        const targetColStart = (col + 1) * 4;
-        const target1 = targetColStart + (i % 4);
-        const target2 = targetColStart + ((i + 1) % 4);
-        
-        nodes[i].connections.push(target1);
-        if (Math.random() > 0.4) {
-          nodes[i].connections.push(target2);
-        }
-      }
-    }
-
-    // Draw the connection lines
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0.15,
-    });
-
-    nodes.forEach((node, index) => {
-      node.connections.forEach((targetIdx) => {
-        const points = [nodePositions[index], nodePositions[targetIdx]];
-        const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-        const line = new THREE.Line(lineGeo, lineMaterial);
-        group2.add(line);
-      });
-    });
-
-    // Traveling signal dots
-    const signalCount = 12;
-    const signals: {
-      mesh: THREE.Mesh;
-      startNode: number;
-      endNode: number;
-      progress: number;
+    const buildings: {
+      group: THREE.Group;
+      yPos: number;
       speed: number;
+      height: number;
+      x: number;
+      z: number;
     }[] = [];
 
-    const sigGeo = new THREE.SphereGeometry(0.2, 8, 8);
-    const sigMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    // Create 14 floating wireframe skyscraper outlines
+    for (let i = 0; i < 14; i++) {
+      const bGroup = new THREE.Group();
+      
+      const w = 1.6 + Math.random() * 2.2;
+      const h = 5 + Math.random() * 9;
+      const d = 1.6 + Math.random() * 2.2;
+      
+      const geom = new THREE.BoxGeometry(w, h, d);
+      geom.translate(0, h / 2, 0); // Translate anchor to bottom of building
+      
+      const edges = new THREE.EdgesGeometry(geom);
+      
+      // Navy blue skeleton body (#0f3460)
+      const lineMesh = new THREE.LineSegments(
+        edges,
+        new THREE.LineBasicMaterial({
+          color: 0x0f3460,
+          transparent: true,
+          opacity: 0.6
+        })
+      );
+      bGroup.add(lineMesh);
+      
+      // Glowing electric orange top outline cap (#ff6b35)
+      const capGeom = new THREE.BoxGeometry(w + 0.04, 0.15, d + 0.04);
+      capGeom.translate(0, h, 0);
+      const capEdges = new THREE.EdgesGeometry(capGeom);
+      const capMesh = new THREE.LineSegments(
+        capEdges,
+        new THREE.LineBasicMaterial({
+          color: 0xff6b35,
+          transparent: true,
+          opacity: 0.9
+        })
+      );
+      bGroup.add(capMesh);
 
-    for (let i = 0; i < signalCount; i++) {
-      // Find a node that has connections
-      let startNode = Math.floor(Math.random() * nodeCount);
-      while (nodes[startNode].connections.length === 0) {
-        startNode = Math.floor(Math.random() * nodeCount);
+      // Add a couple of electric orange vertical accent edge glows on selected buildings
+      if (Math.random() > 0.4) {
+        const edgeGlowGeo = new THREE.BufferGeometry();
+        const vertices = new Float32Array([
+          w / 2 + 0.01, 0, d / 2 + 0.01,
+          w / 2 + 0.01, h, d / 2 + 0.01
+        ]);
+        edgeGlowGeo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+        const edgeGlow = new THREE.Line(
+          edgeGlowGeo,
+          new THREE.LineBasicMaterial({
+            color: 0xff6b35,
+            transparent: true,
+            opacity: 0.85
+          })
+        );
+        bGroup.add(edgeGlow);
       }
       
-      const conn = nodes[startNode].connections;
-      const endNode = conn[Math.floor(Math.random() * conn.length)];
-
-      const sMesh = new THREE.Mesh(sigGeo, sigMat.clone());
-      sMesh.position.copy(nodePositions[startNode]);
-      group2.add(sMesh);
-
-      signals.push({
-        mesh: sMesh,
-        startNode,
-        endNode,
-        progress: Math.random(), // Stagger starts
-        speed: 0.008 + Math.random() * 0.012,
+      const x = (Math.random() - 0.5) * 36;
+      const z = (Math.random() - 0.5) * 16 - 2;
+      const y = -6 - h - Math.random() * 15; // Start floating up below the grid
+      
+      bGroup.position.set(x, y, z);
+      group1.add(bGroup);
+      
+      buildings.push({
+        group: bGroup,
+        yPos: y,
+        speed: 0.8 + Math.random() * 1.4,
+        height: h,
+        x,
+        z
       });
     }
 
-    makeTransparent(group2);
-
-    // ==========================================
-    // SCENE 3: PERFORMANCE TRACKING (3D Bar Chart)
-    // ==========================================
-    const barCount = 10;
-    const bars: { mesh: THREE.Mesh; targetHeight: number; currentHeight: number; glow: THREE.Mesh }[] = [];
-
-    const barContainer = new THREE.Group();
-    // Center the container
-    barContainer.position.set(0, -4, 0);
-    group3.add(barContainer);
-
-    for (let i = 0; i < barCount; i++) {
-      const targetHeight = 4 + Math.random() * 8;
+    // =========================================================================
+    // SLIDE 2: LEAD GENERATION PIPELINE (Converging Funnel Network)
+    // =========================================================================
+    const funnelRings: THREE.Line[] = [];
+    const ringCount = 6;
+    for (let i = 0; i < ringCount; i++) {
+      const y = 8 - (i * 16) / (ringCount - 1); // From y=8 to y=-8
+      // Exponential curve for funnel diameter narrowing toward the bottom
+      const r = 1.2 + 7.5 * Math.pow((y + 10) / 18, 1.8);
       
-      // BoxGeometry translated so anchor is at bottom (Y=0)
-      const boxGeo = new THREE.BoxGeometry(1.6, 1, 1.6);
-      boxGeo.translate(0, 0.5, 0); // Translate center to Y=0.5, so bottom is at Y=0
-
-      const boxMat = new THREE.MeshStandardMaterial({
-        color: 0x151b26,
-        roughness: 0.1,
-        metalness: 0.9,
-        transparent: true,
-        opacity: 0,
-      });
-
-      const barMesh = new THREE.Mesh(boxGeo, boxMat);
-      
-      // Position bars in two neat rows (Z = -2 and Z = 2) or linearly
-      const col = i % 5;
-      const row = Math.floor(i / 5);
-      barMesh.position.set(-8 + col * 4, 0, -2 + row * 4);
-      barMesh.scale.set(1, 0.01, 1); // Start small for animation
-
-      // Soft glow plane or mini box at the top edge
-      const glowGeo = new THREE.BoxGeometry(1.65, 0.15, 1.65);
-      glowGeo.translate(0, 0.075, 0);
-      const glowMat = new THREE.MeshBasicMaterial({
-        color: 0xff8c42,
-        transparent: true,
-        opacity: 0,
-        blending: THREE.AdditiveBlending,
-      });
-      const glowMesh = new THREE.Mesh(glowGeo, glowMat);
-      glowMesh.position.copy(barMesh.position);
-      barContainer.add(barMesh);
-      barContainer.add(glowMesh);
-
-      bars.push({
-        mesh: barMesh,
-        targetHeight,
-        currentHeight: 0.01,
-        glow: glowMesh,
-      });
-    }
-
-    // Ambient wireframe grid under the bars
-    const gridGeo = new THREE.GridHelper(26, 13, 0x444444, 0x222222);
-    gridGeo.position.y = -0.05;
-    barContainer.add(gridGeo);
-
-    makeTransparent(group3);
-
-    // ==========================================
-    // SCENE 4: GROWTH SYSTEMS (Interlocked rings & wire sphere)
-    // ==========================================
-    const sphereGeo = new THREE.IcosahedronGeometry(6, 2);
-    const sphereMat = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.15,
-    });
-    const wireSphere = new THREE.Mesh(sphereGeo, sphereMat);
-    group4.add(wireSphere);
-
-    // Add nodes at sphere vertices
-    const vertexPositions = sphereGeo.attributes.position;
-    const vertexNodeGeo = new THREE.SphereGeometry(0.12, 8, 8);
-    const vertexNodeMat = new THREE.MeshBasicMaterial({ color: 0xff8c42 });
-    const vertexGroup = new THREE.Group();
-    
-    for (let i = 0; i < vertexPositions.count; i++) {
-      const vMesh = new THREE.Mesh(vertexNodeGeo, vertexNodeMat);
-      vMesh.position.set(
-        vertexPositions.getX(i),
-        vertexPositions.getY(i),
-        vertexPositions.getZ(i)
+      const ringGeom = new THREE.BufferGeometry();
+      const points: THREE.Vector3[] = [];
+      const segments = 64;
+      for (let j = 0; j <= segments; j++) {
+        const theta = (j / segments) * Math.PI * 2;
+        points.push(new THREE.Vector3(Math.cos(theta) * r, y, Math.sin(theta) * r));
+      }
+      ringGeom.setFromPoints(points);
+      const ringMesh = new THREE.Line(
+        ringGeom,
+        new THREE.LineBasicMaterial({
+          color: 0x0f3460, // navy blue
+          transparent: true,
+          opacity: 0.45
+        })
       );
-      vertexGroup.add(vMesh);
+      group2.add(ringMesh);
+      funnelRings.push(ringMesh);
     }
-    group4.add(vertexGroup);
 
-    // Torus Rings
-    const ringMat1 = new THREE.MeshStandardMaterial({
-      color: 0xff8c42,
-      roughness: 0.1,
-      metalness: 0.9,
-    });
-    const ringMat2 = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      roughness: 0.1,
-      metalness: 0.9,
-    });
+    // Connect vertical struts of funnel in navy
+    const strutCount = 12;
+    for (let i = 0; i < strutCount; i++) {
+      const theta = (i / strutCount) * Math.PI * 2;
+      const points: THREE.Vector3[] = [];
+      for (let j = 0; j < ringCount; j++) {
+        const y = 8 - (j * 16) / (ringCount - 1);
+        const r = 1.2 + 7.5 * Math.pow((y + 10) / 18, 1.8);
+        points.push(new THREE.Vector3(Math.cos(theta) * r, y, Math.sin(theta) * r));
+      }
+      const strutGeom = new THREE.BufferGeometry().setFromPoints(points);
+      const strutMesh = new THREE.Line(
+        strutGeom,
+        new THREE.LineBasicMaterial({
+          color: 0x0f3460,
+          transparent: true,
+          opacity: 0.35
+        })
+      );
+      group2.add(strutMesh);
+    }
 
-    const ring1 = new THREE.Mesh(new THREE.TorusGeometry(7.2, 0.18, 16, 100), ringMat1);
-    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(8.5, 0.1, 16, 100), ringMat2);
-    const ring3 = new THREE.Mesh(new THREE.TorusGeometry(9.5, 0.08, 16, 100), ringMat1);
+    // Dynamic Flowing Particles (glowing electric orange & white dots)
+    const funnelParticles: {
+      mesh: THREE.Mesh;
+      yPos: number;
+      speed: number;
+      angleOffset: number;
+      spiralSpeed: number;
+      isOrange: boolean;
+    }[] = [];
 
-    ring1.rotation.x = Math.PI / 4;
-    ring2.rotation.y = Math.PI / 3;
-    ring3.rotation.z = Math.PI / 6;
+    const fPartGeo = new THREE.SphereGeometry(0.14, 8, 8);
+    const orangeMat = new THREE.MeshBasicMaterial({ color: 0xff6b35, transparent: true });
+    const whiteMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true });
 
-    group4.add(ring1);
-    group4.add(ring2);
-    group4.add(ring3);
+    for (let i = 0; i < 110; i++) {
+      const isOrange = Math.random() > 0.4;
+      const mesh = new THREE.Mesh(fPartGeo, isOrange ? orangeMat : whiteMat);
+      
+      const y = -8 + Math.random() * 16;
+      const speed = 1.6 + Math.random() * 2.8;
+      const angleOffset = Math.random() * Math.PI * 2;
+      const spiralSpeed = 0.4 + Math.random() * 1.2;
+      
+      group2.add(mesh);
+      funnelParticles.push({
+        mesh,
+        yPos: y,
+        speed,
+        angleOffset,
+        spiralSpeed,
+        isOrange
+      });
+    }
 
-    makeTransparent(group4);
+    // =========================================================================
+    // SLIDE 3: WHATSAPP AUTOMATION (Expanding Concentric Broadcast Signals)
+    // =========================================================================
+    const signalRings: {
+      mesh: THREE.Mesh;
+      radius: number;
+      speed: number;
+      maxRadius: number;
+    }[] = [];
 
-    // ==========================================
+    // Create 4 concentric expanding pulse rings
+    for (let i = 0; i < 4; i++) {
+      const ringGeom = new THREE.RingGeometry(0.98, 1.02, 64);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: 0xff6b35, // electric orange (#ff6b35)
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0
+      });
+      const mesh = new THREE.Mesh(ringGeom, ringMat);
+      mesh.rotation.x = Math.PI / 2.4; // Tilted flat plane orientation
+      group3.add(mesh);
+      
+      signalRings.push({
+        mesh,
+        radius: i * 3.5, // staggered starting sizes
+        speed: 2.4,
+        maxRadius: 14
+      });
+    }
+
+    // Orbiting communication/automation particles (white and navy)
+    const orbitParticles: {
+      mesh: THREE.Mesh;
+      radius: number;
+      speed: number;
+      angle: number;
+      yPos: number;
+      tilt: number;
+    }[] = [];
+
+    const orbGeo = new THREE.SphereGeometry(0.16, 8, 8);
+    const whiteOrbMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true });
+    const navyOrbMat = new THREE.MeshBasicMaterial({ color: 0x0f3460, transparent: true });
+
+    for (let i = 0; i < 55; i++) {
+      const isWhite = Math.random() > 0.45;
+      const mesh = new THREE.Mesh(orbGeo, isWhite ? whiteOrbMat : navyOrbMat);
+      
+      const r = 2.5 + Math.random() * 8.5;
+      const speed = (0.35 + Math.random() * 0.75) * (Math.random() > 0.5 ? 1 : -1);
+      const angle = Math.random() * Math.PI * 2;
+      const yPos = (Math.random() - 0.5) * 5;
+      const tilt = (Math.random() - 0.5) * 0.55;
+      
+      group3.add(mesh);
+      orbitParticles.push({
+        mesh,
+        radius: r,
+        speed,
+        angle,
+        yPos,
+        tilt
+      });
+    }
+
+    // =========================================================================
+    // SLIDE 4: INFRASTRUCTURE YOU CONTROL (3D rotating cage & Control Knot)
+    // =========================================================================
+    // Torus knot geometry
+    const torusKnotGeo = new THREE.TorusKnotGeometry(4.8, 1.35, 120, 16);
+    const knotEdges = new THREE.EdgesGeometry(torusKnotGeo);
+
+    // Structure 1: Navy blue control cage (#0f3460)
+    const navyKnot = new THREE.LineSegments(
+      knotEdges,
+      new THREE.LineBasicMaterial({
+        color: 0x0f3460,
+        transparent: true,
+        opacity: 0.8
+      })
+    );
+    group4.add(navyKnot);
+
+    // Structure 2: Electric orange glowing outlines (#ff6b35) (offset to prevent z-fighting)
+    const orangeKnot = new THREE.LineSegments(
+      knotEdges,
+      new THREE.LineBasicMaterial({
+        color: 0xff6b35,
+        transparent: true,
+        opacity: 0.35
+      })
+    );
+    orangeKnot.scale.set(1.01, 1.01, 1.01);
+    group4.add(orangeKnot);
+
+    // Structure 3: Glowing highlight vertices on control nodes
+    const knotNodesGroup = new THREE.Group();
+    const nodeGeo4 = new THREE.SphereGeometry(0.12, 8, 8);
+    const nodeMat4 = new THREE.MeshBasicMaterial({ color: 0xff6b35, transparent: true });
+    
+    const vertexPositions4 = torusKnotGeo.attributes.position;
+    for (let i = 0; i < vertexPositions4.count; i += 10) {
+      const mesh = new THREE.Mesh(nodeGeo4, nodeMat4);
+      mesh.position.set(
+        vertexPositions4.getX(i),
+        vertexPositions4.getY(i),
+        vertexPositions4.getZ(i)
+      );
+      knotNodesGroup.add(mesh);
+    }
+    group4.add(knotNodesGroup);
+
+    // Outer orbiting coordinate grid box (faint wireframe icosahedron)
+    const outerCageGeo = new THREE.IcosahedronGeometry(9.5, 2);
+    const outerCageEdges = new THREE.EdgesGeometry(outerCageGeo);
+    const outerCage = new THREE.LineSegments(
+      outerCageEdges,
+      new THREE.LineBasicMaterial({
+        color: 0x0f3460,
+        transparent: true,
+        opacity: 0.15
+      })
+    );
+    group4.add(outerCage);
+
+
+    // =========================================================================
     // MOUSE PARALLAX & ANIMATION LOOP
-    // ==========================================
+    // =========================================================================
     let mouseX = 0;
     let mouseY = 0;
     let targetMouseX = 0;
     let targetMouseY = 0;
 
     const handleMouseMove = (event: MouseEvent) => {
-      // Normalize between -1 and 1
+      // Scale coordinates from -1 to 1
       targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
       targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     };
@@ -403,206 +377,193 @@ export default function Hero3DBackground({ activeTab }: Hero3DBackgroundProps) {
     window.addEventListener('mousemove', handleMouseMove);
 
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
+      
       const delta = clock.getDelta();
       const time = clock.getElapsedTime();
 
-      // Mouse Parallax Lerping
+      // Mouse Parallax Lerp
       mouseX = THREE.MathUtils.lerp(mouseX, targetMouseX, 0.05);
       mouseY = THREE.MathUtils.lerp(mouseY, targetMouseY, 0.05);
 
-      // Apply Parallax based on active tab
       const currentActive = activeTabRef.current;
 
-      // Update crossfading opacities
+      // Update crossfading opacities towards targets
       for (let i = 0; i < 4; i++) {
         const target = currentActive === i ? 1.0 : 0.0;
-        opacities[i] = THREE.MathUtils.lerp(opacities[i], target, 4 * delta); // Smooth 600ms crossfade
+        opacities[i] = THREE.MathUtils.lerp(opacities[i], target, 5 * delta); // smooth transition
       }
 
-      // Apply dynamic visibility & material opacity updates to save draw calls
-      const updateGroupOpacity = (group: THREE.Group, opacity: number) => {
-        if (opacity < 0.005) {
-          group.visible = false;
-          return;
-        }
-        group.visible = true;
-        group.traverse((child) => {
-          if (child instanceof THREE.Mesh || child instanceof THREE.LineSegments || child instanceof THREE.Points || child instanceof THREE.Line) {
-            if (Array.isArray(child.material)) {
-              child.material.forEach((m) => {
-                m.opacity = (m.userData.baseOpacity !== undefined ? m.userData.baseOpacity : 1) * opacity;
-              });
-            } else if (child.material) {
-              const baseOp = child.userData.baseOpacity !== undefined ? child.userData.baseOpacity : 1;
-              child.material.opacity = baseOp * opacity;
-            }
-          }
-        });
-      };
+      // Hide inactive groups to save rendering resources
+      group1.visible = opacities[0] > 0.005;
+      group2.visible = opacities[1] > 0.005;
+      group3.visible = opacities[2] > 0.005;
+      group4.visible = opacities[3] > 0.005;
 
-      // Set base opacities on setup if not stored
-      const ensureBaseOpacities = (group: THREE.Group) => {
-        group.traverse((child) => {
-          if (child instanceof THREE.Mesh || child instanceof THREE.LineSegments || child instanceof THREE.Points || child instanceof THREE.Line) {
-            const m = child.material;
-            if (m && !Array.isArray(m) && m.userData.baseOpacity === undefined) {
-              m.userData.baseOpacity = m.opacity !== undefined && m.opacity !== 0 ? m.opacity : 1;
-              // Specific adjustments for grids or wires
-              if (child instanceof THREE.Line || child instanceof THREE.LineSegments) {
-                m.userData.baseOpacity = 0.25;
-              }
-              if (m.color && m.color.getHex() === 0xffffff && !(child instanceof THREE.Points)) {
-                m.userData.baseOpacity = 0.45;
-              }
-            }
-          }
-        });
-      };
-
-      ensureBaseOpacities(group1);
-      ensureBaseOpacities(group2);
-      ensureBaseOpacities(group3);
-      ensureBaseOpacities(group4);
-
-      updateGroupOpacity(group1, opacities[0]);
-      updateGroupOpacity(group2, opacities[1]);
-      updateGroupOpacity(group3, opacities[2]);
-      updateGroupOpacity(group4, opacities[3]);
-
-      // --- ANIMATE TAB 1: LEAD GENERATION ---
+      // -----------------------------------------------------------------------
+      // ANIMATE SLIDE 1: REAL ESTATE
+      // -----------------------------------------------------------------------
       if (group1.visible) {
-        // Parallax rotation
-        group1.rotation.y = time * 0.1 + mouseX * 0.15;
-        group1.rotation.x = mouseY * 0.15;
+        group1.rotation.y = time * 0.04 + mouseX * 0.1;
+        group1.rotation.x = mouseY * 0.08;
 
-        // Pulse central core
-        const coreScale = 1.0 + Math.sin(time * 3) * 0.1;
-        coreMesh.scale.set(coreScale, coreScale, coreScale);
-        innerCoreMesh.scale.set(1.0 + Math.cos(time * 5) * 0.15, 1.0 + Math.cos(time * 5) * 0.15, 1.0 + Math.cos(time * 5) * 0.15);
-
-        // Converge particles toward center
-        const posAttr = pGeometry.getAttribute('position') as THREE.BufferAttribute;
-        const posArray = posAttr.array as Float32Array;
-
-        for (let i = 0; i < particleCount; i++) {
-          const index = i * 3;
-          let px = posArray[index];
-          let py = posArray[index + 1];
-          let pz = posArray[index + 2];
-
-          // Calculate distance from center
-          const dist = Math.sqrt(px * px + py * py + pz * pz);
-
-          if (dist < 1.0) {
-            // Respawn on outer shell
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos((Math.random() * 2) - 1);
-            const r = 16 + Math.random() * 10;
-
-            posArray[index] = r * Math.sin(phi) * Math.cos(theta);
-            posArray[index + 1] = r * Math.sin(phi) * Math.sin(theta);
-            posArray[index + 2] = r * Math.cos(phi);
-          } else {
-            // Pull in towards (0,0,0) + subtle spiral orbit
-            const speed = pSpeeds[i];
-            
-            // Move inward along vector
-            posArray[index] -= (px / dist) * speed * 2;
-            posArray[index + 1] -= (py / dist) * speed * 2;
-            posArray[index + 2] -= (pz / dist) * speed * 2;
-
-            // Spiral orbit effect (rotate around Y axis slightly)
-            const angle = 0.004;
-            const rx = posArray[index] * Math.cos(angle) - posArray[index + 2] * Math.sin(angle);
-            const rz = posArray[index] * Math.sin(angle) + posArray[index + 2] * Math.cos(angle);
-            posArray[index] = rx;
-            posArray[index + 2] = rz;
+        buildings.forEach((b) => {
+          b.yPos += b.speed * delta;
+          
+          // Loop building back below the grid
+          if (b.yPos > 14) {
+            b.yPos = -6 - b.height - Math.random() * 12;
+            b.x = (Math.random() - 0.5) * 36;
+            b.z = (Math.random() - 0.5) * 16 - 2;
+            b.group.position.x = b.x;
+            b.group.position.z = b.z;
           }
-        }
-        posAttr.needsUpdate = true;
-      }
+          b.group.position.y = b.yPos;
 
-      // --- ANIMATE TAB 2: PIPELINE AUTOMATION ---
-      if (group2.visible) {
-        group2.rotation.y = mouseX * 0.1;
-        group2.rotation.x = mouseY * 0.1;
-
-        // Update signals
-        signals.forEach((sig) => {
-          sig.progress += sig.speed;
-          if (sig.progress >= 1.0) {
-            sig.progress = 0;
-            // Pulse the end node
-            nodes[sig.endNode].pulseTimer = 1.0;
-
-            // Pick a new connection or wrap around
-            sig.startNode = sig.endNode;
-            const conn = nodes[sig.startNode].connections;
-            if (conn.length > 0) {
-              sig.endNode = conn[Math.floor(Math.random() * conn.length)];
-            } else {
-              // Reset to a random left-column node
-              sig.startNode = Math.floor(Math.random() * 4);
-              sig.endNode = nodes[sig.startNode].connections[0] || 4;
+          // Apply smooth fade-in and fade-out based on its floating vertical level
+          b.group.traverse((child) => {
+            if (child instanceof THREE.LineSegments || child instanceof THREE.Line) {
+              const material = child.material as THREE.LineBasicMaterial;
+              const isOrange = material.color.getHex() === 0xff6b35;
+              const baseOpacity = isOrange ? 0.9 : 0.6;
+              
+              let alpha = 1;
+              if (b.yPos > 4) {
+                alpha = Math.max(0, 1 - (b.yPos - 4) / 10);
+              } else if (b.yPos < -6) {
+                alpha = Math.max(0, 1 - (-6 - b.yPos) / b.height);
+              }
+              material.opacity = baseOpacity * alpha * opacities[0];
             }
-          }
-
-          // Linearly interpolate position
-          const startPos = nodePositions[sig.startNode];
-          const endPos = nodePositions[sig.endNode];
-          sig.mesh.position.lerpVectors(startPos, endPos, sig.progress);
-        });
-
-        // Update node pulses
-        nodes.forEach((node) => {
-          if (node.pulseTimer > 0) {
-            node.pulseTimer -= delta * 3; // Fade out pulse quickly
-            const scale = 1.0 + Math.sin(node.pulseTimer * Math.PI) * 0.7;
-            node.mesh.scale.set(scale, scale, scale);
-          } else {
-            node.mesh.scale.set(1, 1, 1);
-          }
+          });
         });
       }
 
-      // --- ANIMATE TAB 3: PERFORMANCE TRACKING ---
-      if (group3.visible) {
-        // Slow orbit
-        barContainer.rotation.y = time * 0.12 + mouseX * 0.1;
+      // -----------------------------------------------------------------------
+      // ANIMATE SLIDE 2: LEAD GENERATION
+      // -----------------------------------------------------------------------
+      if (group2.visible) {
+        group2.rotation.y = time * 0.03 + mouseX * 0.08;
+        group2.rotation.x = mouseY * 0.08;
 
-        // Scale bars up on entry
-        bars.forEach((bar) => {
-          if (currentActive === 2) {
-            // Smoothly scale up to targetHeight
-            bar.currentHeight = THREE.MathUtils.lerp(bar.currentHeight, bar.targetHeight, 3.5 * delta);
-          } else {
-            // Shrink down if inactive
-            bar.currentHeight = THREE.MathUtils.lerp(bar.currentHeight, 0.01, 5 * delta);
+        funnelParticles.forEach((p) => {
+          p.yPos -= p.speed * delta;
+          
+          if (p.yPos < -8) {
+            p.yPos = 8;
+            p.angleOffset = Math.random() * Math.PI * 2;
+          }
+
+          // Spiral radius gets narrow at the bottom (funnel shape)
+          const r = 1.2 + 7.5 * Math.pow((p.yPos + 10) / 18, 1.8);
+          const angle = p.angleOffset + p.yPos * p.spiralSpeed * 0.35;
+
+          p.mesh.position.set(
+            Math.cos(angle) * r,
+            p.yPos,
+            Math.sin(angle) * r
+          );
+
+          // Smooth fade at the boundaries of the funnel
+          let alpha = 1;
+          if (p.yPos < -6) {
+            alpha = Math.max(0, (p.yPos + 8) / 2);
+          } else if (p.yPos > 6) {
+            alpha = Math.max(0, (8 - p.yPos) / 2);
+          }
+
+          const mat = p.mesh.material as THREE.MeshBasicMaterial;
+          mat.opacity = alpha * opacities[1];
+        });
+      }
+
+      // -----------------------------------------------------------------------
+      // ANIMATE SLIDE 3: WHATSAPP AUTOMATION
+      // -----------------------------------------------------------------------
+      if (group3.visible) {
+        group3.rotation.y = mouseX * 0.12;
+        group3.rotation.x = mouseY * 0.12;
+
+        signalRings.forEach((ring) => {
+          ring.radius += ring.speed * delta;
+          if (ring.radius > ring.maxRadius) {
+            ring.radius = 0.5;
           }
           
-          bar.mesh.scale.y = bar.currentHeight;
+          ring.mesh.scale.set(ring.radius, ring.radius, 1);
+          
+          // Compute opacity that rises quickly and fades slowly as the signal expands
+          const ratio = ring.radius / ring.maxRadius;
+          const opacity = Math.max(0, Math.sin(ratio * Math.PI) * 0.75);
+          
+          const mat = ring.mesh.material as THREE.MeshBasicMaterial;
+          mat.opacity = opacity * opacities[2];
+        });
 
-          // Align the glow plane at the top of the bar
-          bar.glow.position.copy(bar.mesh.position);
-          bar.glow.position.y = bar.currentHeight;
+        orbitParticles.forEach((p) => {
+          p.angle += p.speed * delta;
+          
+          const x = Math.cos(p.angle) * p.radius;
+          const z = Math.sin(p.angle) * p.radius;
+          const y = p.yPos + Math.sin(p.angle) * p.radius * p.tilt;
+          
+          p.mesh.position.set(x, y, z);
+          
+          const mat = p.mesh.material as THREE.MeshBasicMaterial;
+          const baseOp = mat.color.getHex() === 0xffffff ? 0.8 : 0.45;
+          mat.opacity = baseOp * opacities[2];
         });
       }
 
-      // --- ANIMATE TAB 4: GROWTH SYSTEMS ---
+      // -----------------------------------------------------------------------
+      // ANIMATE SLIDE 4: INFRASTRUCTURE YOU CONTROL
+      // -----------------------------------------------------------------------
       if (group4.visible) {
-        // Rotations at different speeds and axes
-        wireSphere.rotation.y = time * 0.15 + mouseX * 0.12;
-        wireSphere.rotation.x = time * 0.08 + mouseY * 0.12;
-        
-        vertexGroup.rotation.copy(wireSphere.rotation);
+        // Double-axis slow rotating knot
+        const knotRotationY = time * 0.14 + mouseX * 0.1;
+        const knotRotationX = time * 0.08 + mouseY * 0.08;
 
-        ring1.rotation.z = time * 0.35;
-        ring2.rotation.x = time * 0.25;
-        ring3.rotation.y = -time * 0.3;
+        navyKnot.rotation.y = knotRotationY;
+        navyKnot.rotation.x = knotRotationX;
+
+        orangeKnot.rotation.copy(navyKnot.rotation);
+        knotNodesGroup.rotation.copy(navyKnot.rotation);
+
+        // Spin outer ambient cage in reverse
+        outerCage.rotation.y = -time * 0.04;
+        outerCage.rotation.z = time * 0.02;
+
+        // Apply opacities
+        navyKnot.traverse((child: any) => {
+          if (child.material) {
+            child.material.opacity = 0.75 * opacities[3];
+          }
+        });
+
+        orangeKnot.traverse((child: any) => {
+          if (child.material) {
+            // Slight organic breathing glow pulse
+            const pulse = 0.35 + Math.sin(time * 2.5) * 0.15;
+            child.material.opacity = pulse * opacities[3];
+          }
+        });
+
+        knotNodesGroup.traverse((child: any) => {
+          if (child instanceof THREE.Mesh && child.material) {
+            const mat = child.material as THREE.MeshBasicMaterial;
+            const pulse = 0.6 + Math.sin(time * 3 + child.position.x) * 0.4;
+            mat.opacity = pulse * opacities[3];
+          }
+        });
+
+        outerCage.traverse((child: any) => {
+          if (child.material) {
+            child.material.opacity = 0.15 * opacities[3];
+          }
+        });
       }
 
       renderer.render(scene, camera);
@@ -610,9 +571,9 @@ export default function Hero3DBackground({ activeTab }: Hero3DBackgroundProps) {
 
     animate();
 
-    // 4. Resize Handling with ResizeObserver for precise container alignment
+    // 4. Resize Handling with ResizeObserver for precise element sizing
     const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
+      for (const entry of entries) {
         const { width, height } = entry.contentRect;
         renderer.setSize(width, height);
         camera.aspect = width / height;
@@ -632,8 +593,8 @@ export default function Hero3DBackground({ activeTab }: Hero3DBackgroundProps) {
         container.removeChild(renderer.domElement);
       }
 
-      // Recursive disposal helper
-      const disposeNode = (node: any) => {
+      // Dispose of geometries and materials to avoid memory leaks
+      scene.traverse((node: any) => {
         if (node.geometry) node.geometry.dispose();
         if (node.material) {
           if (Array.isArray(node.material)) {
@@ -642,9 +603,7 @@ export default function Hero3DBackground({ activeTab }: Hero3DBackgroundProps) {
             node.material.dispose();
           }
         }
-      };
-
-      scene.traverse(disposeNode);
+      });
       renderer.dispose();
     };
   }, []);

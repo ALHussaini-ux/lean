@@ -6,6 +6,8 @@ import Footer from './components/Footer';
 import LeadPortal from './components/LeadPortal';
 import AramcoButton from './components/AramcoButton';
 import Hero3DBackground from './components/Hero3DBackground';
+import MetricsGlass from './components/MetricsGlass';
+import ServicesBento from './components/ServicesBento';
 import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -110,6 +112,7 @@ export default function App() {
                 {/* HERO SECTION WITH THREE.JS PARTICLE FIELDS & DETAILED CONTENT */}
                 <section 
                   id="home-hero" 
+                  data-header-theme="dark"
                   className="relative h-screen min-h-[650px] flex flex-col justify-between text-white px-6 md:px-16 lg:px-24 pt-32 pb-12 overflow-hidden bg-brand-dark"
                 >
                   <Hero3DBackground activeTab={currentSlide} />
@@ -183,76 +186,11 @@ export default function App() {
                   </div>
                 </section>
 
-                {/* STATS HIGHLIGHTS BANNER */}
-                <section id="stats-banner" className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
-                  <div className="bg-brand-dark text-white p-6 md:p-8 rounded-sm border border-neutral-800 shadow-2xl grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 divide-y divide-neutral-800 md:divide-y-0 md:divide-x divide-neutral-800">
-                    {STATS.map((stat, idx) => (
-                      <div key={idx} className="text-center md:px-4 space-y-1.5 pt-4 md:pt-0">
-                        <span className="text-2xl md:text-3xl font-sans font-black text-brand-orange tracking-tight block">
-                          {stat.value}
-                        </span>
-                        <span className="text-[10px] md:text-xs font-sans font-bold text-neutral-400 tracking-wider block">
-                          {stat.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </section>
+                {/* REDESIGNED LIQUID GLASS METRICS SECTION */}
+                <MetricsGlass />
 
-                {/* WHAT WE DO SECTION */}
-                <section id="what-we-do" className="bg-brand-light py-20 border-y border-neutral-200">
-                  <div className="max-w-7xl mx-auto px-6">
-                    
-                    <div className="text-center mb-16 space-y-2">
-                      <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
-                        WHAT WE DO
-                      </span>
-                      <h2 className="text-2xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
-                        Five Integrated Services
-                      </h2>
-                      <p className="font-body text-brand-gray text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-                        Designed to transform how you generate and convert real estate leads.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {SERVICES.map((srv, idx) => (
-                        <div
-                          key={idx}
-                          id={`service-card-${idx}`}
-                          className="bg-white border border-neutral-200 p-8 rounded-sm shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
-                        >
-                          <div className="space-y-6">
-                            <div className="w-10 h-10 rounded-full bg-brand-orange text-white flex items-center justify-center font-sans font-black text-xs tracking-wider select-none">
-                              {srv.number}
-                            </div>
-
-                            <div className="space-y-2">
-                              <h3 className="font-sans font-extrabold text-lg text-brand-navy group-hover:text-brand-orange transition-colors duration-200">
-                                {srv.title}
-                              </h3>
-                              <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
-                                {srv.description}
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="mt-6 pt-4 border-t border-neutral-100">
-                            <ul className="space-y-1.5 font-body text-[11px] sm:text-xs text-neutral-500">
-                              {srv.details.map((detail, dIdx) => (
-                                <li key={dIdx} className="flex items-center gap-1.5">
-                                  <span className="text-brand-orange text-xs">✓</span>
-                                  {detail}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                  </div>
-                </section>
+                {/* REDESIGNED SERVICES BENTO GRID */}
+                <ServicesBento />
 
                 {/* HOW IT WORKS SECTION (TIMELINE) */}
                 <section id="how-it-works" className="max-w-7xl mx-auto px-6 scroll-mt-24">
@@ -386,7 +324,7 @@ export default function App() {
                 </section>
 
                 {/* WHAT SUCCESS LOOKS LIKE SECTION */}
-                <section id="success-indicators" className="bg-neutral-900 text-white py-20 border-y border-neutral-800">
+                <section id="success-indicators" data-header-theme="dark" className="bg-neutral-900 text-white py-20 border-y border-neutral-800">
                   <div className="max-w-7xl mx-auto px-6">
                     
                     <div className="text-center mb-16 space-y-2">

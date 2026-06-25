@@ -25,7 +25,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
   };
 
   return (
-    <footer id="app-footer" className="bg-brand-dark text-white pt-16 pb-12 border-t border-neutral-800">
+    <footer id="app-footer" data-header-theme="dark" className="bg-brand-dark text-white pt-16 pb-12 border-t border-neutral-800">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-neutral-800">
           
@@ -40,7 +40,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                 src="https://lh3.googleusercontent.com/d/1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5" 
                 alt="LEAN Logo"
                 referrerPolicy="no-referrer"
-                className="h-9 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                className="h-9 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] brightness-0 invert"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
                   e.currentTarget.src = "https://drive.google.com/thumbnail?id=1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5&sz=w1000";
