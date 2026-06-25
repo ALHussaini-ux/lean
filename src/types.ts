@@ -24,13 +24,6 @@ export interface PricingTier {
   popular: boolean;
 }
 
-export interface CalculatorState {
-  monthlyBudget: number;
-  averageCommission: number;
-  closingRate: number; // percentage
-  leadCost: number; // cost per lead
-}
-
 export interface SimulatorLead {
   id: string;
   name: string;

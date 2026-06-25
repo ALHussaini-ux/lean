@@ -3,7 +3,6 @@ import { Page } from './types';
 import { SERVICES, PRICING_TIERS, COMPANY_VALUES, GENERAL_FAQS, PRICING_FAQS } from './data';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import LeadCalculator from './components/LeadCalculator';
 import LeadPortal from './components/LeadPortal';
 import AramcoButton from './components/AramcoButton';
 import Hero3DBackground from './components/Hero3DBackground';
@@ -798,15 +797,6 @@ export default function App() {
                       );
                     })}
                   </div>
-                </section>
-
-                {/* ROI BUSINESS CALCULATOR */}
-                <section id="roi-calculator" className="max-w-7xl mx-auto px-6 border-t border-neutral-200 pt-16">
-                  <div className="text-center mb-8 space-y-1">
-                    <span className="text-xs font-sans font-bold text-brand-orange uppercase tracking-widest">ROI SIMULATION</span>
-                    <h2 className="text-2xl font-sans font-extrabold text-brand-dark">Direct Growth Simulator</h2>
-                  </div>
-                  <LeadCalculator />
                 </section>
 
               </div>
