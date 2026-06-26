@@ -9,6 +9,7 @@ import Hero3DBackground from './components/Hero3DBackground';
 import MetricsGlass from './components/MetricsGlass';
 import ServicesBento from './components/ServicesBento';
 import HowItWorksTimeline from './components/HowItWorksTimeline';
+import AboutPremium from './components/AboutPremium';
 import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -615,118 +616,7 @@ export default function App() {
 
             {/* ==================== 3. ABOUT VIEW ==================== */}
             {currentPage === 'about' && (
-              <div id="about-view" className="space-y-20 pb-20 pt-28 md:pt-32">
-                
-                {/* About Hero Title */}
-                <div className="text-center max-w-2xl mx-auto px-6 space-y-2">
-                  <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
-                    WHO WE ARE
-                  </span>
-                  <h1 className="text-3xl md:text-5xl font-sans font-black text-brand-dark tracking-tight">
-                    About LEAN
-                  </h1>
-                  <p className="font-body text-brand-gray text-sm md:text-base leading-relaxed">
-                    We help property developers replace outdated real estate marketing with direct, automated growth pipelines.
-                  </p>
-                </div>
-
-                {/* Editorial Columns */}
-                <section id="editorial-content" className="max-w-3xl mx-auto px-6">
-                  <div className="prose prose-neutral max-w-2xl mx-auto space-y-8 text-neutral-700 leading-relaxed font-body text-base">
-                    
-                    <p>
-                      At LEAN, we do not view real estate marketing as a creative campaign. We view it as an <strong>infrastructure engineering problem</strong>. Standard agencies focus on brand awareness, creative storytelling, and vanity metrics like impressions and clicks. We focus on system reliability, response latency, and qualified site visits.
-                    </p>
-
-                    {/* highlight box */}
-                    <div className="bg-brand-light border-l-4 border-brand-orange p-8 rounded-sm space-y-2 my-6">
-                      <h3 className="font-sans font-extrabold text-sm text-brand-navy tracking-wider uppercase">
-                        The Sub-60 Second Response Rule
-                      </h3>
-                      <p className="font-body text-xs sm:text-sm text-brand-gray leading-relaxed">
-                        Data from property developers confirms that contacting a prospective buyer within sixty seconds boosts response probability by over 300%. We bypass analog broker delays entirely using secure webhook parsers and automated WhatsApp pipelines.
-                      </p>
-                    </div>
-
-                    <p>
-                      Every system configured under the LEAN standard connects directly with standard database models and CRM pipelines, delivering structured lead parameters that map budget and project interest directly to property sales teams.
-                    </p>
-
-                  </div>
-                </section>
-
-                {/* WHAT MAKES US DIFFERENT (Pillars) */}
-                <section id="what-makes-us-different" className="bg-brand-light py-16 border-y border-neutral-200">
-                  <div className="max-w-5xl mx-auto px-6">
-                    <h2 className="text-center text-xl md:text-2xl font-sans font-bold text-brand-dark uppercase tracking-widest mb-12">
-                      What Makes Us Different
-                    </h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      
-                      {/* Column 1 */}
-                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors">
-                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 01</span>
-                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Built for Real Estate</h3>
-                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
-                          Hyderabad-based team specializing exclusively in property builder sales cycles, launching projects, and competitive dynamics in Indian real estate.
-                        </p>
-                      </div>
-
-                      {/* Column 2 */}
-                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors">
-                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 02</span>
-                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Systems Over Service</h3>
-                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
-                          We build infrastructure you control. You own the landing page, the ad accounts, and access your database directly. No vendor lock-in.
-                        </p>
-                      </div>
-
-                      {/* Column 3 */}
-                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors">
-                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 03</span>
-                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Results Focused</h3>
-                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
-                          Every lead tracked, every rupee evaluated. Direct integration from Google Search query parameters to closed sales commissions.
-                        </p>
-                      </div>
-
-                      {/* Column 4 */}
-                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors">
-                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 04</span>
-                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Affordable Scale</h3>
-                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
-                          Complete enterprise-level CRM integrations, custom automation servers, and campaign management for less than the cost of a junior in-house marketer.
-                        </p>
-                      </div>
-
-                      {/* Column 5 */}
-                      <div className="bg-white p-6 rounded-sm border border-neutral-200 space-y-4 hover:border-brand-orange transition-colors md:col-span-2 lg:col-span-1">
-                        <span className="text-xs font-sans font-bold text-brand-orange uppercase block tracking-widest">PILLAR 05</span>
-                        <h3 className="font-sans font-extrabold text-base text-brand-navy">Honest About Limitations</h3>
-                        <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed">
-                          We generate interest and book site visits. Property quality, pricing, location, and sales team follow-up are your responsibility. We will never pretend ads can sell an overpriced project.
-                        </p>
-                      </div>
-
-                    </div>
-                  </div>
-                </section>
-
-                {/* OUR MISSION */}
-                <section id="our-mission" className="max-w-3xl mx-auto px-6 text-center space-y-4">
-                  <h2 className="text-xs font-sans font-bold text-brand-orange tracking-widest uppercase">
-                    OUR CORE FOCUS
-                  </h2>
-                  <h3 className="font-sans font-black text-2xl md:text-3xl text-brand-navy leading-tight uppercase">
-                    Our Mission
-                  </h3>
-                  <p className="font-body text-brand-gray text-sm md:text-base leading-relaxed max-w-xl mx-auto">
-                    To build transparent, predictable growth systems for builders and developers, eliminating communication delays and delivering qualified buyers directly to property sales teams.
-                  </p>
-                </section>
-
-              </div>
+              <AboutPremium setCurrentPage={setCurrentPage} />
             )}
 
             {/* ==================== 4. GET STARTED VIEW ==================== */}
