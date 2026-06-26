@@ -109,7 +109,7 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
             alt="LEAN Logo"
             referrerPolicy="no-referrer"
             className={`h-7 sm:h-8 w-auto object-contain transition-all duration-300 group-hover:scale-[1.04] ${
-              isOverDarkBg ? 'brightness-0 invert' : ''
+              isOverDarkBg ? 'brightness-0 invert' : 'brightness-0'
             }`}
             onError={(e) => {
               e.currentTarget.onerror = null;
