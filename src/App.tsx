@@ -8,6 +8,7 @@ import AramcoButton from './components/AramcoButton';
 import Hero3DBackground from './components/Hero3DBackground';
 import MetricsGlass from './components/MetricsGlass';
 import ServicesBento from './components/ServicesBento';
+import HowItWorksTimeline from './components/HowItWorksTimeline';
 import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -192,136 +193,8 @@ export default function App() {
                 {/* REDESIGNED SERVICES BENTO GRID */}
                 <ServicesBento />
 
-                {/* HOW IT WORKS SECTION (TIMELINE) */}
-                <section id="how-it-works" className="max-w-7xl mx-auto px-6 scroll-mt-24">
-                  <div className="text-center mb-16 space-y-2">
-                    <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
-                      ROADMAP TO SUCCESS
-                    </span>
-                    <h2 className="text-2xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
-                      How It Works
-                    </h2>
-                    <p className="font-body text-brand-gray text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-                      Simple process. Four weeks to lead generation system live.
-                    </p>
-                  </div>
-
-                  {/* Visual Roadmap Grid / Cards */}
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
-                    
-                    {/* Step 1 */}
-                    <div className="bg-white border border-neutral-200 p-8 rounded-sm shadow-sm space-y-6 relative hover:border-brand-orange transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-sans font-extrabold text-neutral-400 uppercase tracking-widest">
-                          WEEK 01
-                        </span>
-                        <span className="text-[10px] font-sans font-bold bg-brand-navy/5 text-brand-navy py-1 px-3 rounded-full uppercase tracking-wider">
-                          Days 1-7
-                        </span>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <h3 className="font-sans font-black text-xl text-brand-navy uppercase">
-                          Setup & Launch
-                        </h3>
-                        <p className="font-body text-neutral-500 text-xs sm:text-sm leading-relaxed">
-                          We establish search channels, construct landing frameworks, and set up your direct WhatsApp triggers.
-                        </p>
-                      </div>
-
-                      <div className="border-t border-neutral-100 pt-4 space-y-3">
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">What We Do</span>
-                          <p className="text-xs font-body text-brand-gray">Setup Google Search campaigns, build conversion project page, configure WhatsApp instant reply system.</p>
-                        </div>
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">Your Role</span>
-                          <p className="text-xs font-body text-brand-gray">Provide project details, brochure, high-quality images, and API/ad accounts access.</p>
-                        </div>
-                        <div className="space-y-1 pt-1">
-                          <span className="text-[10px] font-sans font-bold text-brand-orange uppercase block">Result</span>
-                          <p className="text-xs font-body font-semibold text-brand-navy">System live and ready to capture leads.</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Step 2 */}
-                    <div className="bg-white border border-brand-orange p-8 rounded-sm shadow-md space-y-6 relative hover:shadow-lg transition-all duration-300 ring-1 ring-brand-orange/20">
-                      <div className="absolute top-0 right-8 transform -translate-y-1/2 bg-brand-orange text-white text-[9px] font-sans font-bold tracking-widest uppercase py-1 px-3 rounded-full">
-                        ACTIVE CAPTURE
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-sans font-extrabold text-brand-orange uppercase tracking-widest">
-                          WEEKS 02-03
-                        </span>
-                        <span className="text-[10px] font-sans font-bold bg-brand-orange/10 text-brand-orange py-1 px-3 rounded-full uppercase tracking-wider">
-                          Days 8-21
-                        </span>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <h3 className="font-sans font-black text-xl text-brand-navy uppercase">
-                          Lead Generation
-                        </h3>
-                        <p className="font-body text-neutral-500 text-xs sm:text-sm leading-relaxed">
-                          Campaigns are published. Buyer parameters pour into your customized routing database in real time.
-                        </p>
-                      </div>
-
-                      <div className="border-t border-neutral-100 pt-4 space-y-3">
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">What We Do</span>
-                          <p className="text-xs font-body text-brand-gray">Launch campaigns, capture leads, monitor WhatsApp replies, track buyer feedback.</p>
-                        </div>
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">Your Role</span>
-                          <p className="text-xs font-body text-brand-gray">Sales team contacts leads within 1 hour of site visit booking.</p>
-                        </div>
-                        <div className="space-y-1 pt-1">
-                          <span className="text-[10px] font-sans font-bold text-brand-orange uppercase block">Result</span>
-                          <p className="text-xs font-body font-semibold text-brand-navy">Steady stream of qualified leads and site visit reservations.</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Step 3 */}
-                    <div className="bg-white border border-neutral-200 p-8 rounded-sm shadow-sm space-y-6 relative hover:border-brand-orange transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-sans font-extrabold text-neutral-400 uppercase tracking-widest">
-                          WEEK 04+
-                        </span>
-                        <span className="text-[10px] font-sans font-bold bg-brand-navy/5 text-brand-navy py-1 px-3 rounded-full uppercase tracking-wider">
-                          Ongoing
-                        </span>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <h3 className="font-sans font-black text-xl text-brand-navy uppercase">
-                          Optimize & Scale
-                        </h3>
-                        <p className="font-body text-neutral-500 text-xs sm:text-sm leading-relaxed">
-                          We weed out non-converting keywords, double down on high-intent targets, and scale predictable metrics.
-                        </p>
-                      </div>
-
-                      <div className="border-t border-neutral-100 pt-4 space-y-3">
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">What We Do</span>
-                          <p className="text-xs font-body text-brand-gray">Analyze search queries, A/B test ad copy, optimize WhatsApp flows, scale successful channels.</p>
-                        </div>
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase block">Your Role</span>
-                          <p className="text-xs font-body text-brand-gray">Weekly review of cost per lead and sales conversions.</p>
-                        </div>
-                        <div className="space-y-1 pt-1">
-                          <span className="text-[10px] font-sans font-bold text-brand-orange uppercase block">Result</span>
-                          <p className="text-xs font-body font-semibold text-brand-navy">Improved lead quality, reduced CPL, and predictable sales pipeline.</p>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </section>
+                {/* REDESIGNED HOW IT WORKS TIMELINE */}
+                <HowItWorksTimeline />
 
                 {/* WHAT SUCCESS LOOKS LIKE SECTION */}
                 <section id="success-indicators" data-header-theme="dark" className="bg-neutral-900 text-white py-20 border-y border-neutral-800">
