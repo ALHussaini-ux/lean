@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface HeaderProps {
-  currentPage: Page;
-  setCurrentPage: (page: Page) => void;
+  currentPage?: Page;
+  setCurrentPage?: (page: Page) => void;
 }
 
 export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
@@ -13,16 +14,25 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [isOverDarkBg, setIsOverDarkBg] = useState(true);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Dynamically compute active page state from route pathname
+  let activePage: Page = 'home';
+  if (location.pathname === '/about') activePage = 'about';
+  else if (location.pathname === '/services') activePage = 'services';
+  else if (location.pathname === '/blog') activePage = 'blog';
+  else if (location.pathname === '/contact') activePage = 'contact';
+  else if (location.pathname === '/get-started') activePage = 'get-started';
+
   useEffect(() => {
     const checkBackground = () => {
-      // Find all elements with data-header-theme="dark"
       const darkSections = document.querySelectorAll('[data-header-theme="dark"]');
       let overDark = false;
-      const headerHeight = 90; // Height of interest at top of screen
+      const headerHeight = 90;
 
       darkSections.forEach((section) => {
         const rect = section.getBoundingClientRect();
-        // If a dark section is overlapping the header's vertical position
         if (rect.top <= headerHeight && rect.bottom >= 20) {
           overDark = true;
         }
@@ -40,14 +50,11 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
       checkBackground();
     };
 
-    // Run initial checks
     checkBackground();
     
-    // Register event listeners
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', checkBackground, { passive: true });
 
-    // Use MutationObserver to watch for route/page changes or layout reflows dynamically
     const observer = new MutationObserver(checkBackground);
     observer.observe(document.body, { childList: true, subtree: true });
 
@@ -56,29 +63,50 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
       window.removeEventListener('resize', checkBackground);
       observer.disconnect();
     };
-  }, [currentPage]);
+  }, [location.pathname]);
 
-  const navItems: { label: string; value: Page; hash?: string; disabled?: boolean }[] = [
-    { label: 'Home', value: 'home' },
-    { label: 'About', value: 'about' },
-    { label: 'Services', value: 'services' },
-    { label: 'How It Works', value: 'home', hash: 'how-it-works' },
-    { label: 'Blog', value: 'home', hash: 'blog', disabled: true },
-    { label: 'Contact', value: 'home', hash: 'contact' }
+  const navItems = [
+    { label: 'Home', path: '/' },
+    { label: 'About', path: '/about' },
+    { label: 'Services', path: '/services' },
+    { label: 'How It Works', path: '/', hash: 'how-it-works' },
+    { label: 'Blog', path: '/blog' },
+    { label: 'Contact', path: '/contact' }
   ];
 
-  const handleNav = (page: Page, hash?: string) => {
-    setCurrentPage(page);
+  const handleNav = (path: string, hash?: string) => {
     setIsOpen(false);
-    if (hash) {
-      setTimeout(() => {
+    if (location.pathname !== path) {
+      navigate(path);
+      if (hash) {
+        setTimeout(() => {
+          const el = document.getElementById(hash);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 300);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      if (hash) {
         const el = document.getElementById(hash);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-      }, 150);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // Call legacy prop if provided
+    if (setCurrentPage) {
+      let pageVal: Page = 'home';
+      if (path === '/about') pageVal = 'about';
+      else if (path === '/services') pageVal = 'services';
+      else if (path === '/blog') pageVal = 'blog';
+      else if (path === '/contact') pageVal = 'contact';
+      setCurrentPage(pageVal);
     }
   };
 
@@ -95,14 +123,13 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
         scrolled ? 'py-1.5' : 'py-2'
       }`}
     >
-      {/* Main Nav Bar Content */}
       <div className="px-4 sm:px-6 h-12 sm:h-14 flex items-center justify-between relative">
         
         {/* Left Side Logo */}
         <div 
           id="brand-logo"
           className="flex items-center gap-2.5 cursor-pointer select-none group pl-1.5"
-          onClick={() => handleNav('home')}
+          onClick={() => handleNav('/')}
         >
           <img 
             src="https://lh3.googleusercontent.com/d/1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5" 
@@ -121,7 +148,12 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
         {/* Centered Desktop Navigation */}
         <nav id="desktop-nav" className="hidden lg:flex items-center space-x-6 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
           {navItems.map((item, index) => {
-            const isActive = currentPage === item.value && !item.hash;
+            const isMatch = activePage === 'home' && item.path === '/' && item.hash 
+              ? false 
+              : activePage === 'home' && item.path === '/' && !item.hash
+                ? true
+                : item.path !== '/' && location.pathname.startsWith(item.path);
+
             const isContact = item.label === 'Contact';
             return (
               <React.Fragment key={index}>
@@ -132,20 +164,17 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
                 )}
                 <button
                   id={`nav-item-${index}`}
-                  disabled={item.disabled}
-                  onClick={() => handleNav(item.value, item.hash)}
+                  onClick={() => handleNav(item.path, item.hash)}
                   className={`relative py-1 text-[13px] font-sans font-medium tracking-wide transition-colors duration-300 cursor-pointer select-none ${
-                    item.disabled 
-                      ? isOverDarkBg ? 'text-white/40 cursor-not-allowed' : 'text-neutral-400 cursor-not-allowed'
-                      : isActive 
-                        ? 'text-brand-orange font-bold' 
-                        : isOverDarkBg 
-                          ? 'text-white/85 hover:text-white' 
-                          : 'text-neutral-700 hover:text-brand-orange'
+                    isMatch 
+                      ? 'text-brand-orange font-bold' 
+                      : isOverDarkBg 
+                        ? 'text-white/85 hover:text-white' 
+                        : 'text-neutral-700 hover:text-brand-orange'
                   }`}
                 >
                   {item.label}
-                  {isActive && !item.disabled && (
+                  {isMatch && (
                     <motion.div
                       layoutId="activeNavLine"
                       className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-orange rounded-full"
@@ -160,11 +189,10 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
 
         {/* Right Side Call To Action */}
         <div className="flex items-center gap-4 pr-1.5">
-          {/* Desktop Capsule Button */}
           <div className="hidden sm:block">
             <button
               id="cta-get-started-desktop"
-              onClick={() => handleNav('get-started')}
+              onClick={() => handleNav('/contact')}
               className="bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white px-5 py-2 rounded-full font-sans font-bold text-[13px] tracking-wide shadow-[0_4px_14px_rgba(255,140,66,0.3)] hover:shadow-[0_6px_20px_rgba(255,140,66,0.45)] hover:scale-[1.02] transition-all duration-300 cursor-pointer active:scale-[0.98] focus:outline-none"
             >
               Get started
@@ -188,7 +216,7 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
 
       </div>
 
-      {/* Mobile Expanding Drawer (Fluid Liquid Container) */}
+      {/* Mobile Expanding Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -203,21 +231,23 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
               isOverDarkBg ? 'border-white/10' : 'border-neutral-100'
             }`}>
               {navItems.map((item, index) => {
-                const isActive = currentPage === item.value && !item.hash;
+                const isMatch = activePage === 'home' && item.path === '/' && item.hash 
+                  ? false 
+                  : activePage === 'home' && item.path === '/' && !item.hash
+                    ? true
+                    : item.path !== '/' && location.pathname.startsWith(item.path);
+
                 return (
                   <button
                     key={index}
                     id={`mobile-nav-item-${index}`}
-                    disabled={item.disabled}
-                    onClick={() => handleNav(item.value, item.hash)}
+                    onClick={() => handleNav(item.path, item.hash)}
                     className={`text-left font-sans font-medium text-[14px] py-1 transition-colors ${
-                      item.disabled
-                        ? isOverDarkBg ? 'text-white/30 cursor-not-allowed' : 'text-neutral-300 cursor-not-allowed'
-                        : isActive
-                          ? 'text-brand-orange font-bold'
-                          : isOverDarkBg
-                            ? 'text-white/80 hover:text-white'
-                            : 'text-neutral-600 hover:text-brand-orange'
+                      isMatch
+                        ? 'text-brand-orange font-bold'
+                        : isOverDarkBg
+                          ? 'text-white/80 hover:text-white'
+                          : 'text-neutral-600 hover:text-brand-orange'
                     }`}
                   >
                     {item.label}
@@ -228,7 +258,7 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
               <div className="pt-2">
                 <button
                   id="mobile-nav-cta"
-                  onClick={() => handleNav('get-started')}
+                  onClick={() => handleNav('/contact')}
                   className="w-full bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white py-2.5 rounded-full font-sans font-bold text-xs tracking-wide shadow-md transition-all duration-300"
                 >
                   Get started

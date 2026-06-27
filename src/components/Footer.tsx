@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { ArrowRight, Sparkles, Check } from 'lucide-react';
 
 interface FooterProps {
-  setCurrentPage: (page: Page) => void;
+  setCurrentPage?: (page: Page) => void;
 }
 
 export default function Footer({ setCurrentPage }: FooterProps) {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const navigate = useNavigate();
 
-  const handleNav = (page: Page) => {
-    setCurrentPage(page);
+  const handleNav = (path: string, legacyPage?: Page) => {
+    navigate(path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (setCurrentPage && legacyPage) {
+      setCurrentPage(legacyPage);
+    }
   };
 
   const handleSubscribe = (e: React.FormEvent) => {
@@ -34,7 +40,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
             <div 
               id="footer-logo"
               className="flex flex-col items-start cursor-pointer select-none group"
-              onClick={() => handleNav('home')}
+              onClick={() => handleNav('/', 'home')}
             >
               <img 
                 src="https://lh3.googleusercontent.com/d/1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5" 
@@ -61,7 +67,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
             <ul className="space-y-2 font-body text-xs sm:text-sm text-neutral-400">
               <li>
                 <button 
-                  onClick={() => handleNav('home')} 
+                  onClick={() => handleNav('/', 'home')} 
                   className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   Home
@@ -69,7 +75,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
               </li>
               <li>
                 <button 
-                  onClick={() => handleNav('about')} 
+                  onClick={() => handleNav('/about', 'about')} 
                   className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   About
@@ -77,7 +83,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
               </li>
               <li>
                 <button 
-                  onClick={() => handleNav('services')} 
+                  onClick={() => handleNav('/services', 'services')} 
                   className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   Services
@@ -86,10 +92,11 @@ export default function Footer({ setCurrentPage }: FooterProps) {
               <li>
                 <button 
                   onClick={() => {
-                    handleNav('home');
+                    navigate('/');
                     setTimeout(() => {
                       document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }, 150);
+                    if (setCurrentPage) setCurrentPage('home');
                   }} 
                   className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
@@ -97,18 +104,16 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                 </button>
               </li>
               <li>
-                <span className="text-neutral-600 cursor-not-allowed text-left py-0.5 block">
-                  Blog (coming soon)
-                </span>
+                <button 
+                  onClick={() => handleNav('/blog', 'blog')} 
+                  className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
+                >
+                  Blog
+                </button>
               </li>
               <li>
                 <button 
-                  onClick={() => {
-                    handleNav('home');
-                    setTimeout(() => {
-                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 150);
-                  }} 
+                  onClick={() => handleNav('/contact', 'contact')} 
                   className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   Contact

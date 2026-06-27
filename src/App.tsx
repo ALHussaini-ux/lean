@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Page } from './types';
 import { SERVICES, PRICING_TIERS, COMPANY_VALUES, GENERAL_FAQS, PRICING_FAQS } from './data';
 import Header from './components/Header';
@@ -11,75 +12,90 @@ import ServicesBento from './components/ServicesBento';
 import HowItWorksTimeline from './components/HowItWorksTimeline';
 import AboutPremium from './components/AboutPremium';
 import ServicesPremium from './components/ServicesPremium';
+import BlogPremium from './components/BlogPremium';
+import ContactPremium from './components/ContactPremium';
+import PageMetadata from './components/PageMetadata';
 import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [expandedPricingFaq, setExpandedPricingFaq] = useState<number | null>(null);
 
-  // Content-Brief specified Carousel Slides representing real estate growth infrastructure elements
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === '/';
+
+  // Legacy page callback adapter to keep ServicesPremium and AboutPremium fully compatible
+  const legacySetPage = (page: Page) => {
+    if (page === 'home') navigate('/');
+    else if (page === 'get-started' || page === 'contact') navigate('/contact');
+    else navigate(`/${page}`);
+  };
+
   const HERO_SLIDES = [
     {
       category: 'REAL ESTATE GROWTH SYSTEMS',
       title: 'Generate qualified leads, automate customer replies, and close deals with systems built for developers.',
       subheading: 'We help you attract interested buyers, respond instantly to enquiries, and track every lead. Modern systems replace outdated marketing methods.',
       ctaText: 'Schedule a Demo',
-      action: () => handleCTA('get-started')
+      action: () => handleCTA('/contact')
     },
     {
       category: 'LEAD GENERATION PIPELINE',
       title: 'Google and Meta Ads campaigns optimized specifically for Indian real estate.',
       subheading: 'Qualified buyers searching for your project, not random clicks. Focus budget on people with high intent to purchase.',
       ctaText: 'Explore Service Tiers',
-      action: () => handleCTA('services')
+      action: () => handleCTA('/services')
     },
     {
       category: 'WHATSAPP AUTOMATION',
       title: 'Brochure dispatch within 60 seconds and site visit scheduling 24/7.',
       subheading: 'Outperform slow human responses. WhatsApp bots engage prospects immediately when their interest is highest.',
       ctaText: 'Explore Service Tiers',
-      action: () => handleCTA('services')
+      action: () => handleCTA('/services')
     },
     {
       category: 'INFRASTRUCTURE YOU CONTROL',
       title: 'Predictable growth pipeline built into your business, not bolted onto it.',
       subheading: 'Own your landing pages, ad accounts, and databases. We set up systems that empower you, with no vendor lock-in.',
       ctaText: 'Build Your System',
-      action: () => handleCTA('get-started')
+      action: () => handleCTA('/contact')
     }
   ];
 
-  // Auto-advance slider every 5 seconds
+  // Auto-advance slider every 5 seconds (Only runs on Home View `/`)
   useEffect(() => {
-    if (currentPage !== 'home') return;
+    if (!isHome) return;
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [currentPage, currentSlide]);
+  }, [isHome, currentSlide]);
 
-  // Robust real estate stats banner
-  const STATS = [
-    { value: '99.2%', label: 'AUTOMATION UPTIME' },
-    { value: '48s', label: 'MEDIAN RESPONSE TIME' },
-    { value: '2.2x', label: 'LEAD-TO-DEAL RATIO' },
-    { value: '₹4.2Cr', label: 'CLIENT COMMISSIONS PIPELINE' }
-  ];
-
-  const handleCTA = (page: Page, hash?: string) => {
-    setCurrentPage(page);
-    if (hash) {
-      setTimeout(() => {
+  const handleCTA = (path: string, hash?: string) => {
+    if (location.pathname !== path) {
+      navigate(path);
+      if (hash) {
+        setTimeout(() => {
+          const el = document.getElementById(hash);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 300);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      if (hash) {
         const el = document.getElementById(hash);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-      }, 150);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 
@@ -95,23 +111,27 @@ export default function App() {
     <div id="lean-app" className="min-h-screen bg-white text-brand-dark flex flex-col justify-between selection:bg-brand-orange selection:text-white">
       
       {/* 1. STICKY HEADER */}
-      <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Header setCurrentPage={legacySetPage} />
 
-      {/* Main Content Area with Transitions */}
+      {/* Main Content Area with Routes and Page-Level Transitions */}
       <main className="flex-grow">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={currentPage}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-          >
-
+          <Routes>
+            
             {/* ==================== 1. HOME VIEW ==================== */}
-            {currentPage === 'home' && (
-              <div id="home-view" className="space-y-24 pb-24">
-                
+            <Route path="/" element={
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-24 pb-24"
+              >
+                <PageMetadata 
+                  title="LEAN Growth Systems | Lead Infrastructure for Real Estate"
+                  description="We build high-conversion digital advertising pipelines and automated WhatsApp communication systems specifically for Indian property builders and developers."
+                />
+
                 {/* HERO SECTION WITH THREE.JS PARTICLE FIELDS & DETAILED CONTENT */}
                 <section 
                   id="home-hero" 
@@ -304,17 +324,16 @@ export default function App() {
                             <span className="w-5 h-5 rounded-full bg-red-950/40 text-red-400 border border-red-500/20 flex items-center justify-center text-xs shrink-0 font-bold">✕</span>
                             <div className="space-y-0.5">
                               <h4 className="font-sans font-bold text-xs sm:text-sm text-neutral-300">Wasted Broker commissions</h4>
-                              <p className="text-xs text-neutral-500 leading-relaxed font-body">Paying huge brokerage commissions because you can\'t reach direct property buyers on your own.</p>
+                              <p className="text-xs text-neutral-500 leading-relaxed font-body">Paying huge brokerage commissions because you can't reach direct property buyers on your own.</p>
                             </div>
                           </li>
                         </ul>
                       </div>
-
                     </div>
                   </div>
                 </section>
 
-                {/* GENERAL FAQ SECTION (15 detailed, realistic Q&As!) */}
+                {/* GENERAL FAQ SECTION */}
                 <section id="general-faqs" className="max-w-4xl mx-auto px-6 scroll-mt-24">
                   <div className="text-center mb-12 space-y-2">
                     <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
@@ -332,10 +351,7 @@ export default function App() {
                     {GENERAL_FAQS.map((faq, idx) => {
                       const isOpen = expandedFaq === idx;
                       return (
-                        <div 
-                          key={idx}
-                          className="border-b border-neutral-200 pb-4 last:border-b-0"
-                        >
+                        <div key={idx} className="border-b border-neutral-200 pb-4 last:border-b-0">
                           <button
                             onClick={() => toggleFaq(idx)}
                             className="w-full flex items-center justify-between text-left py-3 group cursor-pointer focus:outline-none"
@@ -376,32 +392,95 @@ export default function App() {
                   <LeadPortal />
                 </section>
 
-              </div>
-            )}
+              </motion.div>
+            } />
 
             {/* ==================== 2. SERVICES VIEW ==================== */}
-            {currentPage === 'services' && (
-              <ServicesPremium setCurrentPage={setCurrentPage} />
-            )}
+            <Route path="/services" element={
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <PageMetadata 
+                  title="Service Tiers & Deliverables | LEAN Growth Systems"
+                  description="Explore our Starter, Growth, and Premium service plans optimized for real estate ads, ultra-fast landing pages, and WhatsApp brochure automations."
+                />
+                <ServicesPremium setCurrentPage={legacySetPage} />
+              </motion.div>
+            } />
 
             {/* ==================== 3. ABOUT VIEW ==================== */}
-            {currentPage === 'about' && (
-              <AboutPremium setCurrentPage={setCurrentPage} />
-            )}
+            <Route path="/about" element={
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <PageMetadata 
+                  title="Our Methodology | LEAN Growth Systems"
+                  description="Learn about our process-driven lead capture infrastructure, engineering standards, and zero vendor lock-in guidelines built to empower modern developers."
+                />
+                <AboutPremium setCurrentPage={legacySetPage} />
+              </motion.div>
+            } />
 
-            {/* ==================== 4. GET STARTED VIEW ==================== */}
-            {currentPage === 'get-started' && (
-              <div id="get-started-view" className="pt-28 md:pt-32 pb-20">
-                <LeadPortal />
-              </div>
-            )}
+            {/* ==================== 4. BLOG VIEW ==================== */}
+            <Route path="/blog" element={
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <PageMetadata 
+                  title="The LEAN Bulletin | Technical Studies & Real Estate Insights"
+                  description="Expert breakdowns, digital advertising optimization studies, and real estate marketing automation briefs with direct database integration."
+                />
+                <BlogPremium />
+              </motion.div>
+            } />
 
-          </motion.div>
+            {/* ==================== 5. CONTACT VIEW ==================== */}
+            <Route path="/contact" element={
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <PageMetadata 
+                  title="Get Started & Schedule System Audit | LEAN Growth Systems"
+                  description="Schedule a 30-minute growth consultation or submit your project details. Let's analyze your current digital marketing parameters and build your system."
+                />
+                <ContactPremium />
+              </motion.div>
+            } />
+
+            {/* fallback redirect for legacy page links */}
+            <Route path="/get-started" element={
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <PageMetadata 
+                  title="Get Started & Schedule System Audit | LEAN Growth Systems"
+                  description="Schedule a 30-minute growth consultation or submit your project details. Let's analyze your current digital marketing parameters and build your system."
+                />
+                <ContactPremium />
+              </motion.div>
+            } />
+
+          </Routes>
         </AnimatePresence>
       </main>
 
       {/* 6. FOOTER */}
-      <Footer setCurrentPage={setCurrentPage} />
+      <Footer setCurrentPage={legacySetPage} />
 
     </div>
   );

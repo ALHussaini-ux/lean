@@ -2,7 +2,7 @@
  * Types and interfaces for LEAN Real Estate Lead Generation & Automation
  */
 
-export type Page = 'home' | 'services' | 'about' | 'get-started';
+export type Page = 'home' | 'services' | 'about' | 'blog' | 'contact' | 'get-started';
 
 export interface ServiceCard {
   number: string;
