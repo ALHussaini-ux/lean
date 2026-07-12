@@ -1,15 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Outfit", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-body: "Outfit", "Lato", sans-serif;
+  --font-sans: "Archivo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
 
-  --color-brand-dark: #0F0F11;
-  --color-brand-navy: #151B26;
-  --color-brand-orange: #FF8C42;
-  --color-brand-light: #F8F9FA;
-  --color-brand-gray: #8A94A6;
+  --color-brand-dark: #1C1F26;
+  --color-brand-navy: #12192B;
+  --color-brand-orange: #E8622C;
+  --color-brand-light: #F5F2EA;
+  --color-brand-gray: #6B7280;
+  --color-brand-line: #D8D2C4;
 }
 
 /* Base style resets and scrollbar layout for polished Aramco feel */
@@ -32,7 +34,6 @@ html {
 }
 
 ::selection {
-  background-color: #FF8C42;
+  background-color: #E8622C;
   color: #FFFFFF;
 }
-
