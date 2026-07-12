@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import LeadPortal from './components/LeadPortal';
 import AramcoButton from './components/AramcoButton';
-import Hero3DBackground from './components/Hero3DBackground';
+import HeroProductWindow from './components/HeroProductWindow';
 import MetricsGlass from './components/MetricsGlass';
 import ServicesBento from './components/ServicesBento';
 import HowItWorksTimeline from './components/HowItWorksTimeline';
@@ -132,80 +132,84 @@ export default function App() {
                   description="We build high-conversion digital advertising pipelines and automated WhatsApp communication systems specifically for Indian property builders and developers."
                 />
 
-                {/* HERO SECTION WITH THREE.JS PARTICLE FIELDS & DETAILED CONTENT */}
+                {/* HERO SECTION - SAAS SPLIT LAYOUT: TEXT LEFT, LIVE PRODUCT WINDOW RIGHT */}
                 <section 
                   id="home-hero" 
                   data-header-theme="dark"
-                  className="relative h-screen min-h-[650px] flex flex-col justify-between text-white px-6 md:px-16 lg:px-24 pt-32 pb-12 overflow-hidden bg-brand-dark"
+                  className="relative min-h-screen flex flex-col justify-center text-white px-6 md:px-16 lg:px-24 pt-32 pb-16 overflow-hidden bg-brand-dark"
                 >
-                  <Hero3DBackground activeTab={currentSlide} />
+                  <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-10 items-center">
 
-                  {/* Dark photorealistic overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-black/40 to-black/50 pointer-events-none z-[2]" />
-                  
-                  {/* Left-Aligned content block representing current carousel slide */}
-                  <div className="max-w-4xl z-10 space-y-5 mt-auto mb-6 pl-0 md:pl-6">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={currentSlide}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.4 }}
-                        className="space-y-4"
-                      >
-                        <span className="text-[10px] md:text-xs tracking-[0.25em] font-sans font-bold text-brand-orange uppercase block">
-                          {HERO_SLIDES[currentSlide].category}
-                        </span>
+                    {/* Left: rotating text content */}
+                    <div className="z-10 space-y-5">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={currentSlide}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.4 }}
+                          className="space-y-4"
+                        >
+                          <span className="text-[10px] md:text-xs tracking-[0.25em] font-sans font-bold text-brand-orange uppercase block">
+                            {HERO_SLIDES[currentSlide].category}
+                          </span>
 
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.8rem] font-sans font-black text-white tracking-tight leading-[1.12] max-w-3xl">
-                          {HERO_SLIDES[currentSlide].title}
-                        </h1>
+                          <h1 className="text-3xl sm:text-4xl md:text-5xl font-sans font-black text-white tracking-tight leading-[1.12]">
+                            {HERO_SLIDES[currentSlide].title}
+                          </h1>
 
-                        <p className="font-body text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl">
-                          {HERO_SLIDES[currentSlide].subheading}
-                        </p>
+                          <p className="font-body text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-lg">
+                            {HERO_SLIDES[currentSlide].subheading}
+                          </p>
 
-                        <div className="pt-4">
-                          <AramcoButton
-                            onClick={HERO_SLIDES[currentSlide].action}
-                            variant="white"
-                          >
-                            {HERO_SLIDES[currentSlide].ctaText}
-                          </AramcoButton>
+                          <div className="pt-4">
+                            <AramcoButton
+                              onClick={HERO_SLIDES[currentSlide].action}
+                              variant="white"
+                            >
+                              {HERO_SLIDES[currentSlide].ctaText}
+                            </AramcoButton>
+                          </div>
+                        </motion.div>
+                      </AnimatePresence>
+
+                      {/* Slide indicator tabs */}
+                      <div className="w-full border-t border-white/10 pt-4 mt-8">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                          {HERO_SLIDES.map((slide, idx) => {
+                            const isActive = currentSlide === idx;
+                            return (
+                              <button
+                                key={idx}
+                                onClick={() => setCurrentSlide(idx)}
+                                className="text-left group cursor-pointer focus:outline-none relative pb-3 transition-all duration-300"
+                              >
+                                <span className={`text-[9px] md:text-[10px] font-sans font-bold tracking-[0.1em] uppercase transition-all duration-300 block ${
+                                  isActive ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-200'
+                                }`}>
+                                  {slide.category.split(' ')[0]} {slide.category.split(' ')[1] || ''}
+                                </span>
+
+                                {isActive && (
+                                  <motion.div
+                                    layoutId="activeHeroSlideUnderline"
+                                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-orange"
+                                    transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                                  />
+                                )}
+                              </button>
+                            );
+                          })}
                         </div>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Horizontal indicator slider tabs */}
-                  <div className="w-full max-w-7xl mx-auto border-t border-white/10 pt-4 z-10 pl-0 md:pl-6">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
-                      {HERO_SLIDES.map((slide, idx) => {
-                        const isActive = currentSlide === idx;
-                        return (
-                          <button
-                            key={idx}
-                            onClick={() => setCurrentSlide(idx)}
-                            className="text-left group cursor-pointer focus:outline-none relative pb-4 transition-all duration-300"
-                          >
-                            <span className={`text-[10px] md:text-[11px] font-sans font-bold tracking-[0.1em] uppercase transition-all duration-300 block ${
-                              isActive ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-200'
-                            }`}>
-                              {slide.category.split(' ')[0]} {slide.category.split(' ')[1] || ''}
-                            </span>
-                            
-                            {isActive && (
-                              <motion.div
-                                layoutId="activeHeroSlideUnderline"
-                                className="absolute bottom-0 left-0 right-0 h-[3px] bg-brand-orange rounded-full"
-                                transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                              />
-                            )}
-                          </button>
-                        );
-                      })}
+                      </div>
                     </div>
+
+                    {/* Right: live product window */}
+                    <div className="z-10">
+                      <HeroProductWindow />
+                    </div>
+
                   </div>
                 </section>
 
@@ -481,6 +485,10 @@ export default function App() {
 
       {/* 6. FOOTER */}
       <Footer setCurrentPage={legacySetPage} />
+
+    </div>
+  );
+}
 
     </div>
   );
