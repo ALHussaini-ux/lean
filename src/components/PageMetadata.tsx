@@ -4,9 +4,10 @@ import { useLocation } from 'react-router-dom';
 interface PageMetadataProps {
   title: string;
   description: string;
+  noindex?: boolean;
 }
 
-export default function PageMetadata({ title, description }: PageMetadataProps) {
+export default function PageMetadata({ title, description, noindex = false }: PageMetadataProps) {
   const location = useLocation();
 
   useEffect(() => {
@@ -33,15 +34,15 @@ export default function PageMetadata({ title, description }: PageMetadataProps) 
     const cleanCanonicalUrl = `${window.location.origin}${location.pathname}`;
     canonicalLink.setAttribute('href', cleanCanonicalUrl);
 
-    // 4. Ensure Search Engine Indexing (Robots meta)
+    // 4. Search Engine Indexing (Robots meta)
     let robotsMeta = document.querySelector('meta[name="robots"]');
     if (!robotsMeta) {
       robotsMeta = document.createElement('meta');
       robotsMeta.setAttribute('name', 'robots');
       document.head.appendChild(robotsMeta);
     }
-    robotsMeta.setAttribute('content', 'index, follow');
-  }, [title, description, location.pathname]);
+    robotsMeta.setAttribute('content', noindex ? 'noindex, nofollow' : 'index, follow');
+  }, [title, description, location.pathname, noindex]);
 
   return null;
 }

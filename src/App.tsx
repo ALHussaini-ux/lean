@@ -15,6 +15,7 @@ import AboutPremium from './components/AboutPremium';
 import ServicesPremium from './components/ServicesPremium';
 import BlogPremium from './components/BlogPremium';
 import ContactPremium from './components/ContactPremium';
+import HelloPrivateCard from './components/HelloPrivateCard';
 import PageMetadata from './components/PageMetadata';
 import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -66,6 +67,11 @@ export default function App() {
       action: () => handleCTA('/contact')
     }
   ];
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   // Auto-advance slider with progress bar (Only runs on Home View `/`)
   useEffect(() => {
@@ -515,6 +521,18 @@ export default function App() {
                   description="Schedule a 30-minute growth consultation or submit your project details. Let's analyze your current digital marketing parameters and build your system."
                 />
                 <ContactPremium />
+              </motion.div>
+            } />
+
+            {/* ==================== 6. PRIVATE BUSINESS CARD VIEW (/hello) ==================== */}
+            <Route path="/hello" element={
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <HelloPrivateCard />
               </motion.div>
             } />
 

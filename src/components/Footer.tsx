@@ -119,6 +119,14 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                   Contact
                 </button>
               </li>
+              <li>
+                <button 
+                  onClick={() => handleNav('/hello')} 
+                  className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5 text-brand-orange font-semibold"
+                >
+                  Digital Card (/hello)
+                </button>
+              </li>
             </ul>
           </div>
 

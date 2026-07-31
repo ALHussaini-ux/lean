@@ -71,7 +71,8 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
     { label: 'Services', path: '/services' },
     { label: 'How It Works', path: '/', hash: 'how-it-works' },
     { label: 'Blog', path: '/blog' },
-    { label: 'Contact', path: '/contact' }
+    { label: 'Contact', path: '/contact' },
+    { label: 'Card (/hello)', path: '/hello' }
   ];
 
   const handleNav = (path: string, hash?: string) => {
