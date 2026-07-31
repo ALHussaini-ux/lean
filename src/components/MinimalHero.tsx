@@ -1,11 +1,28 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react';
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
+
+const OUTCOME_PHRASES = [
+  'more conversations.',
+  'more follow-ups.',
+  'more appointments.',
+  'more site visits.',
+  'more sales.',
+];
 
 export default function MinimalHero() {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [phraseIndex, setPhraseIndex] = useState(0);
+
+  // Rotating phrase interval (2.8s)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setPhraseIndex((prev) => (prev + 1) % OUTCOME_PHRASES.length);
+    }, 2800);
+    return () => clearInterval(timer);
+  }, []);
 
   // Subtle Interactive Animated Dot Grid Canvas
   useEffect(() => {
@@ -46,15 +63,15 @@ export default function MinimalHero() {
     window.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mouseleave', handleMouseLeave);
 
-    const spacing = 28; // Grid dot distance
+    const spacing = 32; // Grid dot distance
     let time = 0;
 
     const render = () => {
-      time += 0.012;
+      time += 0.01;
 
       // Smooth lerp mouse coordinates for fluid movement
-      mouseX += (targetMouseX - mouseX) * 0.08;
-      mouseY += (targetMouseY - mouseY) * 0.08;
+      mouseX += (targetMouseX - mouseX) * 0.06;
+      mouseY += (targetMouseY - mouseY) * 0.06;
 
       ctx.clearRect(0, 0, width, height);
 
@@ -67,31 +84,31 @@ export default function MinimalHero() {
           const baseY = j * spacing;
 
           // Organic ambient subtle breath motion
-          const wave = Math.sin(time + i * 0.3 + j * 0.3) * 1.2;
+          const wave = Math.sin(time + i * 0.35 + j * 0.35) * 0.8;
 
           // Distance to mouse cursor
           const dx = mouseX - baseX;
           const dy = mouseY - baseY;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = 160;
+          const maxDist = 180;
 
           let offsetX = 0;
           let offsetY = 0;
-          let radius = 1.1;
-          let opacity = 0.18;
-          let color = '160, 160, 165'; // Soft neutral grey
+          let radius = 1.0;
+          let opacity = 0.09; // Barely noticeable dots
+          let color = '160, 165, 175';
 
           if (dist < maxDist) {
             const factor = (1 - dist / maxDist);
             const angle = Math.atan2(dy, dx);
             // Gentle displacement away from cursor
-            offsetX = -Math.cos(angle) * factor * 10;
-            offsetY = -Math.sin(angle) * factor * 10;
+            offsetX = -Math.cos(angle) * factor * 8;
+            offsetY = -Math.sin(angle) * factor * 8;
             
-            radius = 1.1 + factor * 1.4;
-            opacity = 0.18 + factor * 0.45;
+            radius = 1.0 + factor * 1.2;
+            opacity = 0.09 + factor * 0.22;
 
-            if (factor > 0.4) {
+            if (factor > 0.5) {
               color = '255, 140, 66'; // Subtle brand orange accent near cursor
             }
           }
@@ -116,7 +133,7 @@ export default function MinimalHero() {
     };
   }, []);
 
-  const handleGetStarted = () => {
+  const handleLetsTalk = () => {
     navigate('/contact');
   };
 
@@ -133,71 +150,105 @@ export default function MinimalHero() {
     <section
       id="home-hero"
       data-header-theme="light"
-      className="relative min-h-[90vh] lg:min-h-[92vh] flex flex-col justify-center bg-[#FAFAFA] text-neutral-900 overflow-hidden selection:bg-brand-orange selection:text-white"
+      className="relative min-h-[90vh] lg:min-h-[92vh] flex flex-col justify-center items-center bg-[#FAFAFA] text-neutral-900 overflow-hidden selection:bg-brand-orange selection:text-white text-center"
     >
-      {/* Background Interactive Dot Grid Canvas */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-80">
+      {/* Background Interactive Dot Grid Canvas (barely noticeable opacity) */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
         <canvas ref={canvasRef} className="w-full h-full block" />
       </div>
 
-      {/* Very faint linear top/bottom vignette gradients for smooth section transition */}
+      {/* Subtle top & bottom linear vignette transitions */}
       <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-1" />
       <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-white via-white/60 to-transparent pointer-events-none z-1" />
 
-      {/* Main Content Layout */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-32 sm:pt-36 md:pt-40 pb-16 sm:pb-24 w-full">
-        <div className="max-w-3xl space-y-8 text-left">
+      {/* Main Content Layout - Perfectly Centered */}
+      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 pt-32 sm:pt-36 md:pt-40 pb-16 sm:pb-24 w-full flex flex-col items-center justify-center">
+        <div className="space-y-8 sm:space-y-10 text-center flex flex-col items-center max-w-4xl">
           
-          {/* Main Headline */}
+          {/* Top Small Orange Label */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brand-orange/10 border border-brand-orange/20 rounded-full text-brand-orange font-sans font-semibold text-xs sm:text-sm tracking-wide"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
+            <span>CRM • Lead Management • Automation</span>
+          </motion.div>
+
+          {/* Centered Headline with Rotating Final Phrase */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-sans font-extrabold text-neutral-900 tracking-tight leading-[1.08]"
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[4.75rem] font-sans font-extrabold text-neutral-900 tracking-tight leading-[1.08] text-center"
           >
-            CRM, automation <br className="hidden sm:inline" />
-            and lead systems <br className="hidden sm:inline" />
-            for real estate <br className="hidden sm:inline" />
-            developers.
+            Engineering lead systems <br className="hidden sm:inline" />
+            that create{' '}
+            <span className="inline-block relative text-brand-orange min-w-[280px] sm:min-w-[380px] md:min-w-[460px] text-left sm:text-center">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={phraseIndex}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="inline-block"
+                >
+                  {OUTCOME_PHRASES[phraseIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
           </motion.h1>
 
-          {/* Subheading - Single concise human paragraph under two lines */}
+          {/* Supporting Subheading */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base sm:text-lg md:text-xl text-neutral-600 font-body font-normal leading-relaxed max-w-2xl"
+            transition={{ duration: 0.6, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+            className="text-base sm:text-lg md:text-xl text-neutral-600 font-body font-normal leading-relaxed max-w-2xl text-center"
           >
-            We help real estate developers capture enquiries, organise leads and respond faster using simple systems built around CRM and automation.
+            We build simple CRM, lead management and automation systems that help real estate developers capture enquiries, stay organised and respond faster.
           </motion.p>
 
-          {/* Buttons Group */}
+          {/* Centered Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center gap-4 pt-2"
+            transition={{ duration: 0.6, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-wrap items-center justify-center gap-4 pt-2"
           >
             {/* Primary Button */}
             <button
-              onClick={handleGetStarted}
-              className="group relative inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-brand-orange hover:bg-orange-600 text-white font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_20px_rgba(255,140,66,0.3)] hover:shadow-[0_6px_25px_rgba(255,140,66,0.4)] transition-all duration-300 cursor-pointer active:scale-[0.98]"
+              onClick={handleLetsTalk}
+              className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-brand-orange hover:bg-orange-600 text-white font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_20px_rgba(255,140,66,0.3)] hover:shadow-[0_6px_25px_rgba(255,140,66,0.4)] transition-all duration-300 cursor-pointer active:scale-[0.98]"
             >
-              <span>Get Started</span>
+              <span>Let's Talk</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
             </button>
 
             {/* Secondary Button */}
             <button
               onClick={handleHowItWorks}
-              className="inline-flex items-center justify-center gap-1.5 px-7 py-3.5 bg-white hover:bg-neutral-100/80 text-neutral-900 font-sans font-bold text-sm sm:text-base rounded-full border border-neutral-200/80 hover:border-neutral-300 shadow-sm transition-all duration-300 cursor-pointer active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-1.5 px-8 py-3.5 bg-white hover:bg-neutral-100/80 text-neutral-900 font-sans font-bold text-sm sm:text-base rounded-full border border-neutral-200/80 hover:border-neutral-300 shadow-sm transition-all duration-300 cursor-pointer active:scale-[0.98]"
             >
               <span>How It Works</span>
             </button>
           </motion.div>
+
+          {/* Honest Muted Trust Line */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+            className="text-xs sm:text-sm text-neutral-500 font-body text-center pt-2 max-w-lg"
+          >
+            Currently validating Lean Growth Systems with real estate developers in Hyderabad.
+          </motion.p>
 
         </div>
       </div>
     </section>
   );
 }
+
