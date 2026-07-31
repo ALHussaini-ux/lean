@@ -165,17 +165,6 @@ export default function MinimalHero() {
       <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 pt-32 sm:pt-36 md:pt-40 pb-16 sm:pb-24 w-full flex flex-col items-center justify-center">
         <div className="space-y-8 sm:space-y-10 text-center flex flex-col items-center max-w-4xl">
           
-          {/* Top Small Orange Label */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brand-orange/10 border border-brand-orange/20 rounded-full text-brand-orange font-sans font-semibold text-xs sm:text-sm tracking-wide"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-            <span>CRM • Lead Management • Automation</span>
-          </motion.div>
-
           {/* Centered Headline with Rotating Final Phrase */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
@@ -235,16 +224,6 @@ export default function MinimalHero() {
               <span>How It Works</span>
             </button>
           </motion.div>
-
-          {/* Honest Muted Trust Line */}
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs sm:text-sm text-neutral-500 font-body text-center pt-2 max-w-lg"
-          >
-            Currently validating Lean Growth Systems with real estate developers in Hyderabad.
-          </motion.p>
 
         </div>
       </div>
