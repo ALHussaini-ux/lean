@@ -15,6 +15,7 @@ export default function MinimalHero() {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [phraseIndex, setPhraseIndex] = useState(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   // Rotating phrase interval (2.8s)
   useEffect(() => {
@@ -22,6 +23,35 @@ export default function MinimalHero() {
       setPhraseIndex((prev) => (prev + 1) % OUTCOME_PHRASES.length);
     }, 2800);
     return () => clearInterval(timer);
+  }, []);
+
+  // Mouse Parallax tracking (smooth lerp for subtle background ambient motion)
+  useEffect(() => {
+    let reqId: number;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      targetX = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+      targetY = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
+    };
+
+    const update = () => {
+      currentX += (targetX - currentX) * 0.04;
+      currentY += (targetY - currentY) * 0.04;
+      setMousePos({ x: currentX, y: currentY });
+      reqId = requestAnimationFrame(update);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    reqId = requestAnimationFrame(update);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(reqId);
+    };
   }, []);
 
   // Subtle Interactive Animated Dot Grid Canvas
@@ -63,15 +93,15 @@ export default function MinimalHero() {
     window.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mouseleave', handleMouseLeave);
 
-    const spacing = 32; // Grid dot distance
+    const spacing = 36; // Clean, evenly spaced dots
     let time = 0;
 
     const render = () => {
-      time += 0.01;
+      time += 0.008;
 
-      // Smooth lerp mouse coordinates for fluid movement
-      mouseX += (targetMouseX - mouseX) * 0.06;
-      mouseY += (targetMouseY - mouseY) * 0.06;
+      // Smooth lerp mouse coordinates
+      mouseX += (targetMouseX - mouseX) * 0.05;
+      mouseY += (targetMouseY - mouseY) * 0.05;
 
       ctx.clearRect(0, 0, width, height);
 
@@ -84,32 +114,31 @@ export default function MinimalHero() {
           const baseY = j * spacing;
 
           // Organic ambient subtle breath motion
-          const wave = Math.sin(time + i * 0.35 + j * 0.35) * 0.8;
+          const wave = Math.sin(time + i * 0.35 + j * 0.35) * 0.6;
 
           // Distance to mouse cursor
           const dx = mouseX - baseX;
           const dy = mouseY - baseY;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = 180;
+          const maxDist = 160;
 
           let offsetX = 0;
           let offsetY = 0;
-          let radius = 1.0;
-          let opacity = 0.09; // Barely noticeable dots
+          let radius = 0.95;
+          let opacity = 0.055; // Barely noticeable, extremely subtle grid
           let color = '160, 165, 175';
 
           if (dist < maxDist) {
             const factor = (1 - dist / maxDist);
             const angle = Math.atan2(dy, dx);
-            // Gentle displacement away from cursor
-            offsetX = -Math.cos(angle) * factor * 8;
-            offsetY = -Math.sin(angle) * factor * 8;
+            offsetX = -Math.cos(angle) * factor * 6;
+            offsetY = -Math.sin(angle) * factor * 6;
             
-            radius = 1.0 + factor * 1.2;
-            opacity = 0.09 + factor * 0.22;
+            radius = 0.95 + factor * 1.0;
+            opacity = 0.055 + factor * 0.15;
 
             if (factor > 0.5) {
-              color = '255, 140, 66'; // Subtle brand orange accent near cursor
+              color = '255, 140, 66';
             }
           }
 
@@ -152,12 +181,49 @@ export default function MinimalHero() {
       data-header-theme="light"
       className="relative min-h-[90vh] lg:min-h-[92vh] flex flex-col justify-center items-center bg-[#FAFAFA] text-neutral-900 overflow-hidden selection:bg-brand-orange selection:text-white text-center"
     >
-      {/* Background Interactive Dot Grid Canvas (barely noticeable opacity) */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
+      {/* AMBIENT ORANGE SIDE GLARE LIGHTS (Far Left & Far Right Edges) */}
+      {/* Left Edge Studio Glare */}
+      <motion.div
+        animate={{
+          scale: [1, 1.08, 1],
+          opacity: [0.25, 0.38, 0.25],
+        }}
+        transition={{
+          duration: 14,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+        style={{
+          x: mousePos.x * 28,
+          y: mousePos.y * 20,
+        }}
+        className="absolute -left-28 sm:-left-44 lg:-left-60 top-1/2 -translate-y-1/2 w-[480px] h-[700px] sm:w-[650px] sm:h-[900px] lg:w-[850px] lg:h-[1100px] rounded-[100%] bg-[radial-gradient(ellipse_at_left_center,rgba(255,140,66,0.45)_0%,rgba(255,140,66,0.12)_45%,transparent_75%)] blur-[80px] sm:blur-[110px] pointer-events-none z-0"
+      />
+
+      {/* Right Edge Studio Glare */}
+      <motion.div
+        animate={{
+          scale: [1.08, 1, 1.08],
+          opacity: [0.30, 0.20, 0.30],
+        }}
+        transition={{
+          duration: 16,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+        style={{
+          x: mousePos.x * -28,
+          y: mousePos.y * -20,
+        }}
+        className="absolute -right-28 sm:-right-44 lg:-right-60 top-1/2 -translate-y-1/2 w-[480px] h-[700px] sm:w-[650px] sm:h-[900px] lg:w-[850px] lg:h-[1100px] rounded-[100%] bg-[radial-gradient(ellipse_at_right_center,rgba(255,140,66,0.45)_0%,rgba(255,140,66,0.12)_45%,transparent_75%)] blur-[80px] sm:blur-[110px] pointer-events-none z-0"
+      />
+
+      {/* Background Interactive Dot Grid Canvas */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
         <canvas ref={canvasRef} className="w-full h-full block" />
       </div>
 
-      {/* Subtle top & bottom linear vignette transitions */}
+      {/* Subtle top & bottom linear vignette transitions for smooth section blending */}
       <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-1" />
       <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-white via-white/60 to-transparent pointer-events-none z-1" />
 
@@ -230,4 +296,5 @@ export default function MinimalHero() {
     </section>
   );
 }
+
 
