@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import LeadPortal from './LeadPortal';
-import { Phone, Mail, MapPin, Clock, ShieldCheck } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ShieldCheck } from './icons';
 
 export default function ContactPremium() {
   return (

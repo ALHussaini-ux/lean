@@ -23,7 +23,7 @@ import {
   Briefcase,
   ChevronDown,
   ChevronUp
-} from 'lucide-react';
+} from './icons';
 
 interface PlanItem {
   id: string;

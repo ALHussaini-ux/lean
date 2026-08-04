@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'motion/react';
-import { Bot, Zap, Smartphone, Layers } from 'lucide-react';
+import { Bot, Zap, Smartphone, Layers } from './icons';
 
 interface MetricItem {
   icon: React.ReactNode;

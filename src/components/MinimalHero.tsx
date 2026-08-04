@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from './icons';
 
 const OUTCOME_PHRASES = [
   'more conversations.',
@@ -13,9 +13,7 @@ const OUTCOME_PHRASES = [
 
 export default function MinimalHero() {
   const navigate = useNavigate();
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [phraseIndex, setPhraseIndex] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   // Rotating phrase interval (2.8s)
   useEffect(() => {
@@ -23,143 +21,6 @@ export default function MinimalHero() {
       setPhraseIndex((prev) => (prev + 1) % OUTCOME_PHRASES.length);
     }, 2800);
     return () => clearInterval(timer);
-  }, []);
-
-  // Mouse Parallax tracking (smooth lerp for subtle background ambient motion)
-  useEffect(() => {
-    let reqId: number;
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      targetX = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
-      targetY = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
-    };
-
-    const update = () => {
-      currentX += (targetX - currentX) * 0.04;
-      currentY += (targetY - currentY) * 0.04;
-      setMousePos({ x: currentX, y: currentY });
-      reqId = requestAnimationFrame(update);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    reqId = requestAnimationFrame(update);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(reqId);
-    };
-  }, []);
-
-  // Subtle Interactive Animated Dot Grid Canvas
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.offsetWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement?.offsetHeight || window.innerHeight);
-
-    // Mouse tracking state
-    let mouseX = -1000;
-    let mouseY = -1000;
-    let targetMouseX = -1000;
-    let targetMouseY = -1000;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      targetMouseX = e.clientX - rect.left;
-      targetMouseY = e.clientY - rect.top;
-    };
-
-    const handleMouseLeave = () => {
-      targetMouseX = -1000;
-      targetMouseY = -1000;
-    };
-
-    const handleResize = () => {
-      if (!canvas || !canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.offsetWidth;
-      height = canvas.height = canvas.parentElement.offsetHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseleave', handleMouseLeave);
-
-    const spacing = 36; // Clean, evenly spaced dots
-    let time = 0;
-
-    const render = () => {
-      time += 0.008;
-
-      // Smooth lerp mouse coordinates
-      mouseX += (targetMouseX - mouseX) * 0.05;
-      mouseY += (targetMouseY - mouseY) * 0.05;
-
-      ctx.clearRect(0, 0, width, height);
-
-      const cols = Math.ceil(width / spacing) + 1;
-      const rows = Math.ceil(height / spacing) + 1;
-
-      for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-          const baseX = i * spacing;
-          const baseY = j * spacing;
-
-          // Organic ambient subtle breath motion
-          const wave = Math.sin(time + i * 0.35 + j * 0.35) * 0.6;
-
-          // Distance to mouse cursor
-          const dx = mouseX - baseX;
-          const dy = mouseY - baseY;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = 160;
-
-          let offsetX = 0;
-          let offsetY = 0;
-          let radius = 0.95;
-          let opacity = 0.055; // Barely noticeable, extremely subtle grid
-          let color = '160, 165, 175';
-
-          if (dist < maxDist) {
-            const factor = (1 - dist / maxDist);
-            const angle = Math.atan2(dy, dx);
-            offsetX = -Math.cos(angle) * factor * 6;
-            offsetY = -Math.sin(angle) * factor * 6;
-            
-            radius = 0.95 + factor * 1.0;
-            opacity = 0.055 + factor * 0.15;
-
-            if (factor > 0.5) {
-              color = '255, 140, 66';
-            }
-          }
-
-          ctx.beginPath();
-          ctx.arc(baseX + offsetX, baseY + offsetY + wave, radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${color}, ${opacity})`;
-          ctx.fill();
-        }
-      }
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (canvas) canvas.removeEventListener('mouseleave', handleMouseLeave);
-    };
   }, []);
 
   const handleLetsTalk = () => {
@@ -181,46 +42,71 @@ export default function MinimalHero() {
       data-header-theme="light"
       className="relative min-h-[90vh] lg:min-h-[92vh] flex flex-col justify-center items-center bg-[#FAFAFA] text-neutral-900 overflow-hidden selection:bg-brand-orange selection:text-white text-center"
     >
-      {/* AMBIENT ORANGE SIDE GLARE LIGHTS (Far Left & Far Right Edges) */}
-      {/* Left Edge Studio Glare */}
-      <motion.div
-        animate={{
-          scale: [1, 1.08, 1],
-          opacity: [0.25, 0.38, 0.25],
-        }}
-        transition={{
-          duration: 14,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-        style={{
-          x: mousePos.x * 28,
-          y: mousePos.y * 20,
-        }}
-        className="absolute -left-28 sm:-left-44 lg:-left-60 top-1/2 -translate-y-1/2 w-[480px] h-[700px] sm:w-[650px] sm:h-[900px] lg:w-[850px] lg:h-[1100px] rounded-[100%] bg-[radial-gradient(ellipse_at_left_center,rgba(255,140,66,0.45)_0%,rgba(255,140,66,0.12)_45%,transparent_75%)] blur-[80px] sm:blur-[110px] pointer-events-none z-0"
-      />
+      {/* ABSTRACT FLOWING LIGHT RIBBONS BACKGROUND */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Subtle Organic Grain Overlay for smooth tactile depth */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.02] mix-blend-overlay">
+          <filter id="hero-grain">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#hero-grain)" />
+        </svg>
 
-      {/* Right Edge Studio Glare */}
-      <motion.div
-        animate={{
-          scale: [1.08, 1, 1.08],
-          opacity: [0.30, 0.20, 0.30],
-        }}
-        transition={{
-          duration: 16,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-        style={{
-          x: mousePos.x * -28,
-          y: mousePos.y * -20,
-        }}
-        className="absolute -right-28 sm:-right-44 lg:-right-60 top-1/2 -translate-y-1/2 w-[480px] h-[700px] sm:w-[650px] sm:h-[900px] lg:w-[850px] lg:h-[1100px] rounded-[100%] bg-[radial-gradient(ellipse_at_right_center,rgba(255,140,66,0.45)_0%,rgba(255,140,66,0.12)_45%,transparent_75%)] blur-[80px] sm:blur-[110px] pointer-events-none z-0"
-      />
+        {/* Ribbon 1: Upper Diagonal Soft Light Stream */}
+        <motion.div
+          animate={{
+            x: ['-12%', '14%', '-8%', '-12%'],
+            y: ['-8%', '10%', '12%', '-8%'],
+          }}
+          transition={{
+            duration: 27,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute -top-[18%] -left-[12%] w-[1100px] h-[380px] sm:w-[1450px] sm:h-[480px] rounded-[100%] rotate-[-22deg] bg-gradient-to-r from-[#FF7A1A]/16 via-[#FF8C33]/10 to-transparent blur-[130px] sm:blur-[160px] transform-gpu"
+        />
 
-      {/* Background Interactive Dot Grid Canvas */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
-        <canvas ref={canvasRef} className="w-full h-full block" />
+        {/* Ribbon 2: Center-Right Sweeping Light Stream */}
+        <motion.div
+          animate={{
+            x: ['12%', '-14%', '8%', '12%'],
+            y: ['8%', '-12%', '-6%', '8%'],
+          }}
+          transition={{
+            duration: 29,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute top-[12%] -right-[18%] w-[1200px] h-[420px] sm:w-[1550px] sm:h-[520px] rounded-[100%] rotate-[28deg] bg-gradient-to-l from-[#FF7A1A]/17 via-[#FFA352]/09 to-transparent blur-[140px] sm:blur-[170px] transform-gpu"
+        />
+
+        {/* Ribbon 3: Bottom Horizontal Light Ribbon */}
+        <motion.div
+          animate={{
+            x: ['-8%', '10%', '-12%', '-8%'],
+            y: ['10%', '-8%', '6%', '10%'],
+          }}
+          transition={{
+            duration: 24,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute -bottom-[12%] left-[2%] w-[1250px] h-[360px] sm:w-[1600px] sm:h-[460px] rounded-[100%] rotate-[-10deg] bg-gradient-to-r from-transparent via-[#FF7A1A]/14 to-[#FFB366]/06 blur-[130px] sm:blur-[165px] transform-gpu"
+        />
+
+        {/* Ribbon 4: Central Ambient Light Core Sheen */}
+        <motion.div
+          animate={{
+            x: ['6%', '-8%', '10%', '6%'],
+            y: ['-6%', '8%', '-8%', '-6%'],
+          }}
+          transition={{
+            duration: 22,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute top-[28%] left-[12%] w-[900px] h-[300px] sm:w-[1200px] sm:h-[380px] rounded-[100%] rotate-[14deg] bg-radial from-[#FF7A1A]/12 via-[#FF8C33]/05 to-transparent blur-[120px] sm:blur-[150px] transform-gpu"
+        />
       </div>
 
       {/* Subtle top & bottom linear vignette transitions for smooth section blending */}
@@ -296,5 +182,6 @@ export default function MinimalHero() {
     </section>
   );
 }
+
 
 

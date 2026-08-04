@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'motion/react';
-import { Clock, User, ArrowRight, ArrowLeft, ChevronRight, Share2, BookOpen, Sparkles, MessageSquare } from 'lucide-react';
+import { Clock, User, ArrowRight, ArrowLeft, ChevronRight, Share2, BookOpen, Sparkles, MessageSquare } from './icons';
 
 interface Article {
   id: string;

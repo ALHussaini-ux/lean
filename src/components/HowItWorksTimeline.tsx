@@ -12,7 +12,7 @@ import {
   Shield,
   Activity,
   Users
-} from 'lucide-react';
+} from './icons';
 
 interface StepItem {
   week: string;

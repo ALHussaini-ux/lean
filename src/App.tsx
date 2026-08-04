@@ -18,7 +18,7 @@ import ContactPremium from './components/ContactPremium';
 import HelloPrivateCard from './components/HelloPrivateCard';
 import MinimalHero from './components/MinimalHero';
 import PageMetadata from './components/PageMetadata';
-import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from 'lucide-react';
+import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from './components/icons';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {

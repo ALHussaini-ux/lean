@@ -17,7 +17,7 @@ import {
   Eye,
   Smartphone,
   Info
-} from 'lucide-react';
+} from './icons';
 import * as THREE from 'three';
 
 // Define Prop Types for AboutPremium

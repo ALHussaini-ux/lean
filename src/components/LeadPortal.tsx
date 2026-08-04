@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, Mail, Calendar, ArrowRight } from 'lucide-react';
+import { Check, Mail, Calendar, ArrowRight } from './icons';
 import { motion, AnimatePresence } from 'motion/react';
 import AramcoButton from './AramcoButton';
 

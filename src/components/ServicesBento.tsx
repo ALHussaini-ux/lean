@@ -14,7 +14,7 @@ import {
   FileText,
   MousePointer,
   ArrowRight
-} from 'lucide-react';
+} from './icons';
 
 interface BentoCardProps {
   index: number;

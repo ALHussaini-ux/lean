@@ -17,7 +17,7 @@ import {
   Sparkles,
   CheckCircle2,
   ExternalLink
-} from 'lucide-react';
+} from './icons';
 import PageMetadata from './PageMetadata';
 import AramcoButton from './AramcoButton';
 

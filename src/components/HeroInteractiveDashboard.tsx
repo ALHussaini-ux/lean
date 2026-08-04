@@ -4,7 +4,7 @@ import {
   Shield, Zap, Database, MessageSquare, Users, 
   CheckCircle, TrendingUp, Bot, Smartphone, 
   Layers, Lock, Server, ArrowRight, RefreshCw, Cpu
-} from 'lucide-react';
+} from './icons';
 
 interface HeroInteractiveDashboardProps {
   activeTab: number;

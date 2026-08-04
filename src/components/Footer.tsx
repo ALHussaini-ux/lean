@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
-import { ArrowRight, Sparkles, Check } from 'lucide-react';
+import { ArrowRight, Sparkles, Check } from './icons';
 
 interface FooterProps {
   setCurrentPage?: (page: Page) => void;
