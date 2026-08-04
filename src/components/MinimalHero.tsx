@@ -4,22 +4,23 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from './icons';
 
 const OUTCOME_PHRASES = [
-  'more conversations.',
-  'more follow-ups.',
   'more appointments.',
-  'more site visits.',
-  'more sales.',
+  'more enquiries.',
+  'more qualified leads.',
+  'faster follow-ups.',
+  'better conversions.',
+  'happier clients.',
 ];
 
 export default function MinimalHero() {
   const navigate = useNavigate();
   const [phraseIndex, setPhraseIndex] = useState(0);
 
-  // Rotating phrase interval (2.8s)
+  // Rotating phrase interval (2.6s)
   useEffect(() => {
     const timer = setInterval(() => {
       setPhraseIndex((prev) => (prev + 1) % OUTCOME_PHRASES.length);
-    }, 2800);
+    }, 2600);
     return () => clearInterval(timer);
   }, []);
 
@@ -122,18 +123,23 @@ export default function MinimalHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[4.75rem] font-sans font-extrabold text-neutral-900 tracking-tight leading-[1.08] text-center"
+            className="font-sans text-center tracking-[-0.035em] text-neutral-900 leading-[1.05] selection:bg-brand-orange selection:text-white"
           >
-            Engineering lead systems <br className="hidden sm:inline" />
-            that create{' '}
-            <span className="inline-block relative text-brand-orange min-w-[280px] sm:min-w-[380px] md:min-w-[460px] text-left sm:text-center">
+            <span className="block text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[4.75rem] font-medium text-neutral-900 tracking-[-0.035em]">
+              Engineering lead systems
+            </span>
+            <span className="block text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[4.75rem] font-medium text-neutral-800 tracking-[-0.035em] mt-0.5 sm:mt-1">
+              that create
+            </span>
+            
+            <span className="block relative mt-2 sm:mt-3 text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[5.85rem] font-black text-brand-orange tracking-[-0.035em] min-h-[1.25em] flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={phraseIndex}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   className="inline-block"
                 >
                   {OUTCOME_PHRASES[phraseIndex]}
@@ -147,7 +153,7 @@ export default function MinimalHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base sm:text-lg md:text-xl text-neutral-600 font-body font-normal leading-relaxed max-w-2xl text-center"
+            className="text-base sm:text-lg md:text-xl text-neutral-600 font-sans font-normal leading-relaxed max-w-2xl text-center tracking-[-0.01em]"
           >
             We build simple CRM, lead management and automation systems that help real estate developers capture enquiries, stay organised and respond faster.
           </motion.p>
