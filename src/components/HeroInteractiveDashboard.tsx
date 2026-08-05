@@ -45,27 +45,27 @@ export default function HeroInteractiveDashboard({ activeTab }: HeroInteractiveD
       <div className="absolute -inset-1 bg-gradient-to-r from-brand-orange/20 to-orange-600/10 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
       
       {/* Main glass card container */}
-      <div className="relative w-full h-[410px] bg-neutral-900/40 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col justify-between">
+      <div className="relative w-full h-auto min-h-[390px] sm:h-[410px] bg-neutral-900/40 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col justify-between">
         
         {/* Frame Window Header */}
-        <div className="px-5 py-3.5 border-b border-white/5 flex items-center justify-between bg-neutral-950/40">
+        <div className="px-3.5 sm:px-5 py-3.5 border-b border-white/5 flex items-center justify-between bg-neutral-950/40">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
             <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 animate-pulse" />
-            <span className="text-[10px] font-mono font-semibold text-neutral-400 tracking-wider ml-2 flex items-center gap-1.5 uppercase">
+            <span className="text-[10px] font-mono font-semibold text-neutral-400 tracking-wider ml-1 sm:ml-2 flex items-center gap-1.5 uppercase">
               <Cpu className="w-3 h-3 text-brand-orange" />
               LEAN Engine v2.4
             </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
             <span className="text-[9px] font-mono font-bold text-emerald-400 tracking-widest uppercase">LIVE INGRESS</span>
           </div>
         </div>
 
         {/* Dynamic Display Area based on activeTab */}
-        <div className="flex-grow p-5 overflow-hidden flex flex-col justify-center">
+        <div className="flex-grow p-4 sm:p-5 overflow-hidden flex flex-col justify-center">
           <AnimatePresence mode="wait">
             
             {/* TAB 0: REAL ESTATE GROWTH SYSTEMS */}

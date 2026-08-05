@@ -95,7 +95,7 @@ export default function MetricsGlass() {
     <section 
       id="stats-banner" 
       ref={containerRef}
-      className="max-w-7xl mx-auto px-6 -mt-16 md:-mt-20 relative z-20"
+      className="max-w-7xl mx-auto px-4 sm:px-6 -mt-12 sm:-mt-16 md:-mt-20 relative z-20"
     >
       {/* Dynamic Glow Refractions behind the glass pill container for authentic look */}
       <div className="absolute left-10 top-1/2 -translate-y-1/2 w-72 h-32 rounded-full bg-orange-500/10 blur-[50px] pointer-events-none" />
@@ -106,7 +106,7 @@ export default function MetricsGlass() {
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative bg-white/12 backdrop-blur-[32px] rounded-[32px] border border-white/25 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.45),0_12px_45px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.02)] p-8 md:py-10 md:px-12 flex flex-col md:flex-row items-stretch justify-between gap-8 md:gap-0"
+        className="relative bg-white/12 backdrop-blur-[32px] rounded-[24px] sm:rounded-[32px] border border-white/25 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.45),0_12px_45px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.02)] p-5 sm:p-8 md:py-10 md:px-12 grid grid-cols-2 md:flex md:flex-row items-stretch justify-between gap-6 md:gap-0"
       >
         {metrics.map((item, idx) => (
           <React.Fragment key={idx}>

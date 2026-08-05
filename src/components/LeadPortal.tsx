@@ -22,7 +22,7 @@ export default function LeadPortal() {
   };
 
   return (
-    <div id="lead-portal" className="max-w-6xl mx-auto px-6">
+    <div id="lead-portal" className="max-w-6xl mx-auto px-4 sm:px-6">
       
       <div className="text-center mb-12 space-y-3">
         <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
@@ -127,7 +127,7 @@ export default function LeadPortal() {
                         placeholder="John Doe"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-2.5 text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors"
+                        className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors min-h-[44px] sm:min-h-0"
                       />
                     </div>
 
@@ -142,7 +142,7 @@ export default function LeadPortal() {
                         placeholder="+91 XXXXX XXXXX"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-2.5 text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors"
+                        className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors min-h-[44px] sm:min-h-0"
                       />
                     </div>
                   </div>
@@ -158,7 +158,7 @@ export default function LeadPortal() {
                       placeholder="john@realty.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-2.5 text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors"
+                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors min-h-[44px] sm:min-h-0"
                     />
                   </div>
 
@@ -170,7 +170,7 @@ export default function LeadPortal() {
                     <select
                       value={projectType}
                       onChange={(e) => setProjectType(e.target.value)}
-                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3 py-2.5 text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors cursor-pointer"
+                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors cursor-pointer min-h-[44px] sm:min-h-0"
                     >
                       <option value="Apartments">Apartments</option>
                       <option value="Villas">Villas</option>
@@ -189,7 +189,7 @@ export default function LeadPortal() {
                       placeholder="Tell us briefly about your project location, pricing, or targets..."
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-2.5 text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors resize-none"
+                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors resize-none"
                     />
                   </div>
 

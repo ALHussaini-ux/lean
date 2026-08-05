@@ -85,10 +85,10 @@ export default function BlogPremium() {
   };
 
   return (
-    <div ref={containerRef} className="space-y-24 pb-24 pt-28 md:pt-36 bg-brand-light font-sans min-h-screen">
+    <div ref={containerRef} className="space-y-16 sm:space-y-24 pb-16 sm:pb-24 pt-24 sm:pt-28 md:pt-36 bg-brand-light font-sans min-h-screen">
       
       {/* Editorial Header */}
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="max-w-3xl space-y-4">
           <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-black uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
             TELEMETRY & INSIGHTS

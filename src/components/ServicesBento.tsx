@@ -188,7 +188,7 @@ function BentoCard({
       <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full bg-orange-500/5 group-hover:bg-orange-500/10 blur-xl transition-all duration-300 pointer-events-none" />
 
       {/* Main content compartment */}
-      <div className="p-8 sm:p-9 space-y-6 flex-1 flex flex-col justify-between">
+      <div className="p-5 sm:p-9 space-y-6 flex-1 flex flex-col justify-between">
         <div className="space-y-4">
           
           {/* Icon squircle with glass highlight & rotation */}
@@ -227,7 +227,7 @@ function BentoCard({
 
       {/* Integrated sleek visual frame if exists */}
       {visual && (
-        <div className="w-full relative px-8 pb-8 overflow-hidden select-none">
+        <div className="w-full relative px-5 pb-5 sm:px-8 sm:pb-8 overflow-hidden select-none">
           <div className="w-full bg-neutral-900/[0.02] border border-neutral-900/[0.04] rounded-2xl overflow-hidden p-4 backdrop-blur-[4px]">
             {visual}
           </div>

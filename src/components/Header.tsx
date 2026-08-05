@@ -113,17 +113,17 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
   return (
     <header 
       id="app-header" 
-      className={`fixed top-4 inset-x-0 mx-auto max-w-[94%] sm:max-w-[88%] lg:max-w-5xl w-full z-50 transition-all duration-300 font-sans ${
-        isOpen ? 'rounded-2xl' : 'rounded-full'
+      className={`fixed top-3 sm:top-4 inset-x-0 mx-auto max-w-[94%] sm:max-w-[88%] lg:max-w-5xl w-full z-50 transition-all duration-300 font-sans ${
+        isOpen ? 'rounded-2xl sm:rounded-3xl' : 'rounded-full'
       } ${
         isOverDarkBg 
-          ? 'bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.25),0_12px_40px_rgba(0,0,0,0.25)]' 
-          : 'bg-white/70 backdrop-blur-2xl border border-neutral-200/50 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.6),0_12px_40px_rgba(0,0,0,0.06)]'
+          ? 'bg-neutral-900/90 backdrop-blur-2xl border border-white/20 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.25),0_12px_40px_rgba(0,0,0,0.35)]' 
+          : 'bg-white/90 backdrop-blur-2xl border border-neutral-200/80 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.8),0_12px_40px_rgba(0,0,0,0.08)]'
       } ${
         scrolled ? 'py-1.5' : 'py-2'
       }`}
     >
-      <div className="px-4 sm:px-6 h-12 sm:h-14 flex items-center justify-between relative">
+      <div className="px-3.5 sm:px-6 h-12 sm:h-14 flex items-center justify-between relative">
         
         {/* Left Side Logo */}
         <div 
@@ -188,7 +188,7 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
         </nav>
 
         {/* Right Side Call To Action */}
-        <div className="flex items-center gap-4 pr-1.5">
+        <div className="flex items-center gap-3 pr-1">
           <div className="hidden sm:block">
             <button
               id="cta-get-started-desktop"
@@ -199,13 +199,13 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
             </button>
           </div>
 
-          {/* Hamburger Menu Toggle (Mobile) */}
+          {/* Hamburger Menu Toggle (Mobile) - Generous 44px+ touch target */}
           <div className="lg:hidden flex items-center">
             <button
               id="mobile-menu-toggle"
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 focus:outline-none w-10 h-10 flex items-center justify-center cursor-pointer transition-colors duration-300 ${
-                isOverDarkBg ? 'text-white hover:text-brand-orange' : 'text-neutral-700 hover:text-brand-orange'
+              className={`min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center rounded-full cursor-pointer transition-colors duration-200 active:scale-95 ${
+                isOverDarkBg ? 'text-white hover:bg-white/10' : 'text-neutral-800 hover:bg-neutral-100'
               }`}
               aria-label="Toggle Menu"
             >
@@ -225,10 +225,10 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="overflow-hidden lg:hidden px-5 pb-5"
+            className="overflow-hidden lg:hidden px-4 pb-4 max-h-[80vh] overflow-y-auto"
           >
-            <div className={`flex flex-col space-y-3.5 pt-4 border-t ${
-              isOverDarkBg ? 'border-white/10' : 'border-neutral-100'
+            <div className={`flex flex-col space-y-1.5 pt-3 border-t ${
+              isOverDarkBg ? 'border-white/10' : 'border-neutral-200/60'
             }`}>
               {navItems.map((item, index) => {
                 const isMatch = activePage === 'home' && item.path === '/' && item.hash 
@@ -242,24 +242,25 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
                     key={index}
                     id={`mobile-nav-item-${index}`}
                     onClick={() => handleNav(item.path, item.hash)}
-                    className={`text-left font-sans font-medium text-[14px] py-1 transition-colors ${
+                    className={`w-full text-left font-sans font-medium text-base min-h-[44px] px-3.5 py-2.5 rounded-xl transition-all flex items-center justify-between active:scale-[0.99] ${
                       isMatch
-                        ? 'text-brand-orange font-bold'
+                        ? 'text-brand-orange font-bold bg-brand-orange/10'
                         : isOverDarkBg
-                          ? 'text-white/80 hover:text-white'
-                          : 'text-neutral-600 hover:text-brand-orange'
+                          ? 'text-white/90 hover:text-white hover:bg-white/10'
+                          : 'text-neutral-800 hover:text-brand-orange hover:bg-neutral-100'
                     }`}
                   >
-                    {item.label}
+                    <span>{item.label}</span>
+                    {isMatch && <span className="w-2 h-2 rounded-full bg-brand-orange" />}
                   </button>
                 );
               })}
               
-              <div className="pt-2">
+              <div className="pt-3">
                 <button
                   id="mobile-nav-cta"
                   onClick={() => handleNav('/contact')}
-                  className="w-full bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white py-2.5 rounded-full font-sans font-bold text-xs tracking-wide shadow-md transition-all duration-300"
+                  className="w-full min-h-[48px] bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white py-3 rounded-full font-sans font-bold text-sm tracking-wide shadow-md flex items-center justify-center transition-all duration-300 active:scale-[0.98]"
                 >
                   Get started
                 </button>

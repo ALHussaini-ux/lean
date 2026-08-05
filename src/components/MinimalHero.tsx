@@ -115,24 +115,24 @@ export default function MinimalHero() {
       <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-white via-white/60 to-transparent pointer-events-none z-1" />
 
       {/* Main Content Layout - Perfectly Centered */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 pt-32 sm:pt-36 md:pt-40 pb-16 sm:pb-24 w-full flex flex-col items-center justify-center">
-        <div className="space-y-8 sm:space-y-10 text-center flex flex-col items-center max-w-4xl">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-10 lg:px-16 pt-24 sm:pt-36 md:pt-40 pb-12 sm:pb-24 w-full flex flex-col items-center justify-center">
+        <div className="space-y-6 sm:space-y-10 text-center flex flex-col items-center max-w-4xl w-full">
           
           {/* Centered Headline with Rotating Final Phrase */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-center tracking-[-0.035em] text-neutral-900 leading-[1.05] selection:bg-brand-orange selection:text-white"
+            className="font-sans text-center tracking-[-0.035em] text-neutral-900 leading-[1.08] sm:leading-[1.05] selection:bg-brand-orange selection:text-white w-full"
           >
-            <span className="block text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[4.75rem] font-medium text-neutral-900 tracking-[-0.035em]">
+            <span className="block text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[4.75rem] font-medium text-neutral-900 tracking-[-0.035em]">
               Engineering lead systems
             </span>
-            <span className="block text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[4.75rem] font-medium text-neutral-800 tracking-[-0.035em] mt-0.5 sm:mt-1">
+            <span className="block text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[4.75rem] font-medium text-neutral-800 tracking-[-0.035em] mt-0.5 sm:mt-1">
               that create
             </span>
             
-            <span className="block relative mt-2 sm:mt-3 text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[5.85rem] font-black text-brand-orange tracking-[-0.035em] min-h-[1.25em] flex items-center justify-center">
+            <span className="block relative mt-1.5 sm:mt-3 text-[1.65rem] xs:text-3xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[5.85rem] font-black text-brand-orange tracking-[-0.035em] min-h-[1.2em] flex items-center justify-center overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={phraseIndex}
@@ -140,7 +140,7 @@ export default function MinimalHero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="inline-block"
+                  className="inline-block whitespace-nowrap px-1"
                 >
                   {OUTCOME_PHRASES[phraseIndex]}
                 </motion.span>
@@ -153,7 +153,7 @@ export default function MinimalHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base sm:text-lg md:text-xl text-neutral-600 font-sans font-normal leading-relaxed max-w-2xl text-center tracking-[-0.01em]"
+            className="text-sm sm:text-lg md:text-xl text-neutral-600 font-sans font-normal leading-relaxed max-w-2xl text-center tracking-[-0.01em] px-2"
           >
             We build simple CRM, lead management and automation systems that help real estate developers capture enquiries, stay organised and respond faster.
           </motion.p>
@@ -163,12 +163,12 @@ export default function MinimalHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center justify-center gap-4 pt-2"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 w-full sm:w-auto px-4 sm:px-0"
           >
             {/* Primary Button */}
             <button
               onClick={handleLetsTalk}
-              className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-brand-orange hover:bg-orange-600 text-white font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_20px_rgba(255,140,66,0.3)] hover:shadow-[0_6px_25px_rgba(255,140,66,0.4)] transition-all duration-300 cursor-pointer active:scale-[0.98]"
+              className="group relative w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-brand-orange hover:bg-orange-600 text-white font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_20px_rgba(255,140,66,0.3)] hover:shadow-[0_6px_25px_rgba(255,140,66,0.4)] transition-all duration-300 cursor-pointer active:scale-[0.98]"
             >
               <span>Let's Talk</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
@@ -177,7 +177,7 @@ export default function MinimalHero() {
             {/* Secondary Button */}
             <button
               onClick={handleHowItWorks}
-              className="inline-flex items-center justify-center gap-1.5 px-8 py-3.5 bg-white hover:bg-neutral-100/80 text-neutral-900 font-sans font-bold text-sm sm:text-base rounded-full border border-neutral-200/80 hover:border-neutral-300 shadow-sm transition-all duration-300 cursor-pointer active:scale-[0.98]"
+              className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-1.5 px-8 py-3.5 bg-white hover:bg-neutral-100/80 text-neutral-900 font-sans font-bold text-sm sm:text-base rounded-full border border-neutral-200/80 hover:border-neutral-300 shadow-sm transition-all duration-300 cursor-pointer active:scale-[0.98]"
             >
               <span>How It Works</span>
             </button>

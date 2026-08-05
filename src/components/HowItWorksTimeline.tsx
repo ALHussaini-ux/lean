@@ -80,7 +80,7 @@ export default function HowItWorksTimeline() {
     <section 
       id="how-it-works" 
       ref={containerRef}
-      className="relative max-w-7xl mx-auto px-6 py-28 md:py-36 scroll-mt-24 overflow-hidden"
+      className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-28 md:py-36 scroll-mt-24 overflow-hidden"
     >
       {/* Soft background light reflections for Apple-like atmosphere */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-orange-500/5 blur-[120px] pointer-events-none" />
@@ -137,7 +137,7 @@ export default function HowItWorksTimeline() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 45 }}
               transition={{ duration: 0.8, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -6 }}
-              className={`group flex flex-col justify-between p-8 rounded-[24px] border transition-all duration-300 relative bg-white/10 backdrop-blur-[24px] ${
+              className={`group flex flex-col justify-between p-5 sm:p-8 rounded-[20px] sm:rounded-[24px] border transition-all duration-300 relative bg-white/10 backdrop-blur-[24px] ${
                 step.isActive 
                   ? 'border-[#FF6B00]/30 shadow-[0_20px_50px_rgba(255,107,0,0.06),inset_0_1.5px_3px_rgba(255,255,255,0.4)] hover:shadow-[0_24px_60px_rgba(255,107,0,0.1),inset_0_1.5px_4px_rgba(255,255,255,0.5)] ring-1 ring-[#FF6B00]/10' 
                   : 'border-white/20 shadow-[0_10px_35px_-10px_rgba(0,0,0,0.03),inset_0_1.5px_3px_rgba(255,255,255,0.4)] hover:border-white/35 hover:bg-white/18 hover:shadow-[0_20px_45px_rgba(0,0,0,0.04),inset_0_1.5px_3px_rgba(255,255,255,0.5)]'

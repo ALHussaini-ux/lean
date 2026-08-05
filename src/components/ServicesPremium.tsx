@@ -310,13 +310,13 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
   ];
 
   return (
-    <div className="space-y-32 pb-24 font-sans bg-brand-light">
+    <div className="space-y-20 sm:space-y-32 pb-16 sm:pb-24 font-sans bg-brand-light">
 
       {/* SECTION 1: HERO */}
       <section 
         id="services-hero" 
         ref={heroRef}
-        className="pt-28 md:pt-36 max-w-7xl mx-auto px-6"
+        className="pt-24 sm:pt-28 md:pt-36 max-w-7xl mx-auto px-4 sm:px-6"
       >
         <div className="max-w-4xl space-y-6">
           <motion.span 

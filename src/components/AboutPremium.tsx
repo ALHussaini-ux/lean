@@ -75,8 +75,9 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
     scene.fog = new THREE.FogExp2(0xffffff, 0.015);
 
     // Camera
+    const isMobile = window.innerWidth < 640;
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-    camera.position.z = 8;
+    camera.position.z = isMobile ? 12 : 8;
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({
@@ -468,13 +469,13 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
 
 
   return (
-    <div className="space-y-32 pb-24 font-sans bg-brand-light">
+    <div className="space-y-20 sm:space-y-32 pb-16 sm:pb-24 font-sans bg-brand-light">
 
       {/* SECTION 01: ABOUT EDITORIAL HEADER */}
       <section 
         id="about-intro" 
         ref={introRef}
-        className="pt-28 md:pt-36 max-w-7xl mx-auto px-6"
+        className="pt-24 sm:pt-28 md:pt-36 max-w-7xl mx-auto px-4 sm:px-6"
       >
         <div className="max-w-4xl space-y-8">
           <motion.span 
