@@ -138,7 +138,7 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
         >
           <img 
             src="https://lh3.googleusercontent.com/d/1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5" 
-            alt="LEAN Logo"
+            alt="Lean System"
             referrerPolicy="no-referrer"
             className={`h-7 sm:h-8 w-auto object-contain transition-all duration-300 group-hover:scale-[1.04] ${
               isOverDarkBg ? 'brightness-0 invert' : 'brightness-0'

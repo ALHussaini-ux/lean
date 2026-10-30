@@ -96,7 +96,7 @@ export default function HelloPrivateCard() {
                   Founder & Lead Pipeline Architect
                 </p>
                 <p className="text-[11px] font-mono-num text-brand-orange/90 font-medium tracking-wide">
-                  LEAN Growth Systems
+                  Lean System
                 </p>
               </div>
             </div>
@@ -111,7 +111,7 @@ export default function HelloPrivateCard() {
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-brand-orange" />
               <h2 className="text-xs font-sans-clean font-bold text-white uppercase tracking-wider">
-                What Lean Growth Systems Does
+                What Lean System Does
               </h2>
             </div>
             
@@ -262,7 +262,7 @@ export default function HelloPrivateCard() {
             {/* Privacy note */}
             <div className="flex items-center justify-center gap-2 text-[10px] font-mono-num text-neutral-400 pt-2 text-center">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Private direct-access page • LEAN Growth Systems</span>
+              <span>Private direct-access page • Lean System</span>
             </div>
 
           </div>
@@ -272,7 +272,7 @@ export default function HelloPrivateCard() {
 
       {/* Simple Bottom Footer Note */}
       <div className="text-center text-[11px] font-mono-num text-neutral-400 py-4 relative z-10">
-        © <span className="font-mono-num">{new Date().getFullYear()}</span> LEAN Growth Systems. All rights reserved.
+        © <span className="font-mono-num">2026</span> Lean System. All rights reserved.
       </div>
 
     </div>

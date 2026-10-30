@@ -49,7 +49,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
             >
               <img 
                 src="https://lh3.googleusercontent.com/d/1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5" 
-                alt="LEAN Logo"
+                alt="Lean System"
                 referrerPolicy="no-referrer"
                 className="h-9 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] brightness-0 invert"
                 onError={(e) => {
@@ -154,7 +154,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
             <h3 className="font-sans-clean font-bold text-xs tracking-widest uppercase text-neutral-300">TECHNICAL HUB</h3>
             <ul className="space-y-2 font-sans-clean text-xs sm:text-sm text-neutral-400">
               <li className="leading-relaxed">
-                LEAN Real Estate Growth Systems<br />
+                Lean System<br />
                 MG Road, Hyderabad<br />
                 Telangana, India
               </li>
@@ -209,7 +209,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
         {/* Bottom copyright and legal note */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500 font-sans-clean tracking-wide space-y-4 md:space-y-0">
           <div>
-            © <span className="font-mono-num">{new Date().getFullYear()}</span> LEAN Automation Systems. All rights reserved. Built with Swiss precision.
+            © <span className="font-mono-num">2026</span> Lean System. All rights reserved.
           </div>
           <div className="flex space-x-6">
             <span className="hover:text-white cursor-pointer transition-colors">Privacy Telemetry</span>
