@@ -32,7 +32,7 @@ export default function PageMetadata({
     // 1. Update Document Title
     document.title = title;
 
-    // 2. Normalize path and construct strict canonical URL on https://leansystem.co
+    // 2. Normalize path and construct strict canonical URL on https://www.leansystem.co
     const rawPath = canonicalPath ?? location.pathname;
     const normalizedPath =
       rawPath === '/' || rawPath === ''

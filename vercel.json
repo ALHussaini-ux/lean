@@ -42,15 +42,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/blog/sub-60-second-response-rule",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/blog/how-builders-waste-ad-spend",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/blog/database-central-nervous-system",
+      "source": "/blog/:slug",
       "destination": "/index.html"
     },
     {
