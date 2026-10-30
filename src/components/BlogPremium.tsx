@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence, useInView } from 'motion/react';
 import { Clock, User, ArrowRight, ArrowLeft, ChevronRight, Share2, BookOpen, Sparkles, MessageSquare } from './icons';
 
@@ -18,6 +19,8 @@ interface Article {
 export default function BlogPremium() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.1 });
+  const navigate = useNavigate();
+  const { slug } = useParams<{ slug?: string }>();
   
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
@@ -76,27 +79,36 @@ export default function BlogPremium() {
     }
   ];
 
-  const handleShare = (slug: string) => {
-    const url = `${window.location.origin}/blog/${slug}`;
+  useEffect(() => {
+    if (slug) {
+      const matched = articles.find((a) => a.slug === slug);
+      if (matched) {
+        setSelectedArticle(matched);
+      }
+    }
+  }, [slug]);
+
+  const handleShare = (articleSlug: string) => {
+    const url = `https://leansystem.co/blog/${articleSlug}`;
     navigator.clipboard.writeText(url).then(() => {
-      setCopiedSlug(slug);
+      setCopiedSlug(articleSlug);
       setTimeout(() => setCopiedSlug(null), 3000);
     });
   };
 
   return (
-    <div ref={containerRef} className="space-y-16 sm:space-y-24 pb-16 sm:pb-24 pt-24 sm:pt-28 md:pt-36 bg-brand-light font-sans min-h-screen">
+    <div ref={containerRef} className="space-y-16 sm:space-y-24 pb-16 sm:pb-24 pt-24 sm:pt-28 md:pt-36 bg-brand-light font-sans-clean min-h-screen">
       
       {/* Editorial Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="max-w-3xl space-y-4">
-          <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-black uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
+          <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
             TELEMETRY & INSIGHTS
           </span>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-brand-dark tracking-tight leading-tight uppercase">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-brand-dark tracking-tight leading-tight uppercase">
             The LEAN Bulletin
           </h1>
-          <p className="font-body text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed">
+          <p className="font-sans-clean text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed">
             Process-driven studies, digital engineering parameters, and honest breakdowns of Indian real estate marketing systems.
           </p>
         </div>
@@ -129,17 +141,17 @@ export default function BlogPremium() {
                 >
                   <div className="space-y-6">
                     {/* Category and date */}
-                    <div className="flex items-center justify-between text-[10px] font-sans font-black tracking-widest text-neutral-400">
+                    <div className="flex items-center justify-between text-[10px] font-mono-num font-medium tracking-widest text-neutral-400">
                       <span>{art.category}</span>
                       <span>{art.date}</span>
                     </div>
 
                     {/* Title */}
                     <div className="space-y-3">
-                      <h3 className="text-xl font-sans font-black text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-200 leading-snug">
+                      <h3 className="text-xl font-display font-bold text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-200 leading-snug">
                         {art.title}
                       </h3>
-                      <p className="font-body text-neutral-500 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                      <p className="font-sans-clean text-neutral-500 text-xs sm:text-sm leading-relaxed line-clamp-3">
                         {art.excerpt}
                       </p>
                     </div>
@@ -147,10 +159,10 @@ export default function BlogPremium() {
 
                   {/* Card bottom footer */}
                   <div className="pt-6 border-t border-neutral-100/80 mt-8 flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-[#FF6B00] uppercase tracking-wider bg-orange-50 px-2.5 py-1 rounded-md font-bold">
+                    <span className="text-[10px] font-mono-num text-[#FF6B00] uppercase tracking-wider bg-orange-50 px-2.5 py-1 rounded-md font-medium">
                       {art.readTime}
                     </span>
-                    <span className="flex items-center gap-1 text-xs font-sans font-black text-neutral-700 group-hover:text-[#FF6B00] transition-colors">
+                    <span className="flex items-center gap-1 text-xs font-sans-clean font-bold text-neutral-700 group-hover:text-[#FF6B00] transition-colors">
                       <span>Read Study</span>
                       <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </span>
@@ -170,8 +182,13 @@ export default function BlogPremium() {
             >
               {/* Floating back button */}
               <button
-                onClick={() => setSelectedArticle(null)}
-                className="inline-flex items-center gap-2 text-xs font-sans font-black text-neutral-500 hover:text-brand-dark transition-colors cursor-pointer"
+                onClick={() => {
+                  setSelectedArticle(null);
+                  if (slug) {
+                    navigate('/blog');
+                  }
+                }}
+                className="inline-flex items-center gap-2 text-xs font-sans-clean font-bold text-neutral-500 hover:text-brand-dark transition-colors cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>BACK TO INSIGHTS</span>
@@ -179,7 +196,7 @@ export default function BlogPremium() {
 
               {/* Title area */}
               <div className="space-y-5">
-                <div className="flex flex-wrap items-center gap-3 text-[10px] font-sans font-black text-neutral-400 uppercase tracking-widest">
+                <div className="flex flex-wrap items-center gap-3 text-[10px] font-mono-num font-medium text-neutral-400 uppercase tracking-widest">
                   <span className="bg-neutral-50 border border-neutral-100 px-2.5 py-1 rounded-md text-neutral-600">
                     {selectedArticle.category}
                   </span>
@@ -189,7 +206,7 @@ export default function BlogPremium() {
                   <span>{selectedArticle.readTime}</span>
                 </div>
 
-                <h2 className="text-2xl md:text-4xl font-sans font-black text-brand-dark tracking-tight leading-snug">
+                <h2 className="text-2xl md:text-4xl font-display font-bold text-brand-dark tracking-tight leading-snug">
                   {selectedArticle.title}
                 </h2>
 
@@ -198,14 +215,14 @@ export default function BlogPremium() {
                     <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600">
                       <User className="w-4 h-4" />
                     </div>
-                    <span className="text-xs font-sans font-bold text-neutral-700">
+                    <span className="text-xs font-sans-clean font-semibold text-neutral-700">
                       {selectedArticle.author}
                     </span>
                   </div>
 
                   <button
                     onClick={() => handleShare(selectedArticle.slug)}
-                    className="flex items-center gap-1.5 text-xs font-sans font-bold text-neutral-500 hover:text-[#FF6B00] transition-colors cursor-pointer"
+                    className="flex items-center gap-1.5 text-xs font-sans-clean font-semibold text-neutral-500 hover:text-[#FF6B00] transition-colors cursor-pointer"
                   >
                     <Share2 className="w-3.5 h-3.5" />
                     <span>{copiedSlug === selectedArticle.slug ? 'Copied Link!' : 'Share Article'}</span>
@@ -215,14 +232,14 @@ export default function BlogPremium() {
 
               {/* Highlight summary panel */}
               <div className="bg-brand-light border-l-4 border-[#FF6B00] p-6 rounded-r-2xl space-y-2">
-                <span className="text-[10px] font-sans font-black tracking-widest text-[#FF6B00] uppercase block">EXECUTIVE BRIEF</span>
-                <p className="font-body text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
+                <span className="text-[10px] font-mono-num font-medium tracking-widest text-[#FF6B00] uppercase block">EXECUTIVE BRIEF</span>
+                <p className="font-sans-clean text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
                   "{selectedArticle.summary}"
                 </p>
               </div>
 
               {/* Core editorial body content */}
-              <div className="prose prose-neutral max-w-none text-neutral-700 space-y-6 leading-relaxed font-body text-sm md:text-base">
+              <div className="prose prose-neutral max-w-none text-neutral-700 space-y-6 leading-relaxed font-sans-clean text-sm md:text-base">
                 {selectedArticle.content.map((p, pIdx) => (
                   <p key={pIdx}>{p}</p>
                 ))}
@@ -231,22 +248,20 @@ export default function BlogPremium() {
               {/* Bottom navigation suggestion */}
               <div className="pt-10 border-t border-neutral-100 mt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div className="space-y-1 text-center sm:text-left">
-                  <span className="text-[10px] font-sans font-black text-neutral-400 uppercase tracking-widest block">LEARNED ENOUGH?</span>
-                  <p className="text-xs font-body text-neutral-500">Let's audit your current digital lead capture parameters.</p>
+                  <span className="text-[10px] font-mono-num font-medium text-neutral-400 uppercase tracking-widest block">LEARNED ENOUGH?</span>
+                  <p className="text-xs font-sans-clean text-neutral-500">Let's audit your current digital lead capture parameters.</p>
                 </div>
-                <button
-                  onClick={() => {
-                    // Navigate to contact or lead panel
-                    const el = document.getElementById('contact');
-                    if (el) {
-                      el.scrollIntoView({ behavior: 'smooth' });
-                    }
+                <a
+                  href="/contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/contact');
                   }}
-                  className="w-full sm:w-auto px-6 py-3 bg-brand-dark hover:bg-neutral-800 text-white font-sans font-black text-xs uppercase tracking-wider rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 group/cta"
+                  className="w-full sm:w-auto px-6 py-3 bg-brand-dark hover:bg-neutral-800 text-white font-sans-clean font-bold text-xs uppercase tracking-wider rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 group/cta cursor-pointer"
                 >
                   <span>Build Your System</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover/cta:translate-x-1 transition-transform" />
-                </button>
+                </a>
               </div>
             </motion.div>
           )}

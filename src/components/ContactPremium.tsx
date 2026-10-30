@@ -5,18 +5,18 @@ import { Phone, Mail, MapPin, Clock, ShieldCheck } from './icons';
 
 export default function ContactPremium() {
   return (
-    <div className="pt-24 sm:pt-28 md:pt-36 pb-16 sm:pb-24 bg-brand-light font-sans min-h-screen">
+    <div className="pt-24 sm:pt-28 md:pt-36 pb-16 sm:pb-24 bg-brand-light font-sans-clean min-h-screen">
       {/* Visual Header Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-12 sm:mb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-8 space-y-4">
-            <span className="text-brand-orange text-xs tracking-[0.2em] font-black uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
+            <span className="text-brand-orange text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
               ESTABLISH CONNECTION
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-brand-dark tracking-tight leading-tight uppercase">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-brand-dark tracking-tight leading-tight uppercase">
               Schedule Your System Audit
             </h1>
-            <p className="font-body text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed">
+            <p className="font-sans-clean text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed">
               Choose an ingestion pipeline below to contact our systems engineers. Let's analyze your current advertising parameters and deploy automated follow-up structures.
             </p>
           </div>
@@ -26,8 +26,8 @@ export default function ContactPremium() {
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div className="space-y-0.5">
-              <span className="text-[10px] font-sans font-black text-emerald-600 uppercase tracking-widest block">SECURE CHANNEL</span>
-              <p className="text-xs font-body text-neutral-500">All data encrypted. No vendor lock-in guarantees.</p>
+              <span className="text-[10px] font-mono-num font-medium text-emerald-600 uppercase tracking-widest block">SECURE CHANNEL</span>
+              <p className="text-xs font-sans-clean text-neutral-500">All data encrypted. No vendor lock-in guarantees.</p>
             </div>
           </div>
         </div>

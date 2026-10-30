@@ -113,7 +113,7 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
   return (
     <header 
       id="app-header" 
-      className={`fixed top-3 sm:top-4 inset-x-0 mx-auto max-w-[94%] sm:max-w-[88%] lg:max-w-5xl w-full z-50 transition-all duration-300 font-sans ${
+      className={`fixed top-3 sm:top-4 inset-x-0 mx-auto max-w-[94%] sm:max-w-[88%] lg:max-w-5xl w-full z-50 transition-all duration-300 font-sans-clean ${
         isOpen ? 'rounded-2xl sm:rounded-3xl' : 'rounded-full'
       } ${
         isOverDarkBg 
@@ -126,10 +126,15 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
       <div className="px-3.5 sm:px-6 h-12 sm:h-14 flex items-center justify-between relative">
         
         {/* Left Side Logo */}
-        <div 
+        <a 
           id="brand-logo"
+          href="/"
+          aria-label="Lean System Home"
           className="flex items-center gap-2.5 cursor-pointer select-none group pl-1.5"
-          onClick={() => handleNav('/')}
+          onClick={(e) => {
+            e.preventDefault();
+            handleNav('/');
+          }}
         >
           <img 
             src="https://lh3.googleusercontent.com/d/1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5" 
@@ -143,7 +148,7 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
               e.currentTarget.src = "https://drive.google.com/thumbnail?id=1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5&sz=w1000";
             }}
           />
-        </div>
+        </a>
 
         {/* Centered Desktop Navigation */}
         <nav id="desktop-nav" className="hidden lg:flex items-center space-x-6 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
@@ -162,10 +167,14 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
                     isOverDarkBg ? 'text-white/20' : 'text-neutral-300'
                   }`}>|</span>
                 )}
-                <button
+                <a
                   id={`nav-item-${index}`}
-                  onClick={() => handleNav(item.path, item.hash)}
-                  className={`relative py-1 text-[13px] font-sans font-medium tracking-wide transition-colors duration-300 cursor-pointer select-none ${
+                  href={item.hash ? `${item.path}#${item.hash}` : item.path}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav(item.path, item.hash);
+                  }}
+                  className={`relative py-1 text-[13px] font-sans-clean font-medium tracking-wide transition-colors duration-300 cursor-pointer select-none ${
                     isMatch 
                       ? 'text-brand-orange font-bold' 
                       : isOverDarkBg 
@@ -181,7 +190,7 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
-                </button>
+                </a>
               </React.Fragment>
             );
           })}
@@ -190,13 +199,17 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
         {/* Right Side Call To Action */}
         <div className="flex items-center gap-3 pr-1">
           <div className="hidden sm:block">
-            <button
+            <a
               id="cta-get-started-desktop"
-              onClick={() => handleNav('/contact')}
-              className="bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white px-5 py-2 rounded-full font-sans font-bold text-[13px] tracking-wide shadow-[0_4px_14px_rgba(255,140,66,0.3)] hover:shadow-[0_6px_20px_rgba(255,140,66,0.45)] hover:scale-[1.02] transition-all duration-300 cursor-pointer active:scale-[0.98] focus:outline-none"
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNav('/contact');
+              }}
+              className="inline-block bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white px-5 py-2 rounded-full font-sans-clean font-bold text-[13px] tracking-wide shadow-[0_4px_14px_rgba(255,140,66,0.3)] hover:shadow-[0_6px_20px_rgba(255,140,66,0.45)] hover:scale-[1.02] transition-all duration-300 cursor-pointer active:scale-[0.98] focus:outline-none"
             >
               Get started
-            </button>
+            </a>
           </div>
 
           {/* Hamburger Menu Toggle (Mobile) - Generous 44px+ touch target */}
@@ -238,11 +251,15 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
                     : item.path !== '/' && location.pathname.startsWith(item.path);
 
                 return (
-                  <button
+                  <a
                     key={index}
                     id={`mobile-nav-item-${index}`}
-                    onClick={() => handleNav(item.path, item.hash)}
-                    className={`w-full text-left font-sans font-medium text-base min-h-[44px] px-3.5 py-2.5 rounded-xl transition-all flex items-center justify-between active:scale-[0.99] ${
+                    href={item.hash ? `${item.path}#${item.hash}` : item.path}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNav(item.path, item.hash);
+                    }}
+                    className={`w-full text-left font-sans-clean font-medium text-base min-h-[44px] px-3.5 py-2.5 rounded-xl transition-all flex items-center justify-between active:scale-[0.99] ${
                       isMatch
                         ? 'text-brand-orange font-bold bg-brand-orange/10'
                         : isOverDarkBg
@@ -252,18 +269,22 @@ export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
                   >
                     <span>{item.label}</span>
                     {isMatch && <span className="w-2 h-2 rounded-full bg-brand-orange" />}
-                  </button>
+                  </a>
                 );
               })}
               
               <div className="pt-3">
-                <button
+                <a
                   id="mobile-nav-cta"
-                  onClick={() => handleNav('/contact')}
-                  className="w-full min-h-[48px] bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white py-3 rounded-full font-sans font-bold text-sm tracking-wide shadow-md flex items-center justify-center transition-all duration-300 active:scale-[0.98]"
+                  href="/contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav('/contact');
+                  }}
+                  className="w-full min-h-[48px] bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white py-3 rounded-full font-sans-clean font-bold text-sm tracking-wide shadow-md flex items-center justify-center transition-all duration-300 active:scale-[0.98]"
                 >
                   Get started
-                </button>
+                </a>
               </div>
             </div>
           </motion.div>

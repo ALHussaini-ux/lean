@@ -19,7 +19,7 @@ export default function AramcoButton({
   className = ''
 }: AramcoButtonProps) {
   // Base classes - clean flex alignment, responsive cursor pointers, letter spacing
-  const baseClasses = "group inline-flex items-center justify-between gap-4 font-sans font-medium text-sm md:text-base tracking-wide transition-all duration-300 cursor-pointer select-none text-left outline-none";
+  const baseClasses = "group inline-flex items-center justify-between gap-4 font-sans-clean font-semibold text-sm md:text-base tracking-wide transition-all duration-300 cursor-pointer select-none text-left outline-none";
 
   // Default color schema inspired by Aramco design language
   let textColor = "text-white";
@@ -62,7 +62,7 @@ export default function AramcoButton({
       onClick={onClick}
       className={`${baseClasses} ${className}`}
     >
-      <span className={`${textColor} transition-colors duration-300 font-sans tracking-wide`}>
+      <span className={`${textColor} transition-colors duration-300 font-sans-clean tracking-wide`}>
         {children}
       </span>
       <div 

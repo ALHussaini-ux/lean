@@ -1,0 +1,9 @@
+User-agent: Googlebot
+Allow: /
+Disallow: /hello
+
+User-agent: *
+Allow: /
+Disallow: /hello
+
+Sitemap: https://leansystem.co/sitemap.xml

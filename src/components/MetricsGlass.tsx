@@ -48,7 +48,7 @@ function CountUp({
   }, [target, duration, startTrigger]);
 
   return (
-    <span className="font-sans font-extrabold tracking-tight">
+    <span className="font-mono-num font-medium tracking-tight">
       {prefix}
       {count}
       {suffix}
@@ -127,7 +127,7 @@ export default function MetricsGlass() {
               </div>
 
               {/* Large Metric Number with brand orange (#FF6B00) */}
-              <span className="text-[40px] md:text-[46px] lg:text-[52px] font-sans font-black text-[#FF6B00] tracking-tight leading-none mb-2 select-none">
+              <span className="text-[38px] sm:text-[44px] md:text-[48px] lg:text-[52px] font-mono-num font-medium text-[#FF6B00] tracking-tight leading-none mb-2 select-none">
                 <CountUp 
                   target={item.numericTarget} 
                   prefix={item.prefix}
@@ -137,7 +137,7 @@ export default function MetricsGlass() {
               </span>
 
               {/* Metric Label in medium-weight gray (#6B7280) */}
-              <span className="text-sm font-sans font-medium text-[#6B7280] tracking-tight select-none">
+              <span className="text-xs sm:text-sm font-sans-clean font-medium text-[#6B7280] tracking-tight select-none">
                 {item.label}
               </span>
             </motion.div>

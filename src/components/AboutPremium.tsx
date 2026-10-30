@@ -469,7 +469,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
 
 
   return (
-    <div className="space-y-20 sm:space-y-32 pb-16 sm:pb-24 font-sans bg-brand-light">
+    <div className="space-y-20 sm:space-y-32 pb-16 sm:pb-24 font-sans-clean bg-brand-light">
 
       {/* SECTION 01: ABOUT EDITORIAL HEADER */}
       <section 
@@ -482,7 +482,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
             initial={{ opacity: 0, y: 15 }}
             animate={isIntroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
             transition={{ duration: 0.6 }}
-            className="text-[#FF6B00] text-xs tracking-[0.2em] font-black uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2"
+            className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2"
           >
             ABOUT
           </motion.span>
@@ -491,7 +491,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
             initial={{ opacity: 0, y: 30 }}
             animate={isIntroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-black text-brand-dark tracking-tight leading-tight"
+            className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-brand-dark tracking-tight leading-tight"
           >
             We Build Systems That Help Real Estate Teams Capture More Opportunities.
           </motion.h1>
@@ -500,7 +500,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
             initial={{ opacity: 0, y: 25 }}
             animate={isIntroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-body text-neutral-500 text-base md:text-lg max-w-2xl leading-relaxed"
+            className="font-sans-clean text-neutral-500 text-base md:text-lg max-w-2xl leading-relaxed"
           >
             Lean System designs and implements modern lead generation systems using landing pages, advertising, WhatsApp automation, and performance tracking. Our goal is to create a simple, organized process that helps businesses manage enquiries more efficiently.
           </motion.p>
@@ -516,7 +516,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-32 bg-orange-500/5 blur-[80px] pointer-events-none" />
 
           {/* Interactive instruction banner */}
-          <div className="absolute top-6 left-8 flex items-center gap-2 text-xs font-sans font-bold text-neutral-400 select-none">
+          <div className="absolute top-6 left-8 flex items-center gap-2 text-xs font-sans-clean font-semibold text-neutral-400 select-none">
             <Activity className="w-4 h-4 text-[#FF6B00] animate-pulse" />
             <span>Interactive Node Ecosystem • Hover nodes to explore connections</span>
           </div>
@@ -529,7 +529,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
-                className="absolute bottom-8 left-8 bg-brand-dark/95 backdrop-blur-md text-white py-3 px-5 rounded-xl text-xs font-sans font-black border border-neutral-800 shadow-xl flex items-center gap-2"
+                className="absolute bottom-8 left-8 bg-brand-dark/95 backdrop-blur-md text-white py-3 px-5 rounded-xl text-xs font-sans-clean font-bold border border-neutral-800 shadow-xl flex items-center gap-2"
               >
                 <span className="w-2 h-2 rounded-full bg-[#FF6B00]" />
                 <span>SYSTEM ELEMENT: {hoveredNodeName.toUpperCase()}</span>
@@ -553,10 +553,10 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           <div className="lg:col-span-4 space-y-4">
-            <span className="text-xs font-sans font-black tracking-widest text-[#FF6B00] uppercase block">
+            <span className="text-xs font-mono-num font-medium tracking-widest text-[#FF6B00] uppercase block">
               OUR FRAMEWORK
             </span>
-            <h2 className="text-4xl font-sans font-black text-brand-dark tracking-tight leading-none">
+            <h2 className="text-4xl font-display font-bold text-brand-dark tracking-tight leading-tight">
               Technology Should Simplify Growth.
             </h2>
           </div>
@@ -570,11 +570,11 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="space-y-4"
             >
-              <div className="w-10 h-10 rounded-[12px] bg-white border border-neutral-200/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] flex items-center justify-center font-sans font-black text-xs text-neutral-400 select-none">
+              <div className="w-10 h-10 rounded-[12px] bg-white border border-neutral-200/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] flex items-center justify-center font-mono-num font-bold text-xs text-neutral-400 select-none">
                 01
               </div>
-              <h3 className="text-lg font-sans font-black text-brand-dark">Clarity</h3>
-              <p className="font-body text-neutral-500 text-sm leading-relaxed">
+              <h3 className="text-lg font-display font-bold text-brand-dark">Clarity</h3>
+              <p className="font-sans-clean text-neutral-500 text-sm leading-relaxed">
                 Every project starts with understanding the business before choosing the tools.
               </p>
             </motion.div>
@@ -586,11 +586,11 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="space-y-4"
             >
-              <div className="w-10 h-10 rounded-[12px] bg-white border border-neutral-200/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] flex items-center justify-center font-sans font-black text-xs text-neutral-400 select-none">
+              <div className="w-10 h-10 rounded-[12px] bg-white border border-neutral-200/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] flex items-center justify-center font-mono-num font-bold text-xs text-neutral-400 select-none">
                 02
               </div>
-              <h3 className="text-lg font-sans font-black text-brand-dark">Transparency</h3>
-              <p className="font-body text-neutral-500 text-sm leading-relaxed">
+              <h3 className="text-lg font-display font-bold text-brand-dark">Transparency</h3>
+              <p className="font-sans-clean text-neutral-500 text-sm leading-relaxed">
                 We explain what we're doing, why we're doing it, and what the data tells us.
               </p>
             </motion.div>
@@ -602,11 +602,11 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
               transition={{ duration: 0.7, delay: 0.3 }}
               className="space-y-4"
             >
-              <div className="w-10 h-10 rounded-[12px] bg-white border border-neutral-200/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] flex items-center justify-center font-sans font-black text-xs text-neutral-400 select-none">
+              <div className="w-10 h-10 rounded-[12px] bg-white border border-neutral-200/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] flex items-center justify-center font-mono-num font-bold text-xs text-neutral-400 select-none">
                 03
               </div>
-              <h3 className="text-lg font-sans font-black text-brand-dark">Continuous Improvement</h3>
-              <p className="font-body text-neutral-500 text-sm leading-relaxed">
+              <h3 className="text-lg font-display font-bold text-brand-dark">Continuous Improvement</h3>
+              <p className="font-sans-clean text-neutral-500 text-sm leading-relaxed">
                 Digital marketing is never finished. We continuously analyze and refine based on performance.
               </p>
             </motion.div>
@@ -624,10 +624,10 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
       >
         <div className="space-y-16">
           <div className="space-y-3">
-            <span className="text-xs font-sans font-black tracking-widest text-[#FF6B00] uppercase block">
+            <span className="text-xs font-mono-num font-medium tracking-widest text-[#FF6B00] uppercase block">
               OUR PATHWAY
             </span>
-            <h2 className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight leading-none">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight leading-tight">
               How We Work
             </h2>
           </div>
@@ -647,13 +647,13 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
                 className="p-7 rounded-[22px] bg-white/10 backdrop-blur-[24px] border border-white/20 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.03),inset_0_1.5px_3px_rgba(255,255,255,0.45)] flex flex-col justify-between h-48 hover:bg-white/15 transition-all duration-300 group"
               >
                 <div className="space-y-3">
-                  <span className="text-[10px] font-sans font-black tracking-widest text-neutral-400 uppercase block">
+                  <span className="text-[10px] font-mono-num font-medium tracking-widest text-neutral-400 uppercase block">
                     {t.step}
                   </span>
-                  <h3 className="text-xl font-sans font-black text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-200">
+                  <h3 className="text-xl font-display font-bold text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-200">
                     {t.title}
                   </h3>
-                  <p className="text-xs font-body text-neutral-500 leading-relaxed">
+                  <p className="text-xs font-sans-clean text-neutral-500 leading-relaxed">
                     {t.desc}
                   </p>
                 </div>
@@ -671,10 +671,10 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
       <section className="max-w-7xl mx-auto px-6">
         <div className="space-y-16">
           <div className="space-y-3">
-            <span className="text-xs font-sans font-black tracking-widest text-[#FF6B00] uppercase block">
+            <span className="text-xs font-mono-num font-medium tracking-widest text-[#FF6B00] uppercase block">
               ECOSYSTEM MODULES
             </span>
-            <h2 className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight leading-none">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight leading-tight">
               Ecosystem Components
             </h2>
           </div>
@@ -697,10 +697,10 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
                     {srv.icon}
                   </div>
                   <div className="space-y-1.5">
-                    <h3 className="text-lg font-sans font-black text-brand-dark leading-snug group-hover:text-[#FF6B00] transition-colors duration-200">
+                    <h3 className="text-lg font-display font-bold text-brand-dark leading-snug group-hover:text-[#FF6B00] transition-colors duration-200">
                       {srv.title}
                     </h3>
-                    <p className="text-xs font-body text-neutral-500 leading-relaxed">
+                    <p className="text-xs font-sans-clean text-neutral-500 leading-relaxed">
                       {srv.desc}
                     </p>
                   </div>
@@ -720,10 +720,10 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
       >
         <div className="space-y-16">
           <div className="text-center space-y-3">
-            <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-black uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
+            <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
               OUR STANDARDS
             </span>
-            <h2 className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight leading-none">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight leading-tight">
               A Transparent Commitment
             </h2>
           </div>
@@ -746,8 +746,8 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
                   <Check className="w-4 h-4 text-[#FF6B00]" strokeWidth={3} />
                 </div>
                 <div className="space-y-1.5">
-                  <span className="text-lg font-sans font-black text-brand-dark block">{p.statement}</span>
-                  <p className="text-xs font-body text-neutral-500 leading-relaxed">{p.subtitle}</p>
+                  <span className="text-lg font-display font-bold text-brand-dark block">{p.statement}</span>
+                  <p className="text-xs font-sans-clean text-neutral-500 leading-relaxed">{p.subtitle}</p>
                 </div>
               </motion.div>
             ))}
@@ -764,10 +764,10 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
       >
         <div className="space-y-16">
           <div className="space-y-3">
-            <span className="text-xs font-sans font-black tracking-widest text-[#FF6B00] uppercase block">
+            <span className="text-xs font-mono-num font-medium tracking-widest text-[#FF6B00] uppercase block">
               OUR VALUE
             </span>
-            <h2 className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight leading-none">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight leading-tight">
               The Lean System Standards
             </h2>
           </div>
@@ -786,13 +786,13 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
                 transition={{ duration: 0.7, delay: idx * 0.12 }}
                 className="p-8 rounded-[24px] bg-white border border-neutral-200/50 hover:border-[#FF6B00]/40 shadow-[0_4px_20px_rgba(0,0,0,0.01)] transition-all duration-300 space-y-4 cursor-default"
               >
-                <span className="text-xs font-sans font-black tracking-widest text-[#FF6B00] uppercase block">
+                <span className="text-xs font-mono-num font-bold tracking-widest text-[#FF6B00] uppercase block">
                   0{idx + 1}
                 </span>
-                <h3 className="text-xl font-sans font-black text-brand-dark">
+                <h3 className="text-xl font-display font-bold text-brand-dark">
                   {item.title}
                 </h3>
-                <p className="text-xs font-body text-neutral-500 leading-relaxed">
+                <p className="text-xs font-sans-clean text-neutral-500 leading-relaxed">
                   {item.desc}
                 </p>
               </motion.div>
@@ -809,7 +809,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
           {/* Left: Interactive ThreeJS Canvas Container */}
           <div className="lg:col-span-7 rounded-[32px] overflow-hidden bg-white/10 backdrop-blur-[24px] border border-white/20 shadow-[0_12px_45px_rgba(0,0,0,0.02),inset_0_1.5px_3px_rgba(255,255,255,0.45)] relative p-6 flex flex-col justify-between">
             
-            <div className="flex items-center gap-2 text-xs font-sans font-bold text-neutral-400 select-none">
+            <div className="flex items-center gap-2 text-xs font-sans-clean font-semibold text-neutral-400 select-none">
               <Sparkles className="w-4 h-4 text-[#FF6B00]" />
               <span>3D Service Ecosystem • Click a cube to view information</span>
             </div>
@@ -833,13 +833,13 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
                   className="p-8 md:p-10 rounded-[28px] bg-white border border-neutral-200 shadow-[0_10px_40px_rgba(0,0,0,0.02)] space-y-6 flex flex-col justify-between h-full"
                 >
                   <div className="space-y-4">
-                    <span className="text-[10px] font-sans font-black tracking-[0.2em] text-[#FF6B00] uppercase block">Ecosystem Node Active</span>
-                    <h3 className="text-3xl font-sans font-black text-brand-dark">{selectedCube.title}</h3>
-                    <p className="font-body text-neutral-500 text-sm leading-relaxed">{selectedCube.desc}</p>
+                    <span className="text-[10px] font-mono-num font-medium tracking-[0.2em] text-[#FF6B00] uppercase block">Ecosystem Node Active</span>
+                    <h3 className="text-3xl font-display font-bold text-brand-dark">{selectedCube.title}</h3>
+                    <p className="font-sans-clean text-neutral-500 text-sm leading-relaxed">{selectedCube.desc}</p>
                     
                     <ul className="space-y-3 pt-4 border-t border-neutral-100">
                       {selectedCube.details.map((detail, dIdx) => (
-                        <li key={dIdx} className="flex items-center gap-3 text-xs font-sans font-bold text-neutral-600">
+                        <li key={dIdx} className="flex items-center gap-3 text-xs font-sans-clean font-semibold text-neutral-600">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00] shrink-0" />
                           <span>{detail}</span>
                         </li>
@@ -848,16 +848,20 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
                   </div>
 
                   <div className="pt-6 border-t border-neutral-100 flex items-center justify-between">
-                    <button 
-                      onClick={() => setCurrentPage('services')} 
-                      className="text-xs font-sans font-black text-[#FF6B00] tracking-wider uppercase flex items-center gap-1.5 group/btn"
+                    <a 
+                      href="/services"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage('services');
+                      }} 
+                      className="text-xs font-sans-clean font-bold text-[#FF6B00] tracking-wider uppercase flex items-center gap-1.5 group/btn cursor-pointer"
                     >
                       <span>Explore details</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
-                    </button>
+                    </a>
                     <button 
                       onClick={() => setSelectedCube(null)} 
-                      className="text-[11px] font-sans font-bold text-neutral-400 hover:text-neutral-600 uppercase"
+                      className="text-[11px] font-sans-clean font-medium text-neutral-400 hover:text-neutral-600 uppercase cursor-pointer"
                     >
                       Reset Ecosystem
                     </button>
@@ -875,14 +879,14 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
                     <Info className="w-6 h-6" />
                   </div>
                   <div className="space-y-1">
-                    <h4 className="font-sans font-black text-brand-dark text-lg">Ecosystem Showcase</h4>
-                    <p className="font-body text-xs text-neutral-400 max-w-xs leading-relaxed">
+                    <h4 className="font-display font-bold text-brand-dark text-lg">Ecosystem Showcase</h4>
+                    <p className="font-sans-clean text-xs text-neutral-400 max-w-xs leading-relaxed">
                       Click any floating service node on the interactive map to inspect our system implementation strategy.
                     </p>
                   </div>
                   <button 
                     onClick={() => setSelectedCube(cubesData[0])}
-                    className="text-xs font-sans font-black text-[#FF6B00] border border-[#FF6B00]/20 rounded-full px-4 py-1.5 bg-orange-50/50 hover:bg-orange-50 transition-colors"
+                    className="text-xs font-sans-clean font-bold text-[#FF6B00] border border-[#FF6B00]/20 rounded-full px-4 py-1.5 bg-orange-50/50 hover:bg-orange-50 transition-colors cursor-pointer"
                   >
                     Load Ad Modules
                   </button>
@@ -905,7 +909,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
           initial={{ opacity: 0, y: 25 }}
           animate={isClosingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
           transition={{ duration: 0.8 }}
-          className="text-3xl md:text-5xl font-sans font-black text-brand-dark tracking-tight leading-tight"
+          className="text-3xl md:text-5xl font-display font-bold text-brand-dark tracking-tight leading-tight"
         >
           Good systems create consistency.
         </motion.h3>
@@ -914,7 +918,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={isClosingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="font-body text-neutral-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+          className="font-sans-clean text-neutral-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
         >
           Our role is to build a reliable digital foundation that helps businesses capture, organize, and manage opportunities more effectively.
         </motion.p>
@@ -937,26 +941,34 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
           <div className="absolute top-0 left-1/4 w-80 h-32 bg-[#FF6B00]/10 blur-[80px] pointer-events-none" />
 
           <div className="space-y-3">
-            <span className="text-[#FF6B00] text-xs font-sans font-black tracking-widest uppercase block">READY TO START</span>
-            <h2 className="text-3xl md:text-5xl font-sans font-black tracking-tight leading-tight">
+            <span className="text-[#FF6B00] text-xs font-mono-num font-medium tracking-widest uppercase block">READY TO START</span>
+            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight leading-tight">
               Let's Build Something That Works.
             </h2>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button 
-              onClick={() => setCurrentPage('get-started')}
-              className="w-full sm:w-auto px-8 py-4 bg-[#FF6B00] hover:bg-orange-600 font-sans font-black text-sm uppercase tracking-wider rounded-xl transition-all duration-300 shadow-[0_10px_25px_rgba(255,107,0,0.25)] flex items-center justify-center gap-2 group/btn"
+            <a 
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage('get-started');
+              }}
+              className="w-full sm:w-auto px-8 py-4 bg-[#FF6B00] hover:bg-orange-600 font-sans-clean font-bold text-sm uppercase tracking-wider rounded-xl transition-all duration-300 shadow-[0_10px_25px_rgba(255,107,0,0.25)] flex items-center justify-center gap-2 group/btn cursor-pointer"
             >
               <span>Book a Discovery Call</span>
               <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1.5 transition-transform" />
-            </button>
-            <button 
-              onClick={() => setCurrentPage('services')}
-              className="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/15 border border-white/20 font-sans font-black text-sm uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+            </a>
+            <a 
+              href="/services"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage('services');
+              }}
+              className="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/15 border border-white/20 font-sans-clean font-bold text-sm uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>View Our Services</span>
-            </button>
+            </a>
           </div>
         </motion.div>
       </section>

@@ -323,7 +323,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
             initial={{ opacity: 0, y: 15 }}
             animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
             transition={{ duration: 0.6 }}
-            className="text-[#FF6B00] text-xs tracking-[0.2em] font-black uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2"
+            className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2"
           >
             ENGAGEMENT PLANS
           </motion.span>
@@ -332,7 +332,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
             initial={{ opacity: 0, y: 30 }}
             animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-black text-brand-dark tracking-tight leading-none"
+            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-brand-dark tracking-tight leading-tight"
           >
             Choose the Right Growth Plan
           </motion.h1>
@@ -341,7 +341,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
             initial={{ opacity: 0, y: 20 }}
             animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-body text-neutral-500 text-base md:text-lg max-w-2xl leading-relaxed"
+            className="font-sans-clean text-neutral-500 text-base md:text-lg max-w-2xl leading-relaxed"
           >
             Every business has different goals and requirements. Our engagement plans are designed to provide the right level of strategy, execution, and ongoing support for your stage of growth.
           </motion.p>
@@ -374,7 +374,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                 <div className="space-y-6">
                   {/* Card top branding */}
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-sans font-black uppercase tracking-[0.18em] text-neutral-400">
+                    <span className="text-[10px] font-mono-num font-medium uppercase tracking-[0.18em] text-neutral-400">
                       {plan.tier}
                     </span>
                     <div className="w-9 h-9 rounded-[10px] bg-neutral-50 border border-neutral-100 flex items-center justify-center">
@@ -384,15 +384,15 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
 
                   {/* Title & Price */}
                   <div className="space-y-2">
-                    <h3 className="text-2xl font-sans font-black text-brand-dark">{plan.name}</h3>
-                    <p className="font-body text-xs text-neutral-500 leading-relaxed min-h-[40px]">{plan.description}</p>
+                    <h3 className="text-2xl font-display font-bold text-brand-dark">{plan.name}</h3>
+                    <p className="font-sans-clean text-xs text-neutral-500 leading-relaxed min-h-[40px]">{plan.description}</p>
                     
                     <div className="pt-4 pb-2 border-y border-neutral-100/80 flex items-baseline gap-1.5">
-                      <span className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
+                      <span className="text-3xl md:text-4xl font-mono-num font-bold text-brand-dark tracking-tight">
                         {plan.fee}
                       </span>
                       {plan.fee !== 'Custom Plan' && (
-                        <span className="text-xs text-neutral-400 font-body">/ month</span>
+                        <span className="text-xs text-neutral-400 font-sans-clean">/ month</span>
                       )}
                     </div>
                   </div>
@@ -401,8 +401,8 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                   <div className="grid grid-cols-2 gap-4 py-2">
                     {plan.specs.map((spec, sIdx) => (
                       <div key={sIdx} className="space-y-0.5">
-                        <span className="text-[9px] font-sans font-black tracking-wider text-neutral-400 uppercase">{spec.label}</span>
-                        <span className="text-xs font-sans font-bold text-neutral-700 block truncate">{spec.value}</span>
+                        <span className="text-[9px] font-mono-num font-medium tracking-wider text-neutral-400 uppercase">{spec.label}</span>
+                        <span className="text-xs font-sans-clean font-semibold text-neutral-700 block truncate">{spec.value}</span>
                       </div>
                     ))}
                   </div>
@@ -411,7 +411,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                   <div className="border-t border-neutral-100/80 pt-4 space-y-4">
                     <button
                       onClick={() => setExpandedPlan(isCurrentExpanded ? null : plan.id)}
-                      className="w-full flex items-center justify-between text-left text-xs font-sans font-black text-neutral-500 hover:text-[#FF6B00] transition-colors"
+                      className="w-full flex items-center justify-between text-left text-xs font-sans-clean font-bold text-neutral-500 hover:text-[#FF6B00] transition-colors cursor-pointer"
                     >
                       <span>{isCurrentExpanded ? 'Hide Details' : 'Expand Details & Inclusions'}</span>
                       {isCurrentExpanded ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
@@ -426,15 +426,15 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                           transition={{ duration: 0.25, ease: 'easeInOut' }}
                           className="overflow-hidden space-y-4 pt-2"
                         >
-                          <p className="text-xs font-body text-neutral-500 leading-relaxed bg-neutral-50 p-3 rounded-xl border border-neutral-100">
+                          <p className="text-xs font-sans-clean text-neutral-500 leading-relaxed bg-neutral-50 p-3 rounded-xl border border-neutral-100">
                             {plan.overview}
                           </p>
 
                           <div className="space-y-2">
-                            <span className="text-[9px] font-sans font-black text-neutral-400 uppercase tracking-widest block">Structural Inclusions</span>
+                            <span className="text-[9px] font-mono-num font-medium text-neutral-400 uppercase tracking-widest block">Structural Inclusions</span>
                             <ul className="space-y-2">
                               {plan.details.map((detail, dIdx) => (
-                                <li key={dIdx} className="flex items-start gap-2.5 text-xs text-neutral-600 font-body">
+                                <li key={dIdx} className="flex items-start gap-2.5 text-xs text-neutral-600 font-sans-clean">
                                   <Check className="w-3.5 h-3.5 text-[#FF6B00] shrink-0 mt-0.5" strokeWidth={3} />
                                   <span>{detail}</span>
                                 </li>
@@ -450,9 +450,13 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
 
                 {/* Card CTA */}
                 <div className="pt-8 mt-auto">
-                  <button
-                    onClick={() => setCurrentPage('get-started')}
-                    className={`w-full py-3.5 rounded-xl font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 ${
+                  <a
+                    href="/contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentPage('get-started');
+                    }}
+                    className={`w-full py-3.5 rounded-xl font-sans-clean font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer ${
                       plan.id === 'growth'
                         ? 'bg-[#FF6B00] hover:bg-orange-600 text-white shadow-[0_10px_20px_rgba(255,107,0,0.15)]'
                         : 'bg-brand-dark hover:bg-neutral-800 text-white'
@@ -460,7 +464,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                   >
                     <span>Get Started</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  </a>
                 </div>
 
               </motion.div>
@@ -478,13 +482,13 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
       >
         <div className="space-y-16">
           <div className="text-center space-y-3">
-            <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-black uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
+            <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
               ECOSYSTEM MODULES
             </span>
-            <h2 className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight">
               Ecosystem Features Explained
             </h2>
-            <p className="font-body text-neutral-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+            <p className="font-sans-clean text-neutral-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
               We focus on implementing clean digital components. Click any feature block to review its technical parameters.
             </p>
           </div>
@@ -503,15 +507,15 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                 >
                   <button
                     onClick={() => setExpandedFeature(isFeatExpanded ? null : feat.id)}
-                    className="w-full flex items-center justify-between text-left focus:outline-none"
+                    className="w-full flex items-center justify-between text-left focus:outline-none cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-xl bg-neutral-50 border border-neutral-100 flex items-center justify-center shrink-0">
                         {feat.icon}
                       </div>
                       <div>
-                        <h3 className="text-lg font-sans font-black text-brand-dark group-hover:text-[#FF6B00] transition-colors">{feat.title}</h3>
-                        <p className="text-xs font-body text-neutral-500 line-clamp-1">{feat.summary}</p>
+                        <h3 className="text-lg font-display font-bold text-brand-dark group-hover:text-[#FF6B00] transition-colors">{feat.title}</h3>
+                        <p className="text-xs font-sans-clean text-neutral-500 line-clamp-1">{feat.summary}</p>
                       </div>
                     </div>
                     <div className="w-8 h-8 rounded-full bg-neutral-50 border border-neutral-100 flex items-center justify-center text-neutral-500">
@@ -530,17 +534,17 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                       >
                         <div className="pt-6 border-t border-neutral-100/80 mt-6 grid grid-cols-1 md:grid-cols-12 gap-8">
                           <div className="md:col-span-7 space-y-3">
-                            <span className="text-[10px] font-sans font-black text-neutral-400 uppercase tracking-widest block">Implementation Philosophy</span>
-                            <p className="text-sm font-body text-neutral-500 leading-relaxed">
+                            <span className="text-[10px] font-mono-num font-medium text-neutral-400 uppercase tracking-widest block">Implementation Philosophy</span>
+                            <p className="text-sm font-sans-clean text-neutral-500 leading-relaxed">
                               {feat.deepDive}
                             </p>
                           </div>
 
                           <div className="md:col-span-5 space-y-3">
-                            <span className="text-[10px] font-sans font-black text-neutral-400 uppercase tracking-widest block">Technical Standards</span>
+                            <span className="text-[10px] font-mono-num font-medium text-neutral-400 uppercase tracking-widest block">Technical Standards</span>
                             <ul className="space-y-2">
                               {feat.bullets.map((bullet, bIdx) => (
-                                <li key={bIdx} className="flex items-start gap-2.5 text-xs text-neutral-600 font-sans font-bold">
+                                <li key={bIdx} className="flex items-start gap-2.5 text-xs text-neutral-600 font-sans-clean font-semibold">
                                   <Check className="w-3.5 h-3.5 text-[#FF6B00] shrink-0 mt-0.5" strokeWidth={3} />
                                   <span>{bullet}</span>
                                 </li>
@@ -567,13 +571,13 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
       >
         <div className="space-y-16">
           <div className="text-center space-y-3">
-            <span className="text-xs font-sans font-black tracking-widest text-[#FF6B00] uppercase block">
+            <span className="text-xs font-mono-num font-medium tracking-widest text-[#FF6B00] uppercase block">
               ENGAGEMENT PATHWAY
             </span>
-            <h2 className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight">
               Our Collaborative Process
             </h2>
-            <p className="font-body text-neutral-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+            <p className="font-sans-clean text-neutral-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
               We maintain clear, structured steps to align goals, deploy assets, and audit performance metrics.
             </p>
           </div>
@@ -604,13 +608,13 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                   transition={{ duration: 0.7, delay: idx * 0.1 }}
                   className="p-6 rounded-[22px] bg-white border border-neutral-200/50 hover:border-[#FF6B00]/20 shadow-[0_4px_15px_rgba(0,0,0,0.01)] transition-all duration-300 text-center flex flex-col items-center group cursor-default"
                 >
-                  <div className="w-14 h-14 rounded-full bg-white border border-neutral-100 flex items-center justify-center font-sans font-black text-[#FF6B00] text-sm shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.9),0_4px_12px_rgba(0,0,0,0.02)] group-hover:scale-105 transition-transform duration-300">
+                  <div className="w-14 h-14 rounded-full bg-white border border-neutral-100 flex items-center justify-center font-mono-num font-bold text-[#FF6B00] text-sm shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.9),0_4px_12px_rgba(0,0,0,0.02)] group-hover:scale-105 transition-transform duration-300">
                     {item.step}
                   </div>
-                  <h3 className="text-base font-sans font-black text-brand-dark mt-5 group-hover:text-[#FF6B00] transition-colors">
+                  <h3 className="text-base font-sans-clean font-bold text-brand-dark mt-5 group-hover:text-[#FF6B00] transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-xs font-body text-neutral-500 mt-2 leading-relaxed max-w-[200px]">
+                  <p className="text-xs font-sans-clean text-neutral-500 mt-2 leading-relaxed max-w-[200px]">
                     {item.subtitle}
                   </p>
                 </motion.div>
@@ -629,13 +633,13 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
       >
         <div className="space-y-16">
           <div className="text-center space-y-3">
-            <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-black uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
+            <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
               FEATURE AUDIT
             </span>
-            <h2 className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight">
               Compare Platform Capabilities
             </h2>
-            <p className="font-body text-neutral-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+            <p className="font-sans-clean text-neutral-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
               Understand structural variations side-by-side. Click on a category to inspect available configurations.
             </p>
           </div>
@@ -654,9 +658,9 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                 >
                   <button
                     onClick={() => setExpandedCompCategory(isCategoryExpanded ? null : category.id)}
-                    className="w-full flex items-center justify-between text-left focus:outline-none group"
+                    className="w-full flex items-center justify-between text-left focus:outline-none group cursor-pointer"
                   >
-                    <span className="text-base font-sans font-black text-brand-dark group-hover:text-[#FF6B00] transition-colors">
+                    <span className="text-base font-sans-clean font-bold text-brand-dark group-hover:text-[#FF6B00] transition-colors">
                       {category.name}
                     </span>
                     <div className="w-8 h-8 rounded-full bg-neutral-50 border border-neutral-100 flex items-center justify-center text-neutral-500">
@@ -680,19 +684,19 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                               className="grid grid-cols-1 md:grid-cols-12 gap-4 py-3 items-center border-b border-neutral-50 last:border-0"
                             >
                               <div className="md:col-span-4">
-                                <span className="text-xs font-sans font-bold text-neutral-800">{item.name}</span>
+                                <span className="text-xs font-sans-clean font-semibold text-neutral-800">{item.name}</span>
                               </div>
-                              <div className="md:col-span-8 grid grid-cols-3 gap-2 text-center text-[10px] font-sans font-black">
+                              <div className="md:col-span-8 grid grid-cols-3 gap-2 text-center text-[10px] font-sans-clean font-semibold">
                                 <div className="space-y-1 bg-neutral-50/50 p-2 rounded-lg border border-neutral-100/40">
-                                  <span className="text-neutral-400 uppercase tracking-wider block text-[8px]">Starter</span>
+                                  <span className="text-neutral-400 uppercase tracking-wider block text-[8px] font-mono-num">Starter</span>
                                   <span className="text-neutral-600 block">{item.starter}</span>
                                 </div>
                                 <div className="space-y-1 bg-orange-50/20 p-2 rounded-lg border border-[#FF6B00]/10">
-                                  <span className="text-[#FF6B00] uppercase tracking-wider block text-[8px]">Growth</span>
+                                  <span className="text-[#FF6B00] uppercase tracking-wider block text-[8px] font-mono-num">Growth</span>
                                   <span className="text-[#FF6B00] block">{item.growth}</span>
                                 </div>
                                 <div className="space-y-1 bg-neutral-900 text-white p-2 rounded-lg">
-                                  <span className="text-neutral-400 uppercase tracking-wider block text-[8px]">Premium</span>
+                                  <span className="text-neutral-400 uppercase tracking-wider block text-[8px] font-mono-num">Premium</span>
                                   <span className="text-white block">{item.premium}</span>
                                 </div>
                               </div>
@@ -718,10 +722,10 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
       >
         <div className="space-y-12">
           <div className="text-center space-y-3">
-            <span className="text-xs font-sans font-black tracking-widest text-[#FF6B00] uppercase block">
+            <span className="text-xs font-mono-num font-medium tracking-widest text-[#FF6B00] uppercase block">
               SUPPORT & POLICIES
             </span>
-            <h2 className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight">
               Frequently Asked Questions
             </h2>
           </div>
@@ -738,7 +742,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                     onClick={() => setExpandedFaq(isOpen ? null : idx)}
                     className="w-full flex items-center justify-between text-left py-4 group cursor-pointer focus:outline-none"
                   >
-                    <span className="font-sans font-black text-sm text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-200">
+                    <span className="font-sans-clean font-semibold text-sm text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-200">
                       {faq.q}
                     </span>
                     {isOpen ? (
@@ -757,7 +761,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
                         transition={{ duration: 0.2 }}
                         className="overflow-hidden"
                       >
-                        <p className="font-body text-neutral-500 text-xs sm:text-sm leading-relaxed pb-4 px-3 bg-neutral-50 rounded-xl border border-neutral-100">
+                        <p className="font-sans-clean text-neutral-500 text-xs sm:text-sm leading-relaxed pb-4 px-3 bg-neutral-50 rounded-xl border border-neutral-100">
                           {faq.a}
                         </p>
                       </motion.div>
@@ -787,26 +791,34 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
           <div className="absolute top-0 right-1/4 w-80 h-32 bg-[#FF6B00]/10 blur-[80px] pointer-events-none" />
 
           <div className="space-y-3">
-            <span className="text-[#FF6B00] text-xs font-sans font-black tracking-widest uppercase block">GET IN TOUCH</span>
-            <h2 className="text-3xl md:text-5xl font-sans font-black tracking-tight leading-tight">
+            <span className="text-[#FF6B00] text-xs font-mono-num font-medium tracking-widest uppercase block">GET IN TOUCH</span>
+            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight leading-tight">
               Let's Build Your Lead Generation System.
             </h2>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button 
-              onClick={() => setCurrentPage('get-started')}
-              className="w-full sm:w-auto px-8 py-4 bg-[#FF6B00] hover:bg-orange-600 font-sans font-black text-sm uppercase tracking-wider rounded-xl transition-all duration-300 shadow-[0_10px_25px_rgba(255,107,0,0.25)] flex items-center justify-center gap-2 group/btn"
+            <a 
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage('get-started');
+              }}
+              className="w-full sm:w-auto px-8 py-4 bg-[#FF6B00] hover:bg-orange-600 font-sans-clean font-bold text-sm uppercase tracking-wider rounded-xl transition-all duration-300 shadow-[0_10px_25px_rgba(255,107,0,0.25)] flex items-center justify-center gap-2 group/btn cursor-pointer"
             >
               <span>Book a Discovery Call</span>
               <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1.5 transition-transform" />
-            </button>
-            <button 
-              onClick={() => setCurrentPage('get-started')}
-              className="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/15 border border-white/20 font-sans font-black text-sm uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+            </a>
+            <a 
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage('get-started');
+              }}
+              className="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/15 border border-white/20 font-sans-clean font-bold text-sm uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Request a Custom Proposal</span>
-            </button>
+            </a>
           </div>
         </motion.div>
       </section>

@@ -1,11 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-geist: "Geist", "General Sans", "Satoshi", "Manrope", system-ui, -apple-system, sans-serif;
-  --font-heading: "Geist", "General Sans", "Satoshi", "Manrope", system-ui, -apple-system, sans-serif;
-  --font-sans: "Geist", "General Sans", "Satoshi", "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-body: "Geist", "General Sans", "Satoshi", "Manrope", system-ui, -apple-system, sans-serif;
+  --font-display: "Syne", sans-serif;
+  --font-sans-clean: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono-num: "JetBrains Mono", monospace;
+
+  /* Default site font mappings to Plus Jakarta Sans and JetBrains Mono */
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 
   --color-brand-dark: #0F0F11;
   --color-brand-navy: #151B26;
@@ -14,9 +18,23 @@
   --color-brand-gray: #8A94A6;
 }
 
-/* Base style resets and scrollbar layout for polished feel */
+/* Explicit CSS classes as requested */
+.font-display {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-sans-clean {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.font-mono-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Base style resets and scrollbar layout */
 body {
-  font-family: var(--font-body);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: #FFFFFF;
   color: #0F0F11;
   overflow-x: hidden;
@@ -25,7 +43,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 /* Custom smooth scroll and transitions */

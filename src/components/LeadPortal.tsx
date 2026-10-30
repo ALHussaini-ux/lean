@@ -25,13 +25,13 @@ export default function LeadPortal() {
     <div id="lead-portal" className="max-w-6xl mx-auto px-4 sm:px-6">
       
       <div className="text-center mb-12 space-y-3">
-        <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
+        <span className="text-brand-orange text-xs tracking-widest font-sans-clean font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
           GET STARTED
         </span>
-        <h2 className="text-3xl md:text-4xl font-sans font-black text-brand-dark tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight">
           Ready to Generate More Leads?
         </h2>
-        <p className="font-body text-brand-gray text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+        <p className="font-sans-clean text-brand-gray text-sm md:text-base max-w-xl mx-auto leading-relaxed">
           Schedule a quick call to discuss your project and find the right tier for your goals.
         </p>
       </div>
@@ -40,7 +40,7 @@ export default function LeadPortal() {
         
         {/* Contact Options Column (5 columns on large screens) */}
         <div className="lg:col-span-5 space-y-6">
-          <h3 className="text-xs font-sans font-bold text-neutral-400 tracking-widest uppercase mb-4 block">
+          <h3 className="text-xs font-mono-num font-medium text-neutral-400 tracking-widest uppercase mb-4 block">
             DIRECT CONTACT OPTIONS
           </h3>
 
@@ -50,15 +50,15 @@ export default function LeadPortal() {
               <Mail className="w-5 h-5" />
             </div>
             <div className="space-y-2 flex-grow">
-              <span className="text-[10px] font-sans font-bold tracking-wider text-neutral-400 block uppercase">OPTION 1</span>
-              <h4 className="font-sans font-bold text-base text-brand-navy">Direct Email Inquiry</h4>
-              <p className="font-body text-neutral-500 text-xs">
+              <span className="text-[10px] font-mono-num font-medium tracking-wider text-neutral-400 block uppercase">OPTION 1</span>
+              <h4 className="font-sans-clean font-bold text-base text-brand-navy">Direct Email Inquiry</h4>
+              <p className="font-sans-clean text-neutral-500 text-xs">
                 Send us your briefs, layouts, or project files. We respond within 24 hours.
               </p>
               <div className="pt-2">
                 <a 
                   href="mailto:hello@leansystem.co"
-                  className="inline-flex items-center gap-2 text-xs font-sans font-bold text-blue-600 hover:text-blue-700 transition-colors uppercase tracking-wider"
+                  className="inline-flex items-center gap-2 text-xs font-mono-num font-medium text-blue-600 hover:text-blue-700 transition-colors uppercase tracking-wider"
                 >
                   hello@leansystem.co
                   <ArrowRight className="w-3 h-3" />
@@ -73,9 +73,9 @@ export default function LeadPortal() {
               <Calendar className="w-5 h-5" />
             </div>
             <div className="space-y-2 flex-grow">
-              <span className="text-[10px] font-sans font-bold tracking-wider text-neutral-400 block uppercase">OPTION 2</span>
-              <h4 className="font-sans font-bold text-base text-brand-navy">Calendar Booking</h4>
-              <p className="font-body text-neutral-500 text-xs">
+              <span className="text-[10px] font-mono-num font-medium tracking-wider text-neutral-400 block uppercase">OPTION 2</span>
+              <h4 className="font-sans-clean font-bold text-base text-brand-navy">Calendar Booking</h4>
+              <p className="font-sans-clean text-neutral-500 text-xs">
                 Instantly schedule a 30-minute free growth consultation call with our pipeline architect.
               </p>
               <div className="pt-2">
@@ -83,7 +83,7 @@ export default function LeadPortal() {
                   href="https://calendly.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs font-sans font-bold text-brand-orange hover:text-orange-600 transition-colors uppercase tracking-wider"
+                  className="inline-flex items-center gap-2 text-xs font-sans-clean font-bold text-brand-orange hover:text-orange-600 transition-colors uppercase tracking-wider"
                 >
                   Book 30-min Consultation
                   <ArrowRight className="w-3 h-3" />
@@ -106,10 +106,10 @@ export default function LeadPortal() {
                 className="space-y-6"
               >
                 <div>
-                  <h3 className="text-base font-sans font-bold text-brand-dark mb-1">
+                  <h3 className="text-base font-sans-clean font-bold text-brand-dark mb-1">
                     Option 4: Quick Contact Form
                   </h3>
-                  <p className="text-xs font-body text-neutral-500">
+                  <p className="text-xs font-sans-clean text-neutral-500">
                     Submit your basic project parameters and we will contact you directly within 24 hours.
                   </p>
                 </div>
@@ -118,7 +118,7 @@ export default function LeadPortal() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Name */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-sans font-bold text-neutral-600 uppercase tracking-wider block">
+                      <label className="text-[11px] font-sans-clean font-semibold text-neutral-600 uppercase tracking-wider block">
                         Full Name
                       </label>
                       <input
@@ -127,13 +127,13 @@ export default function LeadPortal() {
                         placeholder="John Doe"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors min-h-[44px] sm:min-h-0"
+                        className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-sans-clean transition-colors min-h-[44px] sm:min-h-0"
                       />
                     </div>
 
                     {/* Phone */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-sans font-bold text-neutral-600 uppercase tracking-wider block">
+                      <label className="text-[11px] font-sans-clean font-semibold text-neutral-600 uppercase tracking-wider block">
                         Phone Number
                       </label>
                       <input
@@ -142,14 +142,14 @@ export default function LeadPortal() {
                         placeholder="+91 XXXXX XXXXX"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors min-h-[44px] sm:min-h-0"
+                        className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-mono-num transition-colors min-h-[44px] sm:min-h-0"
                       />
                     </div>
                   </div>
 
                   {/* Email */}
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-sans font-bold text-neutral-600 uppercase tracking-wider block">
+                    <label className="text-[11px] font-sans-clean font-semibold text-neutral-600 uppercase tracking-wider block">
                       Email Address
                     </label>
                     <input
@@ -158,19 +158,19 @@ export default function LeadPortal() {
                       placeholder="john@realty.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors min-h-[44px] sm:min-h-0"
+                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-sans-clean transition-colors min-h-[44px] sm:min-h-0"
                     />
                   </div>
 
                   {/* Project Type Dropdown */}
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-sans font-bold text-neutral-600 uppercase tracking-wider block">
+                    <label className="text-[11px] font-sans-clean font-semibold text-neutral-600 uppercase tracking-wider block">
                       Project Type
                     </label>
                     <select
                       value={projectType}
                       onChange={(e) => setProjectType(e.target.value)}
-                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors cursor-pointer min-h-[44px] sm:min-h-0"
+                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-sans-clean transition-colors cursor-pointer min-h-[44px] sm:min-h-0"
                     >
                       <option value="Apartments">Apartments</option>
                       <option value="Villas">Villas</option>
@@ -181,7 +181,7 @@ export default function LeadPortal() {
 
                   {/* Message */}
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-sans font-bold text-neutral-600 uppercase tracking-wider block">
+                    <label className="text-[11px] font-sans-clean font-semibold text-neutral-600 uppercase tracking-wider block">
                       Your Message
                     </label>
                     <textarea
@@ -189,7 +189,7 @@ export default function LeadPortal() {
                       placeholder="Tell us briefly about your project location, pricing, or targets..."
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-body transition-colors resize-none"
+                      className="w-full bg-white border border-neutral-200 focus:border-brand-orange px-3.5 py-3 sm:py-2.5 text-sm sm:text-xs rounded-sm text-brand-dark focus:outline-none font-sans-clean transition-colors resize-none"
                     />
                   </div>
 
@@ -216,8 +216,8 @@ export default function LeadPortal() {
                 </div>
                 
                  <div className="space-y-2">
-                  <h3 className="font-sans font-black text-2xl text-brand-dark">Enquiry Submitted</h3>
-                  <p className="font-body text-neutral-600 text-sm max-w-sm mx-auto leading-relaxed">
+                  <h3 className="font-display font-bold text-2xl text-brand-dark">Enquiry Submitted</h3>
+                  <p className="font-sans-clean text-neutral-600 text-sm max-w-sm mx-auto leading-relaxed">
                     Thank you! We have received your request. Our real estate growth integration team will get in touch with you within 24 hours to schedule your strategy call.
                   </p>
                 </div>
@@ -231,7 +231,7 @@ export default function LeadPortal() {
                       setEmail('');
                       setMessage('');
                     }}
-                    className="text-xs font-sans font-bold text-neutral-400 hover:text-brand-dark transition-colors uppercase tracking-wider"
+                    className="text-xs font-sans-clean font-semibold text-neutral-400 hover:text-brand-dark transition-colors uppercase tracking-wider"
                   >
                     Submit another request
                   </button>

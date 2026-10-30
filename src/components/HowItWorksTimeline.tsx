@@ -91,7 +91,7 @@ export default function HowItWorksTimeline() {
           initial={{ opacity: 0, y: 15 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans font-black uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2"
+          className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2"
         >
           PROCESS
         </motion.span>
@@ -100,7 +100,7 @@ export default function HowItWorksTimeline() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
-          className="text-4xl md:text-5xl font-sans font-black text-brand-dark tracking-tight leading-tight"
+          className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-brand-dark tracking-tight leading-tight"
         >
           How We Build Your Lead Generation System
         </motion.h2>
@@ -109,7 +109,7 @@ export default function HowItWorksTimeline() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          className="font-body text-neutral-500 text-base md:text-lg leading-relaxed"
+          className="font-sans-clean text-neutral-500 text-base md:text-lg leading-relaxed"
         >
           A transparent, step-by-step approach designed to launch, manage, and continuously improve your lead generation system.
         </motion.p>
@@ -145,7 +145,7 @@ export default function HowItWorksTimeline() {
             >
               {/* Active Step Glowing Badge */}
               {step.isActive && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#FF6B00] text-white text-[9px] font-sans font-black tracking-[0.18em] uppercase py-1 px-3.5 rounded-full shadow-[0_4px_12px_rgba(255,107,0,0.25)] select-none">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#FF6B00] text-white text-[9px] font-mono-num font-medium tracking-[0.18em] uppercase py-1 px-3.5 rounded-full shadow-[0_4px_12px_rgba(255,107,0,0.25)] select-none">
                   ACTIVE PHASE
                 </div>
               )}
@@ -158,7 +158,7 @@ export default function HowItWorksTimeline() {
                   <div className="w-11 h-11 rounded-[14px] bg-white border border-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.02),inset_0_1px_2px_rgba(255,255,255,0.8)] flex items-center justify-center transition-transform duration-300 group-hover:rotate-[5deg] group-hover:scale-105">
                     {step.icon}
                   </div>
-                  <span className={`text-[11px] font-sans font-black uppercase tracking-[0.15em] px-3 py-1 rounded-full ${
+                  <span className={`text-[11px] font-mono-num font-medium uppercase tracking-[0.15em] px-3 py-1 rounded-full ${
                     step.isActive 
                       ? 'bg-[#FF6B00]/10 text-[#FF6B00] border border-[#FF6B00]/10' 
                       : 'bg-neutral-900/[0.04] text-neutral-400 border border-transparent'
@@ -169,10 +169,10 @@ export default function HowItWorksTimeline() {
 
                 {/* Title & Description */}
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-sans font-extrabold text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-200">
+                  <h3 className="text-2xl font-display font-bold text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-200">
                     {step.title}
                   </h3>
-                  <p className="font-body text-neutral-500 text-sm leading-relaxed">
+                  <p className="font-sans-clean text-neutral-500 text-sm leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -182,10 +182,10 @@ export default function HowItWorksTimeline() {
                   
                   {/* What We Do */}
                   <div className="space-y-2">
-                    <span className="text-[10px] font-sans font-black tracking-wider text-neutral-400 uppercase block">What We Do</span>
+                    <span className="text-[10px] font-mono-num font-medium tracking-wider text-neutral-400 uppercase block">What We Do</span>
                     <ul className="space-y-2">
                       {step.whatWeDo.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-xs font-sans font-bold text-neutral-600">
+                        <li key={idx} className="flex items-start gap-2 text-xs font-sans-clean font-semibold text-neutral-600">
                           <Check className="w-3.5 h-3.5 text-[#FF6B00] shrink-0 mt-0.5" strokeWidth={3} />
                           <span>{item}</span>
                         </li>
@@ -195,8 +195,8 @@ export default function HowItWorksTimeline() {
 
                   {/* Your Role */}
                   <div className="space-y-1">
-                    <span className="text-[10px] font-sans font-black tracking-wider text-neutral-400 uppercase block">Your Role</span>
-                    <p className="text-xs font-body text-neutral-500 leading-relaxed">
+                    <span className="text-[10px] font-mono-num font-medium tracking-wider text-neutral-400 uppercase block">Your Role</span>
+                    <p className="text-xs font-sans-clean text-neutral-500 leading-relaxed">
                       {step.yourRole}
                     </p>
                   </div>
@@ -211,8 +211,8 @@ export default function HowItWorksTimeline() {
                   <span className="text-[10px] font-black text-emerald-600">✓</span>
                 </div>
                 <div className="space-y-0.5">
-                  <span className="text-[9px] font-sans font-black uppercase tracking-widest text-emerald-600 block">System Outcome</span>
-                  <span className="text-xs font-sans font-bold text-neutral-700 leading-tight block">
+                  <span className="text-[9px] font-mono-num font-medium uppercase tracking-widest text-emerald-600 block">System Outcome</span>
+                  <span className="text-xs font-sans-clean font-semibold text-neutral-700 leading-tight block">
                     {step.outcome}
                   </span>
                 </div>
@@ -236,14 +236,14 @@ export default function HowItWorksTimeline() {
             <Eye className="w-4.5 h-4.5 text-[#FF6B00]" />
           </div>
           <div>
-            <span className="text-xs font-sans font-black tracking-wider text-neutral-400 uppercase block">Our Philosophy</span>
-            <span className="text-sm font-sans font-extrabold text-brand-dark">No Shortcuts. Quality-First Systems.</span>
+            <span className="text-xs font-mono-num font-medium tracking-wider text-neutral-400 uppercase block">Our Philosophy</span>
+            <span className="text-sm font-display font-bold text-brand-dark">No Shortcuts. Quality-First Systems.</span>
           </div>
         </div>
 
         <div className="h-[1px] w-full bg-neutral-200/50 sm:hidden" />
 
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-sans font-black text-neutral-500 uppercase tracking-widest">
+        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-sans-clean font-semibold text-neutral-500 uppercase tracking-widest">
           <div className="flex items-center gap-2">
             <Eye className="w-3.5 h-3.5 text-[#FF6B00]" />
             <span>Transparent</span>

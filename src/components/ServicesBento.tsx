@@ -48,7 +48,7 @@ export default function ServicesBento() {
             initial={{ opacity: 0, y: 15 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans font-black uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2"
+            className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2"
           >
             WHAT WE DO
           </motion.span>
@@ -57,7 +57,7 @@ export default function ServicesBento() {
             initial={{ opacity: 0, y: 20 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
-            className="text-4xl md:text-5xl lg:text-6xl font-sans font-black text-brand-dark tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-brand-dark tracking-tight leading-tight"
           >
             One System.<br className="sm:hidden" /> Five Growth Engines.
           </motion.h2>
@@ -66,7 +66,7 @@ export default function ServicesBento() {
             initial={{ opacity: 0, y: 20 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-            className="font-body text-neutral-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+            className="font-sans-clean text-neutral-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
           >
             Everything required to attract, capture, nurture, and convert qualified real estate leads—from the first ad click to the final sale.
           </motion.p>
@@ -197,15 +197,15 @@ function BentoCard({
           </div>
 
           <div className="space-y-1.5">
-            <span className="text-[10px] tracking-[0.18em] font-sans font-black text-neutral-400 uppercase block">
+            <span className="text-[10px] tracking-[0.18em] font-mono-num font-medium text-neutral-400 uppercase block">
               {subtitle}
             </span>
-            <h3 className="text-2xl font-sans font-extrabold text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-300">
+            <h3 className="text-2xl font-display font-bold text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-300">
               {title}
             </h3>
           </div>
 
-          <p className="font-body text-neutral-500 text-sm leading-relaxed max-w-md">
+          <p className="font-sans-clean text-neutral-500 text-sm leading-relaxed max-w-md">
             {description}
           </p>
         </div>
@@ -217,7 +217,7 @@ function BentoCard({
               <div className="flex-shrink-0 w-4 h-4 rounded-full bg-orange-50 flex items-center justify-center border border-orange-100">
                 <Check className="w-2.5 h-2.5 text-[#FF6B00]" strokeWidth={3} />
               </div>
-              <span className="font-sans text-[13px] font-bold text-neutral-600">
+              <span className="font-sans-clean text-[13px] font-semibold text-neutral-600">
                 {hl}
               </span>
             </div>
@@ -242,10 +242,10 @@ function BentoCard({
 // 1. Google & Meta Ads Visual
 function AdsVisual() {
   return (
-    <div className="space-y-3 font-sans">
+    <div className="space-y-3 font-sans-clean">
       <div className="flex items-center justify-between text-[11px] text-neutral-400 font-bold border-b border-neutral-200/50 pb-2">
         <span className="flex items-center gap-1.5"><TrendingUp className="w-3.5 h-3.5 text-emerald-500" /> Google & Meta ROAS</span>
-        <span className="text-[#FF6B00] bg-orange-50 px-2 py-0.5 rounded-full border border-orange-100">Live Campaign</span>
+        <span className="text-[#FF6B00] bg-orange-50 px-2 py-0.5 rounded-full border border-orange-100 font-mono-num font-medium text-[10px]">Live Campaign</span>
       </div>
       <div className="relative h-24 flex items-end justify-between px-2 pt-4">
         {/* Simplified high fidelity line graph */}
@@ -273,13 +273,13 @@ function AdsVisual() {
         </svg>
 
         <div className="z-10 bg-white/90 backdrop-blur-md shadow-sm border border-neutral-100 p-2 rounded-xl text-center">
-          <div className="text-[10px] text-neutral-400 font-bold uppercase">CPL Average</div>
-          <div className="text-sm font-black text-brand-dark">₹420</div>
+          <div className="text-[10px] text-neutral-400 font-bold uppercase font-mono-num">CPL Average</div>
+          <div className="text-sm font-bold text-brand-dark font-mono-num">₹420</div>
         </div>
 
         <div className="z-10 bg-white/90 backdrop-blur-md shadow-sm border border-neutral-100 p-2 rounded-xl text-center">
-          <div className="text-[10px] text-neutral-400 font-bold uppercase">Conversions</div>
-          <div className="text-sm font-black text-brand-dark">+148%</div>
+          <div className="text-[10px] text-neutral-400 font-bold uppercase font-mono-num">Conversions</div>
+          <div className="text-sm font-bold text-brand-dark font-mono-num">+148%</div>
         </div>
       </div>
     </div>
@@ -289,19 +289,19 @@ function AdsVisual() {
 // 2. WhatsApp Automation Visual
 function WhatsAppVisual() {
   return (
-    <div className="space-y-2.5 font-sans">
+    <div className="space-y-2.5 font-sans-clean">
       <div className="flex items-center gap-1.5 text-[11px] text-neutral-400 font-bold border-b border-neutral-200/50 pb-2">
         <Smartphone className="w-3.5 h-3.5 text-[#FF6B00]" />
         <span>WhatsApp Conversation Flow</span>
       </div>
       <div className="space-y-2 text-xs">
         <div className="flex justify-start">
-          <div className="bg-neutral-100 text-neutral-700 rounded-2xl rounded-tl-sm px-3.5 py-2 max-w-[85%] border border-neutral-200/40">
+          <div className="bg-neutral-100 text-neutral-700 rounded-2xl rounded-tl-sm px-3.5 py-2 max-w-[85%] border border-neutral-200/40 font-sans-clean">
             Hi, I saw your project. Can you send the pricing brochure?
           </div>
         </div>
         <div className="flex justify-end">
-          <div className="bg-[#FF6B00] text-white rounded-2xl rounded-tr-sm px-3.5 py-2 max-w-[85%] shadow-sm relative overflow-hidden">
+          <div className="bg-[#FF6B00] text-white rounded-2xl rounded-tr-sm px-3.5 py-2 max-w-[85%] shadow-sm relative overflow-hidden font-sans-clean">
             <span className="relative z-10 flex items-center gap-1.5">
               <Sparkles className="w-3 h-3 text-white animate-pulse" />
               <span>Instantly Sent! Here is the pricing PDF. 📥</span>
@@ -309,7 +309,7 @@ function WhatsAppVisual() {
           </div>
         </div>
         <div className="flex justify-end">
-          <div className="bg-[#FF6B00] text-white rounded-2xl rounded-tr-sm px-3.5 py-1.5 max-w-[80%] text-[11px] border border-orange-500/10 flex items-center gap-2">
+          <div className="bg-[#FF6B00] text-white rounded-2xl rounded-tr-sm px-3.5 py-1.5 max-w-[80%] text-[11px] border border-orange-500/10 flex items-center gap-2 font-sans-clean">
             <Calendar className="w-3 h-3 text-white" />
             <span>Schedule free site visit?</span>
           </div>
@@ -322,15 +322,15 @@ function WhatsAppVisual() {
 // 3. Landing Pages Visual
 function LandingPageVisual() {
   return (
-    <div className="space-y-3 font-sans">
+    <div className="space-y-3 font-sans-clean">
       <div className="flex items-center justify-between text-[11px] text-neutral-400 font-bold border-b border-neutral-200/50 pb-2">
         <span className="flex items-center gap-1.5">⚡ Lighthouse Score</span>
-        <span className="text-emerald-500 font-black">99/100 Speed</span>
+        <span className="text-emerald-500 font-bold font-mono-num">99/100 Speed</span>
       </div>
       <div className="bg-white/90 rounded-xl p-3 border border-neutral-100 shadow-sm space-y-2">
         <div className="h-3 w-2/3 bg-neutral-200 rounded animate-pulse" />
         <div className="h-2 w-full bg-neutral-100 rounded" />
-        <div className="h-6 w-full bg-orange-50 border border-orange-100 rounded-lg flex items-center justify-between px-2.5 text-[10px] text-[#FF6B00] font-black">
+        <div className="h-6 w-full bg-orange-50 border border-orange-100 rounded-lg flex items-center justify-between px-2.5 text-[10px] text-[#FF6B00] font-bold font-sans-clean">
           <span>Book Site Visit Now</span>
           <MousePointer className="w-3 h-3 animate-bounce" />
         </div>
@@ -342,19 +342,19 @@ function LandingPageVisual() {
 // 4. CRM & Lead Tracking Visual
 function CRMVisual() {
   return (
-    <div className="space-y-3 font-sans">
+    <div className="space-y-3 font-sans-clean">
       <div className="flex items-center justify-between text-[11px] text-neutral-400 font-bold border-b border-neutral-200/50 pb-2">
         <span>Pipeline Board</span>
-        <span className="text-xs font-black text-[#FF6B00]">Airtable</span>
+        <span className="text-xs font-bold text-[#FF6B00] font-mono-num">Airtable</span>
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between bg-white/90 p-2 rounded-xl border border-neutral-100 shadow-sm text-xs">
-          <span className="font-bold text-neutral-700">Abhishek Sharma</span>
-          <span className="text-[9px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full border border-amber-100 font-bold">Hot Prospect</span>
+          <span className="font-semibold text-neutral-700">Abhishek Sharma</span>
+          <span className="text-[9px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full border border-amber-100 font-medium font-mono-num">Hot Prospect</span>
         </div>
         <div className="flex items-center justify-between bg-white/90 p-2 rounded-xl border border-neutral-100 shadow-sm text-xs">
-          <span className="font-bold text-neutral-700">Rohan Mehta</span>
-          <span className="text-[9px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full border border-emerald-100 font-bold">Site Visit Booked</span>
+          <span className="font-semibold text-neutral-700">Rohan Mehta</span>
+          <span className="text-[9px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full border border-emerald-100 font-medium font-mono-num">Site Visit Booked</span>
         </div>
       </div>
     </div>
@@ -364,25 +364,25 @@ function CRMVisual() {
 // 5. Performance Reporting Visual
 function ReportingVisual() {
   return (
-    <div className="space-y-3 font-sans">
+    <div className="space-y-3 font-sans-clean">
       <div className="flex items-center justify-between text-[11px] text-neutral-400 font-bold border-b border-neutral-200/50 pb-2">
         <span>Channel Breakdown</span>
-        <span className="flex items-center gap-1 text-[10px] text-neutral-400 font-bold"><FileText className="w-3 h-3 text-[#FF6B00]" /> Weekly Report</span>
+        <span className="flex items-center gap-1 text-[10px] text-neutral-400 font-medium font-mono-num"><FileText className="w-3 h-3 text-[#FF6B00]" /> Weekly Report</span>
       </div>
       <div className="space-y-2 text-xs">
         <div className="space-y-1">
-          <div className="flex justify-between text-[10px] font-bold text-neutral-500">
+          <div className="flex justify-between text-[10px] font-semibold text-neutral-500">
             <span>Meta Ads (Instagram/FB)</span>
-            <span>48%</span>
+            <span className="font-mono-num">48%</span>
           </div>
           <div className="w-full h-1.5 bg-neutral-100 rounded-full overflow-hidden">
             <div className="h-full bg-[#FF6B00] rounded-full" style={{ width: '48%' }} />
           </div>
         </div>
         <div className="space-y-1">
-          <div className="flex justify-between text-[10px] font-bold text-neutral-500">
+          <div className="flex justify-between text-[10px] font-semibold text-neutral-500">
             <span>Google Search Ads</span>
-            <span>35%</span>
+            <span className="font-mono-num">35%</span>
           </div>
           <div className="w-full h-1.5 bg-neutral-100 rounded-full overflow-hidden">
             <div className="h-full bg-neutral-700 rounded-full" style={{ width: '35%' }} />

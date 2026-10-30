@@ -37,10 +37,15 @@ export default function Footer({ setCurrentPage }: FooterProps) {
           
           {/* Logo and Tagline Column */}
           <div className="md:col-span-1 space-y-4">
-            <div 
+            <a 
               id="footer-logo"
+              href="/"
+              aria-label="Lean System Home"
               className="flex flex-col items-start cursor-pointer select-none group"
-              onClick={() => handleNav('/', 'home')}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNav('/', 'home');
+              }}
             >
               <img 
                 src="https://lh3.googleusercontent.com/d/1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5" 
@@ -52,87 +57,112 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                   e.currentTarget.src = "https://drive.google.com/thumbnail?id=1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5&sz=w1000";
                 }}
               />
-              <span className="text-[7px] md:text-[8px] text-neutral-400 font-sans tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 h-0 group-hover:h-3 mt-0 group-hover:mt-1 overflow-hidden whitespace-nowrap">
+              <span className="text-[7px] md:text-[8px] text-neutral-400 font-sans-clean tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 h-0 group-hover:h-3 mt-0 group-hover:mt-1 overflow-hidden whitespace-nowrap">
                 Built for Real Estate Growth
               </span>
-            </div>
-            <p className="font-body text-xs text-neutral-400 leading-relaxed max-w-xs">
+            </a>
+            <p className="font-sans-clean text-xs text-neutral-400 leading-relaxed max-w-xs">
               Architecting high-conversion lead ingestion systems and automated communication infrastructure for modern builders and developers.
             </p>
           </div>
 
           {/* Quick Navigation links */}
           <div className="space-y-4">
-            <h3 className="font-sans font-bold text-xs tracking-widest uppercase text-neutral-300">NAVIGATION</h3>
-            <ul className="space-y-2 font-body text-xs sm:text-sm text-neutral-400">
+            <h3 className="font-sans-clean font-bold text-xs tracking-widest uppercase text-neutral-300">NAVIGATION</h3>
+            <ul className="space-y-2 font-sans-clean text-xs sm:text-sm text-neutral-400">
               <li>
-                <button 
-                  onClick={() => handleNav('/', 'home')} 
-                  className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
+                <a 
+                  href="/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav('/', 'home');
+                  }} 
+                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   Home
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => handleNav('/about', 'about')} 
-                  className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
+                <a 
+                  href="/about"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav('/about', 'about');
+                  }} 
+                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   About
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => handleNav('/services', 'services')} 
-                  className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
+                <a 
+                  href="/services"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav('/services', 'services');
+                  }} 
+                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   Services
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => {
+                <a 
+                  href="/#how-it-works"
+                  onClick={(e) => {
+                    e.preventDefault();
                     navigate('/');
                     setTimeout(() => {
                       document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }, 150);
                     if (setCurrentPage) setCurrentPage('home');
                   }} 
-                  className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
+                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   How It Works
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => handleNav('/blog', 'blog')} 
-                  className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
+                <a 
+                  href="/blog"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav('/blog', 'blog');
+                  }} 
+                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   Blog
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => handleNav('/contact', 'contact')} 
-                  className="hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
+                <a 
+                  href="/contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav('/contact', 'contact');
+                  }} 
+                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
                 >
                   Contact
-                </button>
+                </a>
               </li>
             </ul>
           </div>
 
           {/* Contact Details / Address */}
           <div className="space-y-4">
-            <h3 className="font-sans font-bold text-xs tracking-widest uppercase text-neutral-300">TECHNICAL HUB</h3>
-            <ul className="space-y-2 font-body text-xs sm:text-sm text-neutral-400">
+            <h3 className="font-sans-clean font-bold text-xs tracking-widest uppercase text-neutral-300">TECHNICAL HUB</h3>
+            <ul className="space-y-2 font-sans-clean text-xs sm:text-sm text-neutral-400">
               <li className="leading-relaxed">
                 LEAN Real Estate Growth Systems<br />
                 MG Road, Hyderabad<br />
                 Telangana, India
               </li>
               <li className="pt-2">
-                <span className="text-neutral-500">Contact:</span> hello@leansystem.co
+                <span className="text-neutral-500">Contact:</span>{' '}
+                <a href="mailto:hello@leansystem.co" className="font-mono-num font-medium text-neutral-300 hover:text-brand-orange transition-colors">
+                  hello@leansystem.co
+                </a>
               </li>
               <li>
                 <span className="text-neutral-500">Service Hours:</span> 24/7 Autonomous Systems Monitoring
@@ -142,8 +172,8 @@ export default function Footer({ setCurrentPage }: FooterProps) {
 
           {/* Interactive Automation Bulletin Sign-up */}
           <div className="space-y-4">
-            <h3 className="font-sans font-bold text-xs tracking-widest uppercase text-neutral-300 font-bold">AUTOMATION INSIGHTS</h3>
-            <p className="font-body text-sm text-neutral-400 leading-relaxed">
+            <h3 className="font-sans-clean font-bold text-xs tracking-widest uppercase text-neutral-300 font-bold">AUTOMATION INSIGHTS</h3>
+            <p className="font-sans-clean text-sm text-neutral-400 leading-relaxed">
               Subscribe to receive telemetry briefs regarding local real estate lead-capture benchmarks.
             </p>
             
@@ -155,7 +185,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                   placeholder="name@agency.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-neutral-900 border border-neutral-800 focus:border-brand-orange px-4 py-3 text-sm rounded-sm text-white focus:outline-none font-body placeholder-neutral-600 transition-colors"
+                  className="w-full bg-neutral-900 border border-neutral-800 focus:border-brand-orange px-4 py-3 text-sm rounded-sm text-white focus:outline-none font-sans-clean placeholder-neutral-600 transition-colors"
                 />
                 <button
                   type="submit"
@@ -166,7 +196,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                 </button>
               </div>
               {subscribed && (
-                <div className="flex items-center gap-2 text-brand-orange text-xs font-sans font-semibold animate-fade-in">
+                <div className="flex items-center gap-2 text-brand-orange text-xs font-sans-clean font-semibold animate-fade-in">
                   <Check className="w-3 h-3" />
                   <span>Subscribed! Ingestion systems configured.</span>
                 </div>
@@ -177,9 +207,9 @@ export default function Footer({ setCurrentPage }: FooterProps) {
         </div>
 
         {/* Bottom copyright and legal note */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500 font-sans tracking-wide space-y-4 md:space-y-0">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500 font-sans-clean tracking-wide space-y-4 md:space-y-0">
           <div>
-            © {new Date().getFullYear()} LEAN Automation Systems. All rights reserved. Built with Swiss precision.
+            © <span className="font-mono-num">{new Date().getFullYear()}</span> LEAN Automation Systems. All rights reserved. Built with Swiss precision.
           </div>
           <div className="flex space-x-6">
             <span className="hover:text-white cursor-pointer transition-colors">Privacy Telemetry</span>

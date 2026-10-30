@@ -69,10 +69,20 @@ export default function App() {
     }
   ];
 
-  // Scroll to top on route change
+  // Scroll to hash target or top on route change
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    if (location.hash) {
+      const targetId = location.hash.replace(/^#/, '');
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname, location.hash]);
 
   // Auto-advance slider with progress bar (Only runs on Home View `/`)
   useEffect(() => {
@@ -168,13 +178,13 @@ export default function App() {
                 {/* GENERAL FAQ SECTION */}
                 <section id="general-faqs" className="max-w-4xl mx-auto px-6 scroll-mt-24">
                   <div className="text-center mb-12 space-y-2">
-                    <span className="text-brand-orange text-xs tracking-widest font-sans font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
+                    <span className="text-brand-orange text-xs tracking-widest font-sans-clean font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
                       HAVE QUESTIONS?
                     </span>
-                    <h2 className="text-2xl md:text-3xl font-sans font-black text-brand-dark tracking-tight">
+                    <h2 className="text-2xl md:text-3xl font-display font-bold text-brand-dark tracking-tight">
                       Frequently Asked Questions
                     </h2>
-                    <p className="font-body text-brand-gray text-xs sm:text-sm max-w-lg mx-auto">
+                    <p className="font-sans-clean text-brand-gray text-xs sm:text-sm max-w-lg mx-auto">
                       Direct, transparent answers regarding lead quality, timelines, ownership, and systems.
                     </p>
                   </div>
@@ -188,7 +198,7 @@ export default function App() {
                             onClick={() => toggleFaq(idx)}
                             className="w-full flex items-center justify-between text-left py-3 group cursor-pointer focus:outline-none"
                           >
-                            <span className="font-sans font-extrabold text-sm sm:text-base text-brand-navy group-hover:text-brand-orange transition-colors duration-200">
+                            <span className="font-sans-clean font-semibold text-sm sm:text-base text-brand-navy group-hover:text-brand-orange transition-colors duration-200">
                               {faq.q}
                             </span>
                             {isOpen ? (
@@ -207,7 +217,7 @@ export default function App() {
                                 transition={{ duration: 0.2 }}
                                 className="overflow-hidden"
                               >
-                                <p className="font-body text-brand-gray text-xs sm:text-sm leading-relaxed pt-2 pb-4 px-1 bg-brand-light/50 rounded-sm">
+                                <p className="font-sans-clean text-brand-gray text-xs sm:text-sm leading-relaxed pt-2 pb-4 px-1 bg-brand-light/50 rounded-sm">
                                   {faq.a}
                                 </p>
                               </motion.div>
@@ -252,8 +262,8 @@ export default function App() {
                 transition={{ duration: 0.3 }}
               >
                 <PageMetadata 
-                  title="Our Methodology | LEAN Growth Systems"
-                  description="Learn about our process-driven lead capture infrastructure, engineering standards, and zero vendor lock-in guidelines built to empower modern developers."
+                  title="About & Methodology | LEAN Growth Systems"
+                  description="Learn about Lean System's process-driven lead capture infrastructure, engineering standards, and zero vendor lock-in systems built for property developers."
                 />
                 <AboutPremium setCurrentPage={legacySetPage} />
               </motion.div>
@@ -275,6 +285,22 @@ export default function App() {
               </motion.div>
             } />
 
+            <Route path="/blog/:slug" element={
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <PageMetadata 
+                  title="The LEAN Bulletin | Technical Studies & Real Estate Insights"
+                  description="Expert breakdowns, digital advertising optimization studies, and real estate marketing automation briefs with direct database integration."
+                  canonicalPath="/blog"
+                />
+                <BlogPremium />
+              </motion.div>
+            } />
+
             {/* ==================== 5. CONTACT VIEW ==================== */}
             <Route path="/contact" element={
               <motion.div
@@ -284,14 +310,14 @@ export default function App() {
                 transition={{ duration: 0.3 }}
               >
                 <PageMetadata 
-                  title="Get Started & Schedule System Audit | LEAN Growth Systems"
+                  title="Contact & Schedule System Audit | LEAN Growth Systems"
                   description="Schedule a 30-minute growth consultation or submit your project details. Let's analyze your current digital marketing parameters and build your system."
                 />
                 <ContactPremium />
               </motion.div>
             } />
 
-            {/* fallback redirect for legacy page links */}
+            {/* fallback redirect for legacy page links (canonicalized to /contact, excluded from indexing) */}
             <Route path="/get-started" element={
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
@@ -302,6 +328,8 @@ export default function App() {
                 <PageMetadata 
                   title="Get Started & Schedule System Audit | LEAN Growth Systems"
                   description="Schedule a 30-minute growth consultation or submit your project details. Let's analyze your current digital marketing parameters and build your system."
+                  canonicalPath="/contact"
+                  noindex={true}
                 />
                 <ContactPremium />
               </motion.div>
@@ -316,6 +344,43 @@ export default function App() {
                 transition={{ duration: 0.3 }}
               >
                 <HelloPrivateCard />
+              </motion.div>
+            } />
+
+            {/* ==================== 7. NOT FOUND VIEW (404) ==================== */}
+            <Route path="*" element={
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+                className="min-h-[70vh] flex flex-col items-center justify-center text-center px-6 pt-28 pb-20 space-y-6 bg-brand-light"
+              >
+                <PageMetadata 
+                  title="Page Not Found | LEAN Growth Systems"
+                  description="The requested page could not be found on Lean System."
+                  noindex={true}
+                />
+                <span className="text-xs font-mono-num font-medium tracking-widest text-brand-orange uppercase">
+                  ERROR 404
+                </span>
+                <h1 className="text-3xl sm:text-5xl font-display font-bold text-brand-dark tracking-tight">
+                  Page Not Found
+                </h1>
+                <p className="font-sans-clean text-neutral-500 text-sm sm:text-base max-w-md leading-relaxed">
+                  The page you are looking for doesn&apos;t exist or has been moved. Return to our homepage to explore our real estate lead systems.
+                </p>
+                <a
+                  href="/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/');
+                  }}
+                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-orange hover:bg-orange-600 text-white font-sans-clean font-bold text-sm rounded-full transition-colors duration-200"
+                >
+                  <span>Back to Homepage</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
               </motion.div>
             } />
 
