@@ -1,28 +1,89 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { ArrowRight } from './icons';
 
-const OUTCOME_PHRASES = [
-  'more appointments.',
-  'more enquiries.',
-  'more qualified leads.',
-  'faster follow-ups.',
-  'better conversions.',
-  'happier clients.',
-];
+const TYPEWRITER_PHRASES = [
+  'Appointments',
+  'Qualified leads',
+  'More property sales',
+] as const;
+
+const LONGEST_PHRASE = 'More property sales';
+const TYPING_SPEED_MS = 34;
+const DELETING_SPEED_MS = 18;
+const PAUSE_AFTER_TYPING_MS = 1000;
+const PAUSE_AFTER_DELETING_MS = 120;
 
 export default function MinimalHero() {
   const navigate = useNavigate();
   const [phraseIndex, setPhraseIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
+  );
 
-  // Rotating phrase interval (2.6s)
+  // Listen for OS/browser reduced-motion preference changes
   useEffect(() => {
-    const timer = setInterval(() => {
-      setPhraseIndex((prev) => (prev + 1) % OUTCOME_PHRASES.length);
-    }, 2600);
-    return () => clearInterval(timer);
+    if (typeof window === 'undefined') return;
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setPrefersReducedMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
+
+  // Continuous typewriter state machine with clean timer lifecycle management
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setPhraseIndex(0);
+      setDisplayedText(TYPEWRITER_PHRASES[0]);
+      setIsDeleting(false);
+      return;
+    }
+
+    const currentPhrase = TYPEWRITER_PHRASES[phraseIndex];
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting) {
+      if (displayedText.length < currentPhrase.length) {
+        timeoutId = setTimeout(() => {
+          setDisplayedText(currentPhrase.slice(0, displayedText.length + 1));
+        }, TYPING_SPEED_MS);
+      } else {
+        timeoutId = setTimeout(() => {
+          setIsDeleting(true);
+        }, PAUSE_AFTER_TYPING_MS);
+      }
+    } else {
+      if (displayedText.length > 0) {
+        timeoutId = setTimeout(() => {
+          setDisplayedText(currentPhrase.slice(0, displayedText.length - 1));
+        }, DELETING_SPEED_MS);
+      } else {
+        timeoutId = setTimeout(() => {
+          setIsDeleting(false);
+          setPhraseIndex((prev) => (prev + 1) % TYPEWRITER_PHRASES.length);
+        }, PAUSE_AFTER_DELETING_MS);
+      }
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [displayedText, isDeleting, phraseIndex, prefersReducedMotion]);
+
+  const currentPhrase = TYPEWRITER_PHRASES[phraseIndex];
+  const visibleText = prefersReducedMotion ? TYPEWRITER_PHRASES[0] : displayedText;
+  const isActivelyTypingOrDeleting =
+    !prefersReducedMotion &&
+    ((!isDeleting && displayedText.length < currentPhrase.length) ||
+      (isDeleting && displayedText.length > 0));
 
   const handleLetsTalk = () => {
     navigate('/contact');
@@ -118,7 +179,7 @@ export default function MinimalHero() {
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-10 lg:px-16 pt-24 sm:pt-36 md:pt-40 pb-12 sm:pb-24 w-full flex flex-col items-center justify-center">
         <div className="space-y-6 sm:space-y-10 text-center flex flex-col items-center max-w-4xl w-full">
           
-          {/* Centered Headline with Rotating Final Phrase */}
+          {/* Centered Headline with Typewriter Final Phrase */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -131,20 +192,31 @@ export default function MinimalHero() {
             <span className="block text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[4.75rem] font-semibold text-neutral-800 tracking-[-0.035em] mt-0.5 sm:mt-1">
               that create
             </span>
-            
-            <span className="block relative mt-1.5 sm:mt-3 text-[1.65rem] xs:text-3xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[5.85rem] font-extrabold text-brand-orange tracking-[-0.035em] min-h-[1.2em] flex items-center justify-center overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={phraseIndex}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="inline-block whitespace-nowrap px-1"
-                >
-                  {OUTCOME_PHRASES[phraseIndex]}
-                </motion.span>
-              </AnimatePresence>
+
+            <span className="grid place-items-center w-full max-w-full mt-1.5 sm:mt-3 py-0.5 text-[clamp(1.05rem,5.2vw,2.2rem)] sm:text-[clamp(2.05rem,5.1vw,3.45rem)] leading-[1.2] font-extrabold text-brand-orange tracking-[-0.035em]">
+              <span className="sr-only">{currentPhrase}</span>
+              {/* Invisible longest-phrase sizer reserves exact height and width to prevent layout shifts */}
+              <span
+                aria-hidden="true"
+                className="col-start-1 row-start-1 invisible pointer-events-none select-none block w-full max-w-full text-center px-1 break-words"
+              >
+                {LONGEST_PHRASE}
+                <span className="inline-block w-[2.5px] sm:w-[3.5px] h-[0.82em] ml-[0.08em] align-[-0.08em]" />
+              </span>
+              {/* Live centered typewriter phrase + subtle blinking caret */}
+              <span
+                aria-hidden="true"
+                className="col-start-1 row-start-1 block w-full max-w-full text-center px-1 break-words"
+              >
+                <span>{visibleText || '\u200B'}</span>
+                {!prefersReducedMotion && (
+                  <span
+                    className={`inline-block w-[2.5px] sm:w-[3.5px] h-[0.82em] ml-[0.08em] align-[-0.08em] rounded-[1px] bg-brand-orange/85 ${
+                      isActivelyTypingOrDeleting ? 'opacity-100' : 'animate-caret-blink'
+                    }`}
+                  />
+                )}
+              </span>
             </span>
           </motion.h1>
 
