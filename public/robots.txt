@@ -6,4 +6,4 @@ User-agent: *
 Allow: /
 Disallow: /hello
 
-Sitemap: https://leansystem.co/sitemap.xml
+Sitemap: https://www.leansystem.co/sitemap.xml

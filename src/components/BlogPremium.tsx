@@ -89,7 +89,7 @@ export default function BlogPremium() {
   }, [slug]);
 
   const handleShare = (articleSlug: string) => {
-    const url = `https://leansystem.co/blog/${articleSlug}`;
+    const url = `https://www.leansystem.co/blog/${articleSlug}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopiedSlug(articleSlug);
       setTimeout(() => setCopiedSlug(null), 3000);

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const CANONICAL_ORIGIN = 'https://leansystem.co';
+const CANONICAL_ORIGIN = 'https://www.leansystem.co';
 
 interface PageMetadataProps {
   title: string;

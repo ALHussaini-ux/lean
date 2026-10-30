@@ -1,5 +1,4 @@
 {
-  "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
     {
@@ -31,7 +30,39 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!sitemap\\.xml$|robots\\.txt$|favicon\\.png$|assets/).*)",
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog/sub-60-second-response-rule",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog/how-builders-waste-ad-spend",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog/database-central-nervous-system",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/get-started",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hello",
       "destination": "/index.html"
     }
   ]
