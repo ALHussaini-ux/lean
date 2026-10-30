@@ -159,8 +159,8 @@ export default function App() {
                 className="space-y-24 pb-24"
               >
                 <PageMetadata 
-                  title="LEAN Growth Systems | Lead Infrastructure for Real Estate"
-                  description="We build high-conversion digital advertising pipelines and automated WhatsApp communication systems specifically for Indian property builders and developers."
+                  title="Lean System | Real Estate Lead Generation & Automation"
+                  description="Lean System builds lead generation and digital growth systems for real estate businesses in Hyderabad, India, combining targeted ads and WhatsApp automation."
                 />
 
                 {/* MINIMALIST HERO SECTION (APPLE / LINEAR STYLE) */}
