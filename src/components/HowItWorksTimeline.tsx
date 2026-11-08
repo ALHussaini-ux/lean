@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'motion/react';
 import { 
   Rocket, 
@@ -13,6 +13,7 @@ import {
   Activity,
   Users
 } from './icons';
+import { gsap, ScrollTrigger, prefersReducedMotion } from '../utils/scroll';
 
 interface StepItem {
   week: string;
@@ -27,19 +28,79 @@ interface StepItem {
 
 export default function HowItWorksTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const timelineGridRef = useRef<HTMLDivElement>(null);
+  const desktopLineRef = useRef<HTMLDivElement>(null);
+  const ambientGlowRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
+
+  useEffect(() => {
+    if (prefersReducedMotion() || !containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Progressive scrubbed draw for the timeline connecting line on scroll
+      if (desktopLineRef.current && timelineGridRef.current) {
+        gsap.fromTo(desktopLineRef.current,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: timelineGridRef.current,
+              start: 'top 80%',
+              end: 'bottom 70%',
+              scrub: 0.3,
+            }
+          }
+        );
+      }
+
+      // Parallax drift on ambient background aura
+      if (ambientGlowRef.current) {
+        gsap.to(ambientGlowRef.current, {
+          y: -40,
+          scale: 1.15,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          }
+        });
+      }
+
+      // Staggered reveal for timeline step cards
+      gsap.fromTo('.timeline-step-card',
+        { opacity: 0, y: 45 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          stagger: 0.14,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: timelineGridRef.current || containerRef.current,
+            start: 'top 82%',
+            once: true,
+          }
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const steps: StepItem[] = [
     {
       week: "Week 1",
       title: "Setup & Launch",
-      description: "We configure the foundation of your lead generation system, including campaigns, landing pages, WhatsApp automation, and tracking.",
+      description: "We configure the foundation of your lead generation system, including campaigns, landing pages, lead tracking, and analytics.",
       icon: <Rocket className="w-5 h-5 text-[#FF6B00]" />,
       whatWeDo: [
         "Strategy session",
         "Landing page setup",
         "Google & Meta campaign configuration",
-        "WhatsApp automation",
+        "Lead tracking setup",
         "CRM integration"
       ],
       yourRole: "Provide project information, creative assets, and account access.",
@@ -82,8 +143,8 @@ export default function HowItWorksTimeline() {
       ref={containerRef}
       className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-28 md:py-36 scroll-mt-24 overflow-hidden"
     >
-      {/* Soft background light reflections for Apple-like atmosphere */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-orange-500/5 blur-[120px] pointer-events-none" />
+      {/* Soft background light reflections with parallax */}
+      <div ref={ambientGlowRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-orange-500/5 blur-[120px] pointer-events-none will-change-transform" />
 
       {/* SECTION HEADER */}
       <div className="text-center mb-20 md:mb-24 space-y-4 max-w-3xl mx-auto">
@@ -116,15 +177,13 @@ export default function HowItWorksTimeline() {
       </div>
 
       {/* TIMELINE CONTAINER */}
-      <div className="relative mb-24">
+      <div ref={timelineGridRef} className="relative mb-24">
         
-        {/* Progress connecting lines for desktop */}
-        <div className="absolute top-[38px] left-[15%] right-[15%] h-[1.5px] bg-neutral-200 hidden lg:block z-0 overflow-hidden">
-          <motion.div 
-            initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{ duration: 1.5, delay: 0.3, ease: 'easeInOut' }}
-            className="h-full bg-gradient-to-r from-neutral-200 via-[#FF6B00]/40 to-neutral-200 origin-left"
+        {/* Progress connecting lines for desktop with progressive scrubbed fill */}
+        <div className="absolute top-[38px] left-[15%] right-[15%] h-[2px] bg-neutral-200/60 hidden lg:block z-0 overflow-hidden rounded-full">
+          <div 
+            ref={desktopLineRef}
+            className="h-full bg-gradient-to-r from-neutral-300 via-[#FF6B00] to-orange-400 origin-left scale-x-0 will-change-transform shadow-[0_0_8px_rgba(255,107,0,0.4)]"
           />
         </div>
 
@@ -133,11 +192,11 @@ export default function HowItWorksTimeline() {
           {steps.map((step, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 45 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 45 }}
-              transition={{ duration: 0.8, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ duration: 0.8, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -6 }}
-              className={`group flex flex-col justify-between p-5 sm:p-8 rounded-[20px] sm:rounded-[24px] border transition-all duration-300 relative bg-white/10 backdrop-blur-[24px] ${
+              className={`timeline-step-card group flex flex-col justify-between p-5 sm:p-8 rounded-[20px] sm:rounded-[24px] border transition-all duration-300 relative bg-white/10 backdrop-blur-[24px] will-change-transform ${
                 step.isActive 
                   ? 'border-[#FF6B00]/30 shadow-[0_20px_50px_rgba(255,107,0,0.06),inset_0_1.5px_3px_rgba(255,255,255,0.4)] hover:shadow-[0_24px_60px_rgba(255,107,0,0.1),inset_0_1.5px_4px_rgba(255,255,255,0.5)] ring-1 ring-[#FF6B00]/10' 
                   : 'border-white/20 shadow-[0_10px_35px_-10px_rgba(0,0,0,0.03),inset_0_1.5px_3px_rgba(255,255,255,0.4)] hover:border-white/35 hover:bg-white/18 hover:shadow-[0_20px_45px_rgba(0,0,0,0.04),inset_0_1.5px_3px_rgba(255,255,255,0.5)]'

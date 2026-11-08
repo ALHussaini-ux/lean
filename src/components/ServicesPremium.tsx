@@ -92,14 +92,14 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
       details: [
         'Single responsive project page designed for speed',
         'Google Ads Search campaign launch (targeted ad groups)',
-        'Instant WhatsApp automated response template',
+        'Instant automated lead notification alert',
         'Basic lead delivery to secure Google Sheets',
         'Weekly activity and parameter updates'
       ],
       specs: [
         { label: 'Channels', value: 'Google Search' },
         { label: 'Landing Pages', value: '1 Project Page' },
-        { label: 'WhatsApp', value: 'Auto-reply trigger' },
+        { label: 'Notifications', value: 'Instant lead alert' },
         { label: 'Reporting', value: 'Weekly reports' }
       ]
     },
@@ -114,14 +114,14 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
       details: [
         'Multiple highly optimized landing variations',
         'Comprehensive Google & Meta campaign management',
-        'Advanced WhatsApp conversation and brochure triggers',
+        'Real-time lead alerts and automated brochure delivery',
         'Airtable conversion board integration',
         'Bi-weekly optimization sync calls'
       ],
       specs: [
         { label: 'Channels', value: 'Google & Meta' },
         { label: 'Landing Pages', value: 'Multi-Page + A/B Testing' },
-        { label: 'WhatsApp', value: 'Advanced Flows + PDF dispatch' },
+        { label: 'Lead Dispatch', value: 'Real-time alerts + PDF dispatch' },
         { label: 'Reporting', value: 'Live database & bi-weekly calls' }
       ]
     },
@@ -143,7 +143,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
       specs: [
         { label: 'Channels', value: 'Google, Meta & Display Networks' },
         { label: 'Landing Pages', value: 'Bespoke Custom UI Components' },
-        { label: 'WhatsApp', value: 'Interactive API chatbots & routing' },
+        { label: 'Integrations', value: 'Custom API webhooks & multi-channel routing' },
         { label: 'Reporting', value: 'Custom live dashboard + weekly calls' }
       ]
     }
@@ -176,19 +176,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
         'Secure, direct form submissions to prevent webhook delays'
       ]
     },
-    {
-      id: 'whatsapp',
-      title: 'WhatsApp Automation',
-      icon: <MessageSquare className="w-5 h-5 text-[#FF6B00]" />,
-      summary: 'Sub-60s response structures and automatic brochure delivery.',
-      deepDive: 'Response latency is critical in real estate. We create custom automated triggers that dispatch project details and capture basic parameters within seconds of form submission.',
-      bullets: [
-        'Automatic PDF brochure dispatch upon form submission',
-        'Initial filter questions to pre-qualify buyer parameters',
-        'Direct links for immediate Sales Rep calling configuration',
-        'Built using verified WhatsApp Business API standards'
-      ]
-    },
+
     {
       id: 'crm',
       title: 'CRM Integration',
@@ -259,7 +247,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
       name: 'Conversion Infrastructure',
       items: [
         { name: 'High-Speed Project Landing Page', starter: '1 Template', growth: '2+ A/B Variations', premium: 'Bespoke Design' },
-        { name: 'Sub-60s WhatsApp Automation Bot', starter: 'Standard template', growth: 'Advanced conversation flows', premium: 'Custom API routing' },
+        { name: 'Real-Time Lead Alert Dispatch', starter: 'Instant Email & Sheet sync', growth: 'Automated SMS & Webhook triggers', premium: 'Custom CRM API routing' },
         { name: 'Brochure PDF Automatic Dispatch', starter: 'Included', growth: 'Included', premium: 'Included' },
         { name: 'Domain & SSL Setup (Self-Owned)', starter: 'Included', growth: 'Included', premium: 'Included' }
       ]
@@ -289,7 +277,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
   const faqs = [
     {
       q: 'How long does setup usually take?',
-      a: 'A typical foundational setup is completed and ready to launch within 7 to 10 days. This includes constructing the conversion landing page, configuring campaigns, establishing UTM parameters, and structuring initial WhatsApp triggers. We launch once campaign approvals and asset handovers are finalized.'
+      a: 'A typical foundational setup is completed and ready to launch within 7 to 10 days. This includes constructing the conversion landing page, configuring campaigns, establishing UTM parameters, and structuring initial lead notification triggers. We launch once campaign approvals and asset handovers are finalized.'
     },
     {
       q: 'Can plans be customized?',
@@ -597,7 +585,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
               {[
                 { step: '01', title: 'Discovery Call', subtitle: 'Understand business parameters, listing locations, and target developer goals.' },
                 { step: '02', title: 'Planning', subtitle: 'Identify high-intent keywords, map custom conversion funnels, and draft campaign budgets.' },
-                { step: '03', title: 'Build', subtitle: 'Construct conversion-optimized landing portals and configure secure WhatsApp CRM webhooks.' },
+                { step: '03', title: 'Build', subtitle: 'Construct conversion-optimized landing portals and configure secure CRM webhook pipelines.' },
                 { step: '04', title: 'Launch', subtitle: 'Activate search/social ad groups, monitor parameter captures, and verify system integrity.' },
                 { step: '05', title: 'Monthly Optimization', subtitle: 'Prune non-converting keywords, adjust bid weights, and audit overall channel efficiency.' }
               ].map((item, idx) => (

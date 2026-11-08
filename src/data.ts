@@ -23,16 +23,6 @@ export const SERVICES: ServiceCard[] = [
   },
   {
     number: '3',
-    title: 'WhatsApp Automation',
-    description: 'Instant replies to leads. Brochure delivery in seconds. Site visit booking without manual follow-up. Responds 24/7.',
-    details: [
-      'Brochure dispatch within 60 seconds',
-      'Site visit scheduling without friction',
-      'Continuous 24/7 responsive follow-ups'
-    ]
-  },
-  {
-    number: '4',
     title: 'Lead Tracking',
     description: "Complete visibility on every lead. Know who's interested, who's visited your site, who's ready to buy. No leads lost to disorganization.",
     details: [
@@ -42,7 +32,7 @@ export const SERVICES: ServiceCard[] = [
     ]
   },
   {
-    number: '5',
+    number: '4',
     title: 'Performance Reports',
     description: 'Weekly insights. Cost per lead. Conversion rates. Data that shows exactly what\'s working and where to optimize.',
     details: [
@@ -63,7 +53,7 @@ export const PRICING_TIERS: PricingTier[] = [
     features: [
       'Google Ads management (up to ₹8,000 monthly ad spend)',
       'Professional landing page (hosted and maintained)',
-      'WhatsApp auto-reply setup and maintenance',
+      'Instant lead notification and CRM delivery',
       'Lead database (Google Sheets) with tracking',
       'Weekly performance reports with metrics',
       'One monthly strategy discussion'
@@ -71,7 +61,7 @@ export const PRICING_TIERS: PricingTier[] = [
     typicalResults: [
       '15-25 qualified leads per month',
       'Cost per lead: ₹400-600',
-      'Lead response time: <1 minute (WhatsApp)',
+      'Lead delivery time: <1 minute',
       'Lead time to first results: 48-72 hours'
     ],
     whoItsFor: [
@@ -92,7 +82,7 @@ export const PRICING_TIERS: PricingTier[] = [
     features: [
       'Google Ads + Meta Ads (up to ₹20,000 total spend)',
       'Landing page with A/B testing and optimization',
-      'Advanced WhatsApp automation + SMS messaging',
+      'Multi-channel lead notification & automated SMS',
       'Airtable database with conversion dashboard',
       'Bi-weekly strategy calls and optimization',
       'Bi-weekly performance reports with insights'
@@ -100,7 +90,7 @@ export const PRICING_TIERS: PricingTier[] = [
     typicalResults: [
       '40-60 qualified leads per month',
       'Cost per lead: ₹300-500',
-      'Lead response time: <30 minutes (WhatsApp)',
+      'Lead routing time: <15 minutes',
       'Conversion visibility: Full funnel tracking'
     ],
     whoItsFor: [
@@ -121,7 +111,7 @@ export const PRICING_TIERS: PricingTier[] = [
     features: [
       'Unlimited ad spend management (Google + Meta)',
       'Custom landing page design + full optimization',
-      'Full funnel WhatsApp + SMS + email automation',
+      'Full funnel lead routing & automated SMS/email alerts',
       'Advanced analytics dashboard (custom reporting)',
       'Weekly strategy calls with dedicated account manager',
       'Proactive optimization and scaling recommendations'
@@ -197,7 +187,7 @@ export const GENERAL_FAQS = [
   },
   {
     q: 'Can you help with offline sales too?',
-    a: 'We focus on digital lead generation (ads, landing pages, WhatsApp). Site visit conversions depend on your sales team. We\'re not a sales company — we\'re lead infrastructure.'
+    a: "We focus on digital lead generation (ads, landing pages, CRM pipelines). Site visit conversions depend on your sales team. We're not a sales company — we're lead infrastructure."
   },
   {
     q: 'Do you provide customer service support?',

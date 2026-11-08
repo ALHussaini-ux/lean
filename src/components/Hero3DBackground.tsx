@@ -44,7 +44,7 @@ export default function Hero3DBackground({ activeTab }: Hero3DBackgroundProps) {
     // Groups for each slide scene
     const group1 = new THREE.Group(); // Slide 1: Real Estate (Buildings & Grid)
     const group2 = new THREE.Group(); // Slide 2: Lead Generation (funnel)
-    const group3 = new THREE.Group(); // Slide 3: WhatsApp Automation (Broadcast/Rings)
+    const group3 = new THREE.Group(); // Slide 3: Conversion Pipelines (Signals/Rings)
     const group4 = new THREE.Group(); // Slide 4: Infrastructure (Knot & Grid)
 
     scene.add(group1);
@@ -234,7 +234,7 @@ export default function Hero3DBackground({ activeTab }: Hero3DBackgroundProps) {
     }
 
     // =========================================================================
-    // SLIDE 3: WHATSAPP AUTOMATION (Expanding Concentric Broadcast Signals)
+    // SLIDE 3: CONVERSION PIPELINES (Expanding Concentric Broadcast Signals)
     // =========================================================================
     const signalRings: {
       mesh: THREE.Mesh;
@@ -481,7 +481,7 @@ export default function Hero3DBackground({ activeTab }: Hero3DBackgroundProps) {
       }
 
       // -----------------------------------------------------------------------
-      // ANIMATE SLIDE 3: WHATSAPP AUTOMATION
+      // ANIMATE SLIDE 3: CONVERSION PIPELINES
       // -----------------------------------------------------------------------
       if (group3.visible) {
         group3.rotation.y = mouseX * 0.12;

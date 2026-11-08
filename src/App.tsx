@@ -20,6 +20,7 @@ import MinimalHero from './components/MinimalHero';
 import PageMetadata from './components/PageMetadata';
 import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from './components/icons';
 import { motion, AnimatePresence } from 'motion/react';
+import { gsap, ScrollTrigger, prefersReducedMotion } from './utils/scroll';
 
 export default function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -54,9 +55,9 @@ export default function App() {
       action: () => handleCTA('/services')
     },
     {
-      category: 'WHATSAPP AUTOMATION',
-      title: 'Brochure dispatch within 60 seconds and site visit scheduling 24/7.',
-      subheading: 'Outperform slow human responses. WhatsApp bots engage prospects immediately when their interest is highest.',
+      category: 'CONVERSION LANDING PAGES',
+      title: 'Ultra-fast landing pages engineered for high buyer intent.',
+      subheading: 'Turn ad clicks into qualified enquiries. Mobile-first design with built-in site visit scheduling forms.',
       ctaText: 'Explore Service Tiers',
       action: () => handleCTA('/services')
     },
@@ -69,7 +70,7 @@ export default function App() {
     }
   ];
 
-  // Scroll to hash target or top on route change
+  // Scroll to hash target or top on route change, and refresh ScrollTrigger
   useEffect(() => {
     if (location.hash) {
       const targetId = location.hash.replace(/^#/, '');
@@ -78,11 +79,35 @@ export default function App() {
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+        ScrollTrigger.refresh();
       }, 100);
     } else {
       window.scrollTo(0, 0);
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 150);
     }
   }, [location.pathname, location.hash]);
+
+  // Global subtle scroll progress indicator
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.to('#global-scroll-progress', {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.documentElement,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.1,
+        }
+      });
+    });
+
+    return () => ctx.revert();
+  }, [location.pathname]);
 
   // Auto-advance slider with progress bar (Only runs on Home View `/`)
   useEffect(() => {
@@ -141,6 +166,17 @@ export default function App() {
   return (
     <div id="lean-app" className="min-h-screen bg-white text-brand-dark flex flex-col justify-between selection:bg-brand-orange selection:text-white">
       
+      {/* Top Reading / Scroll Progress Bar */}
+      <div 
+        aria-hidden="true" 
+        className="fixed top-0 left-0 right-0 h-[2.5px] z-50 pointer-events-none origin-left"
+      >
+        <div 
+          id="global-scroll-progress" 
+          className="h-full bg-gradient-to-r from-brand-orange via-[#FF8C33] to-[#FFA352] origin-left scale-x-0 will-change-transform shadow-[0_0_10px_rgba(255,122,26,0.65)]" 
+        />
+      </div>
+
       {/* 1. STICKY HEADER */}
       <Header setCurrentPage={legacySetPage} />
 
@@ -160,7 +196,7 @@ export default function App() {
               >
                 <PageMetadata 
                   title="Lean System | Real Estate Lead Generation & Automation"
-                  description="Lean System builds lead generation and digital growth systems for real estate businesses in Hyderabad, India, combining targeted ads and WhatsApp automation."
+                  description="Lean System builds lead generation and digital growth systems for real estate businesses in Hyderabad, India, combining targeted ads and conversion pipelines."
                 />
 
                 {/* MINIMALIST HERO SECTION (APPLE / LINEAR STYLE) */}
@@ -176,7 +212,14 @@ export default function App() {
                 <HowItWorksTimeline />
 
                 {/* GENERAL FAQ SECTION */}
-                <section id="general-faqs" className="max-w-4xl mx-auto px-6 scroll-mt-24">
+                <motion.section 
+                  id="general-faqs" 
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="max-w-4xl mx-auto px-6 scroll-mt-24"
+                >
                   <div className="text-center mb-12 space-y-2">
                     <span className="text-brand-orange text-xs tracking-widest font-sans-clean font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
                       HAVE QUESTIONS?
@@ -227,12 +270,19 @@ export default function App() {
                       );
                     })}
                   </div>
-                </section>
+                </motion.section>
 
                 {/* BOTTOM CTA: DIRECT CONTACT CONVERSION */}
-                <section id="contact" className="border-t border-neutral-200 pt-16 scroll-mt-24">
+                <motion.section 
+                  id="contact" 
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.12 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="border-t border-neutral-200 pt-16 scroll-mt-24"
+                >
                   <LeadPortal />
-                </section>
+                </motion.section>
 
               </motion.div>
             } />
@@ -247,7 +297,7 @@ export default function App() {
               >
                 <PageMetadata 
                   title="Service Tiers & Deliverables | LEAN Growth Systems"
-                  description="Explore our Starter, Growth, and Premium service plans optimized for real estate ads, ultra-fast landing pages, and WhatsApp brochure automations."
+                  description="Explore our Starter, Growth, and Premium service plans optimized for real estate ads, ultra-fast landing pages, and automated lead tracking pipelines."
                 />
                 <ServicesPremium setCurrentPage={legacySetPage} />
               </motion.div>

@@ -1,20 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'motion/react';
 import { 
   Target, 
   AppWindow, 
-  MessageSquare, 
   Database, 
   LineChart, 
   Check, 
   TrendingUp, 
-  Sparkles, 
-  Smartphone,
-  Calendar,
-  FileText,
-  MousePointer,
-  ArrowRight
+  FileText, 
+  MousePointer, 
+  ArrowRight 
 } from './icons';
+import { gsap, ScrollTrigger, prefersReducedMotion } from '../utils/scroll';
 
 interface BentoCardProps {
   index: number;
@@ -28,17 +25,74 @@ interface BentoCardProps {
 }
 
 export default function ServicesBento() {
+  const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
+  const bgGlow1Ref = useRef<HTMLDivElement>(null);
+  const bgGlow2Ref = useRef<HTMLDivElement>(null);
   const isHeaderInView = useInView(headerRef, { once: true, amount: 0.2 });
+
+  useEffect(() => {
+    if (prefersReducedMotion() || !sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Parallax on ambient backdrop gradients
+      if (bgGlow1Ref.current) {
+        gsap.to(bgGlow1Ref.current, {
+          yPercent: -25,
+          xPercent: 10,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          }
+        });
+      }
+      if (bgGlow2Ref.current) {
+        gsap.to(bgGlow2Ref.current, {
+          yPercent: 20,
+          xPercent: -8,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.2,
+          }
+        });
+      }
+
+      // Staggered reveal for Bento Cards
+      gsap.fromTo('.bento-card-unit',
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.bento-cards-grid',
+            start: 'top 82%',
+            once: true,
+          }
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section 
+      ref={sectionRef}
       id="what-we-do" 
       className="relative bg-brand-light py-28 md:py-36 border-y border-neutral-200 overflow-hidden"
     >
-      {/* Decorative ambient blurred glass blobs for realistic refraction */}
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-orange-500/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-amber-500/5 blur-[150px] pointer-events-none" />
+      {/* Decorative ambient blurred glass blobs with parallax */}
+      <div ref={bgGlow1Ref} className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-orange-500/5 blur-[120px] pointer-events-none will-change-transform" />
+      <div ref={bgGlow2Ref} className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-amber-500/5 blur-[150px] pointer-events-none will-change-transform" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
@@ -59,7 +113,7 @@ export default function ServicesBento() {
             transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-brand-dark tracking-tight leading-tight"
           >
-            One System.<br className="sm:hidden" /> Five Growth Engines.
+            One System.<br className="sm:hidden" /> Four Growth Engines.
           </motion.h2>
           
           <motion.p 
@@ -73,14 +127,14 @@ export default function ServicesBento() {
         </div>
 
         {/* BENTO GRID LAYOUT */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+        <div className="bento-cards-grid grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           
-          {/* CARD 1: Google & Meta Ads (Large - 7 cols) */}
+          {/* CARD 1: Google & Meta Ads (7 cols) */}
           <BentoCard 
             index={0}
             title="Google & Meta Ads"
-            subtitle="PERFORMANCE CAMPAIGNS"
-            description="Generate qualified enquiries through highly targeted campaigns built specifically for real estate developers."
+            subtitle="PERFORMANCE ACQUISITION"
+            description="Precision-targeted campaigns focused on real property buyers actively searching for projects in your area."
             icon={<Target className="w-5 h-5 text-[#FF6B00]" />}
             highlights={[
               "High-intent audience targeting",
@@ -91,25 +145,9 @@ export default function ServicesBento() {
             visual={<AdsVisual />}
           />
 
-          {/* CARD 2: WhatsApp Automation (Medium - 5 cols) */}
+          {/* CARD 2: Landing Pages (5 cols) */}
           <BentoCard 
             index={1}
-            title="WhatsApp Automation"
-            subtitle="INSTANT RESPONSE"
-            description="Automatically engage every lead with instant responses, brochure delivery, and appointment scheduling."
-            icon={<MessageSquare className="w-5 h-5 text-[#FF6B00]" />}
-            highlights={[
-              "Instant replies",
-              "Brochure delivery",
-              "24/7 follow-up"
-            ]}
-            className="md:col-span-12 lg:col-span-5"
-            visual={<WhatsAppVisual />}
-          />
-
-          {/* CARD 3: Landing Pages (Medium - 4 cols) */}
-          <BentoCard 
-            index={2}
             title="Landing Pages"
             subtitle="CONVERSION DESIGN"
             description="Beautiful landing pages engineered to turn visitors into booked site visits and qualified enquiries."
@@ -119,13 +157,13 @@ export default function ServicesBento() {
               "Conversion-focused design",
               "Mobile-first experience"
             ]}
-            className="md:col-span-6 lg:col-span-4"
+            className="md:col-span-12 lg:col-span-5"
             visual={<LandingPageVisual />}
           />
 
-          {/* CARD 4: CRM & Lead Tracking (Medium - 4 cols) */}
+          {/* CARD 3: CRM & Lead Tracking (6 cols) */}
           <BentoCard 
-            index={3}
+            index={2}
             title="CRM & Lead Tracking"
             subtitle="PIPELINE SYSTEM"
             description="Track every enquiry from the first click to the final sale without losing valuable prospects."
@@ -135,13 +173,13 @@ export default function ServicesBento() {
               "Activity tracking",
               "Complete visibility"
             ]}
-            className="md:col-span-6 lg:col-span-4"
+            className="md:col-span-6 lg:col-span-6"
             visual={<CRMVisual />}
           />
 
-          {/* CARD 5: Performance Reporting (Large - 4 cols, fully styled to balance grid) */}
+          {/* CARD 4: Performance Reporting (6 cols) */}
           <BentoCard 
-            index={4}
+            index={3}
             title="Performance Reporting"
             subtitle="ACTIONABLE INSIGHTS"
             description="Understand exactly where your leads come from with transparent reporting and actionable insights."
@@ -151,7 +189,7 @@ export default function ServicesBento() {
               "Lead quality analysis",
               "Weekly reporting"
             ]}
-            className="md:col-span-12 lg:col-span-4"
+            className="md:col-span-6 lg:col-span-6"
             visual={<ReportingVisual />}
           />
 
@@ -178,11 +216,11 @@ function BentoCard({
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      initial={{ opacity: 0, y: 35 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 35 }}
+      transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -8 }}
-      className={`group relative rounded-[28px] overflow-hidden bg-white/10 backdrop-blur-[24px] border border-white/20 shadow-[0_10px_35px_-10px_rgba(0,0,0,0.04),inset_0_1.5px_3px_rgba(255,255,255,0.4)] hover:bg-white/18 hover:shadow-[0_24px_50px_-15px_rgba(255,107,0,0.07),inset_0_1.5px_4px_rgba(255,255,255,0.5)] transition-all duration-300 flex flex-col justify-between ${className}`}
+      className={`bento-card-unit group relative rounded-[28px] overflow-hidden bg-white/10 backdrop-blur-[24px] border border-white/20 shadow-[0_10px_35px_-10px_rgba(0,0,0,0.04),inset_0_1.5px_3px_rgba(255,255,255,0.4)] hover:bg-white/18 hover:shadow-[0_24px_50px_-15px_rgba(255,107,0,0.07),inset_0_1.5px_4px_rgba(255,255,255,0.5)] transition-all duration-300 flex flex-col justify-between will-change-transform ${className}`}
     >
       {/* Absolute subtle glowing radial gradient at the top right of cards */}
       <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full bg-orange-500/5 group-hover:bg-orange-500/10 blur-xl transition-all duration-300 pointer-events-none" />
@@ -286,38 +324,6 @@ function AdsVisual() {
   );
 }
 
-// 2. WhatsApp Automation Visual
-function WhatsAppVisual() {
-  return (
-    <div className="space-y-2.5 font-sans-clean">
-      <div className="flex items-center gap-1.5 text-[11px] text-neutral-400 font-bold border-b border-neutral-200/50 pb-2">
-        <Smartphone className="w-3.5 h-3.5 text-[#FF6B00]" />
-        <span>WhatsApp Conversation Flow</span>
-      </div>
-      <div className="space-y-2 text-xs">
-        <div className="flex justify-start">
-          <div className="bg-neutral-100 text-neutral-700 rounded-2xl rounded-tl-sm px-3.5 py-2 max-w-[85%] border border-neutral-200/40 font-sans-clean">
-            Hi, I saw your project. Can you send the pricing brochure?
-          </div>
-        </div>
-        <div className="flex justify-end">
-          <div className="bg-[#FF6B00] text-white rounded-2xl rounded-tr-sm px-3.5 py-2 max-w-[85%] shadow-sm relative overflow-hidden font-sans-clean">
-            <span className="relative z-10 flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-white animate-pulse" />
-              <span>Instantly Sent! Here is the pricing PDF. 📥</span>
-            </span>
-          </div>
-        </div>
-        <div className="flex justify-end">
-          <div className="bg-[#FF6B00] text-white rounded-2xl rounded-tr-sm px-3.5 py-1.5 max-w-[80%] text-[11px] border border-orange-500/10 flex items-center gap-2 font-sans-clean">
-            <Calendar className="w-3 h-3 text-white" />
-            <span>Schedule free site visit?</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // 3. Landing Pages Visual
 function LandingPageVisual() {

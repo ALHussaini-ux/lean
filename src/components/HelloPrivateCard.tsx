@@ -29,7 +29,6 @@ export default function HelloPrivateCard() {
   // Contact details
   const emailAddress = "hello@leansystem.co";
   const phoneNumber = "+91 98765 43210";
-  const whatsappUrl = "https://wa.me/919876543210?text=Hi%20Numair%2C%20I%20scanned%20your%20business%20card.%20I%27d%20like%20to%20connect.";
 
   const handleCopy = (text: string, type: 'email' | 'phone') => {
     navigator.clipboard.writeText(text);
@@ -126,7 +125,7 @@ export default function HelloPrivateCard() {
               </li>
               <li className="flex items-start gap-2.5 text-xs text-neutral-300 font-sans-clean">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong className="text-white font-semibold">WhatsApp Automation:</strong> 24/7 instant brochure dispatch (&lt;60s) and friction-free site visit scheduling.</span>
+                <span><strong className="text-white font-semibold">Instant Lead Pipelines:</strong> Automated brochure delivery, instant alerts, and friction-free site visit scheduling.</span>
               </li>
               <li className="flex items-start gap-2.5 text-xs text-neutral-300 font-sans-clean">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
@@ -151,20 +150,18 @@ export default function HelloPrivateCard() {
               Direct Contact Options
             </h3>
 
-            {/* Primary Action: WhatsApp */}
+            {/* Primary Action: Direct Call */}
             <a 
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl p-4 flex items-center justify-between transition-all duration-300 shadow-lg shadow-emerald-950/50 group cursor-pointer"
+              href={`tel:${phoneNumber.replace(/\s+/g, '')}`}
+              className="w-full bg-[#FF6B00] hover:bg-[#FF7A1A] text-white rounded-2xl p-4 flex items-center justify-between transition-all duration-300 shadow-lg shadow-orange-950/50 group cursor-pointer"
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                  <MessageSquare className="w-5 h-5 text-white" />
+                  <Phone className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono-num text-emerald-100 uppercase tracking-wider block font-semibold">FASTEST RESPONSE</span>
-                  <span className="text-sm font-sans-clean font-bold text-white">Message Me on WhatsApp</span>
+                  <span className="text-[10px] font-mono-num text-orange-100 uppercase tracking-wider block font-semibold">FASTEST RESPONSE</span>
+                  <span className="text-sm font-sans-clean font-bold text-white">Call Directly: {phoneNumber}</span>
                 </div>
               </div>
               <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />

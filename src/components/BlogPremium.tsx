@@ -35,11 +35,11 @@ export default function BlogPremium() {
       date: 'June 24, 2026',
       author: 'Pranav Reddy, System Architect',
       summary: 'Data from Indian property developers confirms that contacting a prospective buyer within 60 seconds boosts response probability by over 300%. Here is how we bypass analog delays.',
-      excerpt: 'In the hyper-competitive real estate landscape of major Indian hubs like Hyderabad and Bengaluru, a lead is a transient pulse. Learn how we engineered a custom webhook pipeline that routes inquiries to active WhatsApp dialogues in real-time.',
+      excerpt: 'In the hyper-competitive real estate landscape of major Indian hubs like Hyderabad and Bengaluru, a lead is a transient pulse. Learn how we engineered a custom webhook pipeline that routes inquiries to active sales pipelines in real-time.',
       content: [
         'At LEAN, we do not view real estate marketing as a creative campaign. We view it as an infrastructure engineering problem. Most builders measure lead follow-up in hours, or sometimes even days. By the time a sales executive manually reads an email, matches the project, and dials the number, the prospect has already clicked on three other competitor ad campaigns.',
         'Data from Indian property developers confirms that contacting a prospective buyer within 60 seconds boosts response probability by over 300%. After 5 minutes, conversion rates decay exponentially. At 30 minutes, the lead is virtually dead.',
-        'To solve this response latency, we bypass analog broker delays entirely using secure webhook parsers. The instant a user clicks "Submit" on a Google or Meta ad, the payload is parsed by our automation servers. Within 48 seconds, a personalized WhatsApp response is triggered, dispatching the high-resolution project brochure, asking pre-qualification filter questions, and establishing a direct booking link.',
+        'To solve this response latency, we bypass analog broker delays entirely using secure webhook parsers. The instant a user clicks "Submit" on a Google or Meta ad, the payload is parsed by our automation servers. Within 48 seconds, an instant CRM dispatch is triggered, delivering the high-resolution project brochure, recording pre-qualification parameters, and establishing a direct booking connection.',
         'Your sales team receives structured parameter logs directly on their Airtable boards. Instead of cold-calling random contacts, they dial prospects who are actively engaged with the brochure in real-time. That is how automated infrastructure turns raw interest into steady site visits.'
       ]
     },
@@ -69,9 +69,9 @@ export default function BlogPremium() {
       date: 'May 12, 2026',
       author: 'Meera Sen, Integration Lead',
       summary: 'Raw Google Sheets lead sheets lead to lost details and forgotten callbacks. We design structured, visual conversion boards that track leads from ad click to registration.',
-      excerpt: 'Disorganized lead tracking is the silent killer of property sales. When leads are dumped into static sheets or shared via WhatsApp chat, follow-ups fall through the cracks. Learn how a structured CRM board brings absolute transparency.',
+      excerpt: 'Disorganized lead tracking is the silent killer of property sales. When leads are dumped into static sheets or shared via fragmented chats, follow-ups fall through the cracks. Learn how a structured CRM board brings absolute transparency.',
       content: [
-        'A lead is an asset with a high rate of value depreciation. When a lead is generated, it contains key parameter metadata: the specific project they clicked, their search query, their budget threshold, and the time they submitted. Yet, most developers distribute these leads as a copy-pasted WhatsApp message to their sales team.',
+        'A lead is an asset with a high rate of value depreciation. When a lead is generated, it contains key parameter metadata: the specific project they clicked, their search query, their budget threshold, and the time they submitted. Yet, most developers distribute these leads as a copy-pasted chat message to their sales team.',
         'This chaotic system is prone to leakages. There is no central log of who called whom, what the response was, or when the site visit is scheduled. Leads are forgotten, duplicate calls are made, and builders lose trust in their campaigns.',
         'Under the LEAN framework, we integrate every lead channel directly into an interactive Airtable or custom CRM conversion board. Each entry is timestamped and mapped with structured parameters. Sales reps update lead states with single-click drop-down selectors: "Attempting Contact", "Brochure Dispatched", "Site Visit Booked", "Follow Up Required", or "Unqualified".',
         'This creates a single source of truth. As a property developer, you can inspect the board in real-time, reviewing exactly how many site visits were scheduled this week and tracing them back to the exact search campaign that generated the interest.'

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowRight } from './icons';
+import { gsap, ScrollTrigger, prefersReducedMotion as checkReducedMotion } from '../utils/scroll';
 
 const TYPEWRITER_PHRASES = [
   'Appointments',
@@ -17,6 +18,13 @@ const PAUSE_AFTER_DELETING_MS = 120;
 
 export default function MinimalHero() {
   const navigate = useNavigate();
+  const heroRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const ribbon1Ref = useRef<HTMLDivElement>(null);
+  const ribbon2Ref = useRef<HTMLDivElement>(null);
+  const ribbon3Ref = useRef<HTMLDivElement>(null);
+  const ribbon4Ref = useRef<HTMLDivElement>(null);
+
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -25,6 +33,80 @@ export default function MinimalHero() {
       ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
       : false
   );
+
+  // Parallax and scroll-driven exit transition via GSAP ScrollTrigger
+  useEffect(() => {
+    if (prefersReducedMotion || !heroRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Differential Parallax drift on ambient background ribbons
+      if (ribbon1Ref.current) {
+        gsap.to(ribbon1Ref.current, {
+          yPercent: -22,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 0.6,
+          }
+        });
+      }
+      if (ribbon2Ref.current) {
+        gsap.to(ribbon2Ref.current, {
+          yPercent: -14,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 0.8,
+          }
+        });
+      }
+      if (ribbon3Ref.current) {
+        gsap.to(ribbon3Ref.current, {
+          yPercent: -28,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 0.5,
+          }
+        });
+      }
+      if (ribbon4Ref.current) {
+        gsap.to(ribbon4Ref.current, {
+          yPercent: -18,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 0.7,
+          }
+        });
+      }
+
+      // Smooth cinema exit fade & upward glide on hero content
+      if (contentRef.current) {
+        gsap.to(contentRef.current, {
+          y: -40,
+          opacity: 0.25,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: '85% top',
+            scrub: 0.2,
+          }
+        });
+      }
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, [prefersReducedMotion]);
 
   // Listen for OS/browser reduced-motion preference changes
   useEffect(() => {
@@ -100,6 +182,7 @@ export default function MinimalHero() {
 
   return (
     <section
+      ref={heroRef}
       id="home-hero"
       data-header-theme="light"
       className="relative min-h-[90vh] lg:min-h-[92vh] flex flex-col justify-center items-center bg-[#FAFAFA] text-neutral-900 overflow-hidden selection:bg-brand-orange selection:text-white text-center"
@@ -115,60 +198,68 @@ export default function MinimalHero() {
         </svg>
 
         {/* Ribbon 1: Upper Diagonal Soft Light Stream */}
-        <motion.div
-          animate={{
-            x: ['-12%', '14%', '-8%', '-12%'],
-            y: ['-8%', '10%', '12%', '-8%'],
-          }}
-          transition={{
-            duration: 27,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute -top-[18%] -left-[12%] w-[1100px] h-[380px] sm:w-[1450px] sm:h-[480px] rounded-[100%] rotate-[-22deg] bg-gradient-to-r from-[#FF7A1A]/16 via-[#FF8C33]/10 to-transparent blur-[130px] sm:blur-[160px] transform-gpu"
-        />
+        <div ref={ribbon1Ref} className="absolute inset-0 pointer-events-none will-change-transform">
+          <motion.div
+            animate={{
+              x: ['-12%', '14%', '-8%', '-12%'],
+              y: ['-8%', '10%', '12%', '-8%'],
+            }}
+            transition={{
+              duration: 27,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="absolute -top-[18%] -left-[12%] w-[1100px] h-[380px] sm:w-[1450px] sm:h-[480px] rounded-[100%] rotate-[-22deg] bg-gradient-to-r from-[#FF7A1A]/16 via-[#FF8C33]/10 to-transparent blur-[130px] sm:blur-[160px] transform-gpu"
+          />
+        </div>
 
         {/* Ribbon 2: Center-Right Sweeping Light Stream */}
-        <motion.div
-          animate={{
-            x: ['12%', '-14%', '8%', '12%'],
-            y: ['8%', '-12%', '-6%', '8%'],
-          }}
-          transition={{
-            duration: 29,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute top-[12%] -right-[18%] w-[1200px] h-[420px] sm:w-[1550px] sm:h-[520px] rounded-[100%] rotate-[28deg] bg-gradient-to-l from-[#FF7A1A]/17 via-[#FFA352]/09 to-transparent blur-[140px] sm:blur-[170px] transform-gpu"
-        />
+        <div ref={ribbon2Ref} className="absolute inset-0 pointer-events-none will-change-transform">
+          <motion.div
+            animate={{
+              x: ['12%', '-14%', '8%', '12%'],
+              y: ['8%', '-12%', '-6%', '8%'],
+            }}
+            transition={{
+              duration: 29,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="absolute top-[12%] -right-[18%] w-[1200px] h-[420px] sm:w-[1550px] sm:h-[520px] rounded-[100%] rotate-[28deg] bg-gradient-to-l from-[#FF7A1A]/17 via-[#FFA352]/09 to-transparent blur-[140px] sm:blur-[170px] transform-gpu"
+          />
+        </div>
 
         {/* Ribbon 3: Bottom Horizontal Light Ribbon */}
-        <motion.div
-          animate={{
-            x: ['-8%', '10%', '-12%', '-8%'],
-            y: ['10%', '-8%', '6%', '10%'],
-          }}
-          transition={{
-            duration: 24,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute -bottom-[12%] left-[2%] w-[1250px] h-[360px] sm:w-[1600px] sm:h-[460px] rounded-[100%] rotate-[-10deg] bg-gradient-to-r from-transparent via-[#FF7A1A]/14 to-[#FFB366]/06 blur-[130px] sm:blur-[165px] transform-gpu"
-        />
+        <div ref={ribbon3Ref} className="absolute inset-0 pointer-events-none will-change-transform">
+          <motion.div
+            animate={{
+              x: ['-8%', '10%', '-12%', '-8%'],
+              y: ['10%', '-8%', '6%', '10%'],
+            }}
+            transition={{
+              duration: 24,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="absolute -bottom-[12%] left-[2%] w-[1250px] h-[360px] sm:w-[1600px] sm:h-[460px] rounded-[100%] rotate-[-10deg] bg-gradient-to-r from-transparent via-[#FF7A1A]/14 to-[#FFB366]/06 blur-[130px] sm:blur-[165px] transform-gpu"
+          />
+        </div>
 
         {/* Ribbon 4: Central Ambient Light Core Sheen */}
-        <motion.div
-          animate={{
-            x: ['6%', '-8%', '10%', '6%'],
-            y: ['-6%', '8%', '-8%', '-6%'],
-          }}
-          transition={{
-            duration: 22,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute top-[28%] left-[12%] w-[900px] h-[300px] sm:w-[1200px] sm:h-[380px] rounded-[100%] rotate-[14deg] bg-radial from-[#FF7A1A]/12 via-[#FF8C33]/05 to-transparent blur-[120px] sm:blur-[150px] transform-gpu"
-        />
+        <div ref={ribbon4Ref} className="absolute inset-0 pointer-events-none will-change-transform">
+          <motion.div
+            animate={{
+              x: ['6%', '-8%', '10%', '6%'],
+              y: ['-6%', '8%', '-8%', '-6%'],
+            }}
+            transition={{
+              duration: 22,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="absolute top-[28%] left-[12%] w-[900px] h-[300px] sm:w-[1200px] sm:h-[380px] rounded-[100%] rotate-[14deg] bg-radial from-[#FF7A1A]/12 via-[#FF8C33]/05 to-transparent blur-[120px] sm:blur-[150px] transform-gpu"
+          />
+        </div>
       </div>
 
       {/* Subtle top & bottom linear vignette transitions for smooth section blending */}
@@ -176,7 +267,7 @@ export default function MinimalHero() {
       <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-white via-white/60 to-transparent pointer-events-none z-1" />
 
       {/* Main Content Layout - Perfectly Centered */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-10 lg:px-16 pt-24 sm:pt-36 md:pt-40 pb-12 sm:pb-24 w-full flex flex-col items-center justify-center">
+      <div ref={contentRef} className="relative z-10 max-w-5xl mx-auto px-4 sm:px-10 lg:px-16 pt-24 sm:pt-36 md:pt-40 pb-12 sm:pb-24 w-full flex flex-col items-center justify-center will-change-transform">
         <div className="space-y-6 sm:space-y-10 text-center flex flex-col items-center max-w-4xl w-full">
           
           {/* Centered Headline with Typewriter Final Phrase */}

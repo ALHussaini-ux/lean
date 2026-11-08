@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Check, Mail, Calendar, ArrowRight } from './icons';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useInView } from 'motion/react';
 import AramcoButton from './AramcoButton';
 
 export default function LeadPortal() {
+  const portalRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(portalRef, { once: true, amount: 0.15 });
+
   // Form fields state
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -22,9 +25,14 @@ export default function LeadPortal() {
   };
 
   return (
-    <div id="lead-portal" className="max-w-6xl mx-auto px-4 sm:px-6">
+    <div id="lead-portal" ref={portalRef} className="max-w-6xl mx-auto px-4 sm:px-6">
       
-      <div className="text-center mb-12 space-y-3">
+      <motion.div 
+        initial={{ opacity: 0, y: 24 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="text-center mb-12 space-y-3"
+      >
         <span className="text-brand-orange text-xs tracking-widest font-sans-clean font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
           GET STARTED
         </span>
@@ -34,9 +42,14 @@ export default function LeadPortal() {
         <p className="font-sans-clean text-brand-gray text-sm md:text-base max-w-xl mx-auto leading-relaxed">
           Schedule a quick call to discuss your project and find the right tier for your goals.
         </p>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <motion.div 
+        initial={{ opacity: 0, y: 32 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+        transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
+        className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+      >
         
         {/* Contact Options Column (5 columns on large screens) */}
         <div className="lg:col-span-5 space-y-6">
@@ -241,7 +254,7 @@ export default function LeadPortal() {
           </AnimatePresence>
         </div>
 
-      </div>
+      </motion.div>
 
     </div>
   );

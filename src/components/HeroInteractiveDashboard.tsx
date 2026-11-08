@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Shield, Zap, Database, MessageSquare, Users, 
   CheckCircle, TrendingUp, Bot, Smartphone, 
-  Layers, Lock, Server, ArrowRight, RefreshCw, Cpu
+  Layers, Lock, Server, ArrowRight, RefreshCw, Cpu, AppWindow
 } from './icons';
 
 interface HeroInteractiveDashboardProps {
@@ -24,14 +24,14 @@ export default function HeroInteractiveDashboard({ activeTab }: HeroInteractiveD
     
     const locations = ['Whitefield', 'Kalyan Nagar', 'Sarjapur Road', 'Gachibowli', 'Koramangala', 'Noida Sec 62'];
     const names = ['Amit S.', 'Priya R.', 'Sandeep K.', 'Vikram M.', 'Neha J.', 'Rahul D.'];
-    const channels = ['Meta Lead Form', 'Google Search Ads', 'WhatsApp QR', 'Instagram Ad'];
+    const channels = ['Meta Lead Form', 'Google Search Ads', 'Project Landing Page', 'Instagram Ad'];
     
     const interval = setInterval(() => {
       const randomLoc = locations[Math.floor(Math.random() * locations.length)];
       const randomName = names[Math.floor(Math.random() * names.length)];
       const randomChannel = channels[Math.floor(Math.random() * channels.length)];
       
-      const newLog = `INGRESS: Lead ${randomName} (${randomLoc}) via ${randomChannel} -> Brochure Dispatched [60s limit]`;
+      const newLog = `INGRESS: Lead ${randomName} (${randomLoc}) via ${randomChannel} -> Lead Logged [CRM Synced]`;
       
       setLogs(prev => [newLog, ...prev.slice(0, 4)]);
     }, 3800);
@@ -106,9 +106,9 @@ export default function HeroInteractiveDashboard({ activeTab }: HeroInteractiveD
 
                   <div className="z-10 bg-neutral-950/80 border border-white/5 rounded p-2 flex flex-col items-center gap-1">
                     <div className="w-6 h-6 rounded-full bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center">
-                      <MessageSquare className="w-3.5 h-3.5 text-brand-orange animate-pulse" />
+                      <Zap className="w-3.5 h-3.5 text-brand-orange animate-pulse" />
                     </div>
-                    <span className="text-[9px] font-sans-clean font-bold text-neutral-300">WhatsApp</span>
+                    <span className="text-[9px] font-sans-clean font-bold text-neutral-300">Fast Sync</span>
                     <span className="text-[10px] font-mono-num text-emerald-400 font-bold">85%</span>
                   </div>
 
@@ -239,7 +239,7 @@ export default function HeroInteractiveDashboard({ activeTab }: HeroInteractiveD
               </motion.div>
             )}
 
-            {/* TAB 2: WHATSAPP AUTOMATION */}
+            {/* TAB 2: CONVERSION LANDING PAGES */}
             {activeTab === 2 && (
               <motion.div
                 key="tab-2"
@@ -252,57 +252,56 @@ export default function HeroInteractiveDashboard({ activeTab }: HeroInteractiveD
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <div className="p-1.5 rounded bg-brand-orange/10 border border-brand-orange/20">
-                      <Bot className="w-4 h-4 text-brand-orange" />
+                      <AppWindow className="w-4 h-4 text-brand-orange" />
                     </div>
                     <span className="text-xs font-sans-clean font-extrabold text-neutral-200 uppercase tracking-wider">
-                      Instant WhatsApp Assistant
+                      High-Speed Conversion Portal
                     </span>
                   </div>
                   <p className="text-[11px] text-neutral-400 font-body leading-relaxed">
-                    Instantly deliver product catalogs & handle appointment bookings 24/7 without manual sales labor.
+                    Ultra-fast mobile project portals with built-in qualification forms and instant brochure dispatch.
                   </p>
                 </div>
 
-                {/* WhatsApp Chat Simulator */}
-                <div className="bg-neutral-950/80 border border-white/5 rounded-xl p-3 space-y-2.5 h-[155px] overflow-y-auto flex flex-col justify-end">
-                  
-                  {/* Message 1 (Prospect) */}
-                  <div className="flex flex-col items-end space-y-1">
-                    <div className="bg-neutral-800 text-white rounded-2xl rounded-tr-none px-3 py-1.5 max-w-[85%] text-[10px] font-body leading-tight">
-                      Hi, please share floor plans and pricing for the 3BHK project.
+                {/* Conversion Portal Simulator */}
+                <div className="bg-neutral-950/80 border border-white/5 rounded-xl p-3 space-y-2.5 h-[155px] overflow-y-auto flex flex-col justify-between">
+                  <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-[10px] font-mono-num font-bold text-neutral-300">Lighthouse: 99/100</span>
                     </div>
-                    <span className="text-[8px] font-mono-num text-neutral-500">11:12 AM • Delivered</span>
+                    <span className="text-[9px] font-mono-num text-brand-orange">Load: 0.8s</span>
                   </div>
 
-                  {/* Message 2 (Bot Response) */}
-                  <div className="flex flex-col items-start space-y-1">
-                    <div className="flex items-center gap-1">
-                      <span className="text-[8px] font-sans-clean font-bold text-brand-orange bg-brand-orange/10 px-1 rounded">LEAN BOT</span>
+                  <div className="bg-neutral-900 border border-white/5 rounded-lg p-2.5 space-y-2">
+                    <div className="flex items-center justify-between text-[10px] text-neutral-300 font-sans-clean">
+                      <span className="font-semibold">3BHK Royal Residences</span>
+                      <span className="text-emerald-400 font-mono-num text-[9px] font-bold">Verified Buyer</span>
                     </div>
-                    <div className="bg-neutral-900 border border-white/5 text-neutral-200 rounded-2xl rounded-tl-none px-3 py-2 max-w-[85%] text-[10px] font-body leading-tight space-y-1">
-                      <p>Hi there! 📥 Here is the official Brochure PDF.</p>
-                      <div className="flex items-center gap-1.5 bg-neutral-950 p-1 px-1.5 rounded border border-white/5 mt-1">
-                        <Database className="w-3.5 h-3.5 text-brand-orange" />
-                        <div className="flex-grow min-w-0">
-                          <p className="text-[8px] font-bold font-sans-clean truncate text-white">brochure_3bhk_royal.pdf</p>
-                          <p className="text-[7px] font-mono-num text-neutral-500">2.4 MB • PDF Document</p>
-                        </div>
+                    <div className="flex items-center gap-2 bg-neutral-950 p-1.5 rounded border border-white/5">
+                      <Database className="w-3.5 h-3.5 text-brand-orange shrink-0" />
+                      <div className="min-w-0 flex-grow">
+                        <p className="text-[9px] font-bold font-sans-clean truncate text-white">brochure_3bhk_royal.pdf</p>
+                        <p className="text-[8px] font-mono-num text-neutral-500">2.4 MB • Instant Access Granted</p>
                       </div>
                     </div>
-                    <span className="text-[8px] font-mono-num text-neutral-500">11:13 AM</span>
                   </div>
 
+                  <div className="flex items-center justify-between text-[9px] font-mono-num text-neutral-400 pt-1">
+                    <span>STATUS: Form Submitted</span>
+                    <span className="text-emerald-400 font-semibold">CRM Webhook Synced</span>
+                  </div>
                 </div>
 
                 {/* Simulated stat ribbon */}
                 <div className="grid grid-cols-2 gap-2 text-center text-xs font-mono-num">
                   <div className="bg-neutral-950/50 border border-white/5 p-1.5 rounded">
-                    <span className="text-[9px] text-neutral-500 block">Avg Response Time</span>
-                    <span className="font-bold text-emerald-400">4.8 Seconds</span>
+                    <span className="text-[9px] text-neutral-500 block">Avg Page Load</span>
+                    <span className="font-bold text-emerald-400">0.8 Seconds</span>
                   </div>
                   <div className="bg-neutral-950/50 border border-white/5 p-1.5 rounded">
-                    <span className="text-[9px] text-neutral-500 block">Lead Engagement Rate</span>
-                    <span className="font-bold text-brand-orange">94.2%</span>
+                    <span className="text-[9px] text-neutral-500 block">Visitor-to-Lead</span>
+                    <span className="font-bold text-brand-orange">14.8%</span>
                   </div>
                 </div>
               </motion.div>
@@ -364,10 +363,10 @@ export default function HeroInteractiveDashboard({ activeTab }: HeroInteractiveD
                     </div>
 
                     <div className="flex items-center gap-2 bg-neutral-900/60 p-2 rounded border border-white/5">
-                      <Smartphone className="w-3.5 h-3.5 text-brand-orange shrink-0" />
+                      <AppWindow className="w-3.5 h-3.5 text-brand-orange shrink-0" />
                       <div className="min-w-0">
-                        <p className="font-bold text-[9px] text-white">WhatsApp API</p>
-                        <p className="text-[8px] text-emerald-400">Meta Authorized</p>
+                        <p className="font-bold text-[9px] text-white">Project Portals</p>
+                        <p className="text-[8px] text-emerald-400">100% Client-Owned</p>
                       </div>
                     </div>
                   </div>

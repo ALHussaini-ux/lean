@@ -98,11 +98,10 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
 
     // Nodes definition
     const nodeData = [
-      { name: 'Ads', pos: new THREE.Vector3(-3.5, 1.5, 0), label: 'Google & Meta Ads' },
-      { name: 'Landing Pages', pos: new THREE.Vector3(-1.2, -1.0, 1), label: 'Landing Pages' },
-      { name: 'WhatsApp', pos: new THREE.Vector3(1.2, 1.8, -1), label: 'WhatsApp Automation' },
-      { name: 'CRM', pos: new THREE.Vector3(3.5, -0.8, 0), label: 'CRM & Tracking' },
-      { name: 'Reporting', pos: new THREE.Vector3(0, 0.2, 2), label: 'Performance Analytics' }
+      { name: 'Ads', pos: new THREE.Vector3(-3.0, 1.5, 0), label: 'Google & Meta Ads' },
+      { name: 'Landing Pages', pos: new THREE.Vector3(-1.0, -1.0, 1), label: 'Landing Pages' },
+      { name: 'CRM', pos: new THREE.Vector3(1.2, 1.5, -1), label: 'CRM & Tracking' },
+      { name: 'Reporting', pos: new THREE.Vector3(3.0, -0.5, 0), label: 'Performance Analytics' }
     ];
 
     const spheres: THREE.Mesh[] = [];
@@ -276,12 +275,6 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
       title: 'Landing Pages',
       desc: 'High-speed, conversion-optimized project portals.',
       details: ['Lighthouse score 95+', 'Mobile-first interfaces', 'Optimized booking hooks']
-    },
-    {
-      id: 'whatsapp',
-      title: 'WhatsApp Automation',
-      desc: 'Instant auto-responses, scheduling, & brochures.',
-      details: ['Sub-60s brochure dispatch', 'Site visit scheduling bots', '24/7 lead nurturing']
     },
     {
       id: 'crm',
@@ -502,7 +495,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="font-sans-clean text-neutral-500 text-base md:text-lg max-w-2xl leading-relaxed"
           >
-            Lean System designs and implements modern lead generation systems using landing pages, advertising, WhatsApp automation, and performance tracking. Our goal is to create a simple, organized process that helps businesses manage enquiries more efficiently.
+            Lean System designs and implements modern lead generation systems using landing pages, advertising, CRM tracking, and performance analytics. Our goal is to create a simple, organized process that helps businesses manage enquiries more efficiently.
           </motion.p>
         </div>
       </section>
@@ -668,7 +661,7 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
 
 
       {/* SECTION 05: WHAT WE ACTUALLY DO (FLOATING LIQUID GLASS CARDS) */}
-      <section className="max-w-7xl mx-auto px-6">
+      <section ref={actionsRef} className="max-w-7xl mx-auto px-6">
         <div className="space-y-16">
           <div className="space-y-3">
             <span className="text-xs font-mono-num font-medium tracking-widest text-[#FF6B00] uppercase block">
@@ -679,16 +672,18 @@ export default function AboutPremium({ setCurrentPage }: AboutPremiumProps) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { title: 'Google & Meta Ads', icon: <Target className="w-5 h-5 text-[#FF6B00]" />, desc: 'High-intent search keyword targeting.' },
               { title: 'Landing Pages', icon: <AppWindow className="w-5 h-5 text-[#FF6B00]" />, desc: 'Engineered conversion portals.' },
-              { title: 'WhatsApp Automation', icon: <MessageSquare className="w-5 h-5 text-[#FF6B00]" />, desc: 'Sub-60s response pipelines.' },
               { title: 'CRM Integration', icon: <Database className="w-5 h-5 text-[#FF6B00]" />, desc: 'Consolidated enquiry pipelines.' },
               { title: 'Performance Reporting', icon: <LineChart className="w-5 h-5 text-[#FF6B00]" />, desc: 'Actionable performance audits.' }
             ].map((srv, idx) => (
               <motion.div
                 key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isActionsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: 'easeOut' }}
                 whileHover={{ y: -8 }}
                 className="p-6 rounded-[24px] bg-white/10 backdrop-blur-[24px] border border-white/20 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.45),0_10px_35px_-10px_rgba(0,0,0,0.03)] hover:bg-white/18 hover:shadow-[0_20px_45px_rgba(255,107,0,0.06),inset_0_1.5px_3px_rgba(255,255,255,0.5)] transition-all duration-300 flex flex-col justify-between group cursor-default"
               >

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import { Bot, Zap, Smartphone, Layers } from './icons';
+import { gsap, ScrollTrigger, prefersReducedMotion } from '../utils/scroll';
 
 interface MetricItem {
   icon: React.ReactNode;
@@ -58,7 +59,62 @@ function CountUp({
 
 export default function MetricsGlass() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const leftGlowRef = useRef<HTMLDivElement>(null);
+  const rightGlowRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.25 });
+
+  useEffect(() => {
+    if (prefersReducedMotion() || !containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Ambient glow parallax displacement
+      if (leftGlowRef.current) {
+        gsap.to(leftGlowRef.current, {
+          x: -24,
+          y: 16,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.8,
+          }
+        });
+      }
+      if (rightGlowRef.current) {
+        gsap.to(rightGlowRef.current, {
+          x: 24,
+          y: -16,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.8,
+          }
+        });
+      }
+
+      // Staggered reveal for metric items
+      gsap.fromTo('.metric-item-block', 
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 85%',
+            once: true
+          }
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const metrics: MetricItem[] = [
     {
@@ -98,8 +154,8 @@ export default function MetricsGlass() {
       className="max-w-7xl mx-auto px-4 sm:px-6 -mt-12 sm:-mt-16 md:-mt-20 relative z-20"
     >
       {/* Dynamic Glow Refractions behind the glass pill container for authentic look */}
-      <div className="absolute left-10 top-1/2 -translate-y-1/2 w-72 h-32 rounded-full bg-orange-500/10 blur-[50px] pointer-events-none" />
-      <div className="absolute right-10 top-1/2 -translate-y-1/2 w-72 h-32 rounded-full bg-amber-500/10 blur-[50px] pointer-events-none" />
+      <div ref={leftGlowRef} className="absolute left-10 top-1/2 -translate-y-1/2 w-72 h-32 rounded-full bg-orange-500/10 blur-[50px] pointer-events-none will-change-transform" />
+      <div ref={rightGlowRef} className="absolute right-10 top-1/2 -translate-y-1/2 w-72 h-32 rounded-full bg-amber-500/10 blur-[50px] pointer-events-none will-change-transform" />
 
       {/* Main Glass Panel */}
       <motion.div
@@ -119,7 +175,7 @@ export default function MetricsGlass() {
             <motion.div
               whileHover={{ y: -4 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="flex-1 flex flex-col items-center text-center group cursor-default relative px-4"
+              className="metric-item-block flex-1 flex flex-col items-center text-center group cursor-default relative px-4 will-change-transform"
             >
               {/* Embossed Glass Squircle Container for Icon */}
               <div className="w-12 h-12 rounded-2xl bg-white shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.9),0_6px_16px_rgba(0,0,0,0.04)] border border-white/60 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_15px_rgba(255,107,0,0.25)]">
