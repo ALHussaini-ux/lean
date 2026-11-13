@@ -1,41 +1,19 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'motion/react';
 import { 
-  Rocket, 
   Target, 
-  TrendingUp, 
   Sparkles, 
-  Zap, 
   AppWindow, 
-  MessageSquare, 
   Database, 
   LineChart, 
-  Users, 
   Layers, 
   Plus, 
   Minus, 
   Check, 
   ArrowRight,
-  HelpCircle,
-  Clock,
-  Settings,
-  Shield,
-  Briefcase,
   ChevronDown,
   ChevronUp
 } from './icons';
-
-interface PlanItem {
-  id: string;
-  name: string;
-  tier: string;
-  description: string;
-  fee: string;
-  icon: React.ReactNode;
-  overview: string;
-  details: string[];
-  specs: { label: string; value: string }[];
-}
 
 interface FeatureBlock {
   id: string;
@@ -47,29 +25,17 @@ interface FeatureBlock {
 }
 
 export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (page: any) => void }) {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const isHeroInView = useInView(heroRef, { once: true, amount: 0.15 });
-
-  const plansRef = useRef<HTMLDivElement>(null);
-  const isPlansInView = useInView(plansRef, { once: true, amount: 0.15 });
-
   const featuresRef = useRef<HTMLDivElement>(null);
-  const isFeaturesInView = useInView(featuresRef, { once: true, amount: 0.15 });
 
   const engagementRef = useRef<HTMLDivElement>(null);
   const isEngagementInView = useInView(engagementRef, { once: true, amount: 0.15 });
 
   const comparisonRef = useRef<HTMLDivElement>(null);
-  const isComparisonInView = useInView(comparisonRef, { once: true, amount: 0.15 });
 
   const faqsRef = useRef<HTMLDivElement>(null);
-  const isFaqsInView = useInView(faqsRef, { once: true, amount: 0.15 });
 
   const ctaRef = useRef<HTMLDivElement>(null);
   const isCtaInView = useInView(ctaRef, { once: true, amount: 0.15 });
-
-  // Plan expandable states
-  const [expandedPlan, setExpandedPlan] = useState<string | null>('growth');
 
   // Feature block expand states
   const [expandedFeature, setExpandedFeature] = useState<string | null>('ads');
@@ -79,75 +45,6 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
 
   // FAQ states
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
-  const plans: PlanItem[] = [
-    {
-      id: 'starter',
-      name: 'Starter',
-      tier: 'FOUNDATIONAL LAUNCH',
-      description: 'Ideal for businesses launching their first lead generation system.',
-      fee: '₹25,000',
-      icon: <Rocket className="w-5 h-5 text-[#FF6B00]" />,
-      overview: 'Focuses on establishing initial search visibility, simple landing architecture, and essential instant response triggers.',
-      details: [
-        'Single responsive project page designed for speed',
-        'Google Ads Search campaign launch (targeted ad groups)',
-        'Instant automated lead notification alert',
-        'Basic lead delivery to secure Google Sheets',
-        'Weekly activity and parameter updates'
-      ],
-      specs: [
-        { label: 'Channels', value: 'Google Search' },
-        { label: 'Landing Pages', value: '1 Project Page' },
-        { label: 'Notifications', value: 'Instant lead alert' },
-        { label: 'Reporting', value: 'Weekly reports' }
-      ]
-    },
-    {
-      id: 'growth',
-      name: 'Growth',
-      tier: 'ACCELERATED SCALE',
-      description: 'Designed for businesses looking to scale campaigns and improve operational efficiency.',
-      fee: '₹50,000',
-      icon: <Target className="w-5 h-5 text-[#FF6B00]" />,
-      overview: 'Introduces multi-channel marketing, robust landing page A/B testing, and advanced customer relationship routing boards.',
-      details: [
-        'Multiple highly optimized landing variations',
-        'Comprehensive Google & Meta campaign management',
-        'Real-time lead alerts and automated brochure delivery',
-        'Airtable conversion board integration',
-        'Bi-weekly optimization sync calls'
-      ],
-      specs: [
-        { label: 'Channels', value: 'Google & Meta' },
-        { label: 'Landing Pages', value: 'Multi-Page + A/B Testing' },
-        { label: 'Lead Dispatch', value: 'Real-time alerts + PDF dispatch' },
-        { label: 'Reporting', value: 'Live database & bi-weekly calls' }
-      ]
-    },
-    {
-      id: 'premium',
-      name: 'Premium',
-      tier: 'ENTERPRISE ECOSYSTEM',
-      description: 'A comprehensive engagement for businesses requiring a fully managed lead generation system with continuous optimization.',
-      fee: 'Custom Plan',
-      icon: <TrendingUp className="w-5 h-5 text-[#FF6B00]" />,
-      overview: 'Provides a completely customized marketing infrastructure from database synchronization to dedicated account strategies.',
-      details: [
-        'Bespoke, custom designed web interfaces',
-        'Unlimited campaigns, tracking setups, and keyword audits',
-        'Full CRM database integration with secure webhooks',
-        'Custom interactive metrics dashboards',
-        'Weekly strategy alignment calls and audits'
-      ],
-      specs: [
-        { label: 'Channels', value: 'Google, Meta & Display Networks' },
-        { label: 'Landing Pages', value: 'Bespoke Custom UI Components' },
-        { label: 'Integrations', value: 'Custom API webhooks & multi-channel routing' },
-        { label: 'Reporting', value: 'Custom live dashboard + weekly calls' }
-      ]
-    }
-  ];
 
   const features: FeatureBlock[] = [
     {
@@ -300,182 +197,20 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
   return (
     <div className="space-y-20 sm:space-y-32 pb-16 sm:pb-24 font-sans bg-brand-light">
 
-      {/* SECTION 1: HERO */}
-      <section 
-        id="services-hero" 
-        ref={heroRef}
-        className="pt-24 sm:pt-28 md:pt-36 max-w-7xl mx-auto px-4 sm:px-6"
-      >
-        <div className="max-w-4xl space-y-6">
-          <motion.span 
-            initial={{ opacity: 0, y: 15 }}
-            animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-            transition={{ duration: 0.6 }}
-            className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2"
-          >
-            ENGAGEMENT PLANS
-          </motion.span>
-
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-brand-dark tracking-tight leading-tight"
-          >
-            Choose the Right Growth Plan
-          </motion.h1>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-sans-clean text-neutral-500 text-base md:text-lg max-w-2xl leading-relaxed"
-          >
-            Every business has different goals and requirements. Our engagement plans are designed to provide the right level of strategy, execution, and ongoing support for your stage of growth.
-          </motion.p>
-        </div>
-      </section>
-
-
-      {/* SECTION 2: INTERACTIVE PLAN CARDS */}
-      <section 
-        id="services-plans" 
-        ref={plansRef}
-        className="max-w-7xl mx-auto px-6"
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-          {plans.map((plan, idx) => {
-            const isCurrentExpanded = expandedPlan === plan.id;
-            return (
-              <motion.div
-                key={plan.id}
-                initial={{ opacity: 0, y: 40 }}
-                animate={isPlansInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                transition={{ duration: 0.8, delay: idx * 0.12 }}
-                whileHover={{ y: -6 }}
-                className={`p-8 rounded-[24px] border transition-all duration-300 relative bg-white flex flex-col justify-between ${
-                  plan.id === 'growth'
-                    ? 'border-[#FF6B00]/30 shadow-[0_20px_45px_rgba(255,107,0,0.05),inset_0_1.5px_3px_rgba(255,255,255,0.4)] ring-1 ring-[#FF6B00]/10' 
-                    : 'border-neutral-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.01)] hover:border-[#FF6B00]/20'
-                }`}
-              >
-                <div className="space-y-6">
-                  {/* Card top branding */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono-num font-medium uppercase tracking-[0.18em] text-neutral-400">
-                      {plan.tier}
-                    </span>
-                    <div className="w-9 h-9 rounded-[10px] bg-neutral-50 border border-neutral-100 flex items-center justify-center">
-                      {plan.icon}
-                    </div>
-                  </div>
-
-                  {/* Title & Price */}
-                  <div className="space-y-2">
-                    <h3 className="text-2xl font-display font-bold text-brand-dark">{plan.name}</h3>
-                    <p className="font-sans-clean text-xs text-neutral-500 leading-relaxed min-h-[40px]">{plan.description}</p>
-                    
-                    <div className="pt-4 pb-2 border-y border-neutral-100/80 flex items-baseline gap-1.5">
-                      <span className="text-3xl md:text-4xl font-mono-num font-bold text-brand-dark tracking-tight">
-                        {plan.fee}
-                      </span>
-                      {plan.fee !== 'Custom Plan' && (
-                        <span className="text-xs text-neutral-400 font-sans-clean">/ month</span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Specs grid */}
-                  <div className="grid grid-cols-2 gap-4 py-2">
-                    {plan.specs.map((spec, sIdx) => (
-                      <div key={sIdx} className="space-y-0.5">
-                        <span className="text-[9px] font-mono-num font-medium tracking-wider text-neutral-400 uppercase">{spec.label}</span>
-                        <span className="text-xs font-sans-clean font-semibold text-neutral-700 block truncate">{spec.value}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Expand button and collapsible contents */}
-                  <div className="border-t border-neutral-100/80 pt-4 space-y-4">
-                    <button
-                      onClick={() => setExpandedPlan(isCurrentExpanded ? null : plan.id)}
-                      className="w-full flex items-center justify-between text-left text-xs font-sans-clean font-bold text-neutral-500 hover:text-[#FF6B00] transition-colors cursor-pointer"
-                    >
-                      <span>{isCurrentExpanded ? 'Hide Details' : 'Expand Details & Inclusions'}</span>
-                      {isCurrentExpanded ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                      {isCurrentExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.25, ease: 'easeInOut' }}
-                          className="overflow-hidden space-y-4 pt-2"
-                        >
-                          <p className="text-xs font-sans-clean text-neutral-500 leading-relaxed bg-neutral-50 p-3 rounded-xl border border-neutral-100">
-                            {plan.overview}
-                          </p>
-
-                          <div className="space-y-2">
-                            <span className="text-[9px] font-mono-num font-medium text-neutral-400 uppercase tracking-widest block">Structural Inclusions</span>
-                            <ul className="space-y-2">
-                              {plan.details.map((detail, dIdx) => (
-                                <li key={dIdx} className="flex items-start gap-2.5 text-xs text-neutral-600 font-sans-clean">
-                                  <Check className="w-3.5 h-3.5 text-[#FF6B00] shrink-0 mt-0.5" strokeWidth={3} />
-                                  <span>{detail}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                </div>
-
-                {/* Card CTA */}
-                <div className="pt-8 mt-auto">
-                  <a
-                    href="/contact"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setCurrentPage('get-started');
-                    }}
-                    className={`w-full py-3.5 rounded-xl font-sans-clean font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer ${
-                      plan.id === 'growth'
-                        ? 'bg-[#FF6B00] hover:bg-orange-600 text-white shadow-[0_10px_20px_rgba(255,107,0,0.15)]'
-                        : 'bg-brand-dark hover:bg-neutral-800 text-white'
-                    }`}
-                  >
-                    <span>Get Started</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-
-      {/* SECTION 3: WHAT'S INCLUDED - EXPANDABLE FEATURE BLOCKS */}
+      {/* WHAT'S INCLUDED - EXPANDABLE FEATURE BLOCKS */}
       <section 
         id="services-features" 
         ref={featuresRef}
-        className="max-w-5xl mx-auto px-6"
+        className="pt-24 sm:pt-28 md:pt-36 max-w-5xl mx-auto px-6"
       >
         <div className="space-y-16">
           <div className="text-center space-y-3">
             <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
               ECOSYSTEM MODULES
             </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-brand-dark tracking-tight">
               Ecosystem Features Explained
-            </h2>
+            </h1>
             <p className="font-sans-clean text-neutral-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
               We focus on implementing clean digital components. Click any feature block to review its technical parameters.
             </p>

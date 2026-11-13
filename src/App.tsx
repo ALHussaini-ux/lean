@@ -8,7 +8,6 @@ import LeadPortal from './components/LeadPortal';
 import AramcoButton from './components/AramcoButton';
 import Hero3DBackground from './components/Hero3DBackground';
 import HeroInteractiveDashboard from './components/HeroInteractiveDashboard';
-import MetricsGlass from './components/MetricsGlass';
 import ServicesBento from './components/ServicesBento';
 import HowItWorksTimeline from './components/HowItWorksTimeline';
 import AboutPremium from './components/AboutPremium';
@@ -201,9 +200,6 @@ export default function App() {
 
                 {/* MINIMALIST HERO SECTION (APPLE / LINEAR STYLE) */}
                 <MinimalHero />
-
-                {/* REDESIGNED LIQUID GLASS METRICS SECTION */}
-                <MetricsGlass />
 
                 {/* REDESIGNED SERVICES BENTO GRID */}
                 <ServicesBento />

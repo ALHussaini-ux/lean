@@ -53,18 +53,13 @@ export default function LeadPortal() {
         
         {/* Contact Options Column (5 columns on large screens) */}
         <div className="lg:col-span-5 space-y-6">
-          <h3 className="text-xs font-mono-num font-medium text-neutral-400 tracking-widest uppercase mb-4 block">
-            DIRECT CONTACT OPTIONS
-          </h3>
-
-          {/* Option 1: Email */}
+          {/* Email */}
           <div className="bg-white border border-neutral-200 p-5 rounded-sm hover:border-brand-orange transition-all duration-300 shadow-sm flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
               <Mail className="w-5 h-5" />
             </div>
             <div className="space-y-2 flex-grow">
-              <span className="text-[10px] font-mono-num font-medium tracking-wider text-neutral-400 block uppercase">OPTION 1</span>
-              <h4 className="font-sans-clean font-bold text-base text-brand-navy">Direct Email Inquiry</h4>
+              <h3 className="font-sans-clean font-bold text-base text-brand-navy">Direct Email Inquiry</h3>
               <p className="font-sans-clean text-neutral-500 text-xs">
                 Send us your briefs, layouts, or project files. We respond within 24 hours.
               </p>
@@ -80,14 +75,13 @@ export default function LeadPortal() {
             </div>
           </div>
 
-          {/* Option 2: Calendar Booking */}
+          {/* Calendar Booking */}
           <div className="bg-white border border-neutral-200 p-5 rounded-sm hover:border-brand-orange transition-all duration-300 shadow-sm flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
               <Calendar className="w-5 h-5" />
             </div>
             <div className="space-y-2 flex-grow">
-              <span className="text-[10px] font-mono-num font-medium tracking-wider text-neutral-400 block uppercase">OPTION 2</span>
-              <h4 className="font-sans-clean font-bold text-base text-brand-navy">Calendar Booking</h4>
+              <h3 className="font-sans-clean font-bold text-base text-brand-navy">Calendar Booking</h3>
               <p className="font-sans-clean text-neutral-500 text-xs">
                 Instantly schedule a 30-minute free growth consultation call with our pipeline architect.
               </p>
@@ -120,7 +114,7 @@ export default function LeadPortal() {
               >
                 <div>
                   <h3 className="text-base font-sans-clean font-bold text-brand-dark mb-1">
-                    Option 4: Quick Contact Form
+                    Quick Contact Form
                   </h3>
                   <p className="text-xs font-sans-clean text-neutral-500">
                     Submit your basic project parameters and we will contact you directly within 24 hours.
