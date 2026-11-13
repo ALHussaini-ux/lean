@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
-import { ArrowRight, Sparkles, Check } from './icons';
+import { ArrowRight, Check } from './icons';
 
 interface FooterProps {
   setCurrentPage?: (page: Page) => void;
@@ -33,7 +33,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
   return (
     <footer id="app-footer" data-header-theme="dark" className="bg-brand-dark text-white pt-16 pb-12 border-t border-neutral-800">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-neutral-800">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 border-b border-neutral-800">
           
           {/* Logo and Tagline Column */}
           <div className="md:col-span-1 space-y-4">
@@ -145,27 +145,6 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                 >
                   Contact
                 </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Details / Address */}
-          <div className="space-y-4">
-            <h3 className="font-sans-clean font-bold text-xs tracking-widest uppercase text-neutral-300">TECHNICAL HUB</h3>
-            <ul className="space-y-2 font-sans-clean text-xs sm:text-sm text-neutral-400">
-              <li className="leading-relaxed">
-                Lean System<br />
-                MG Road, Hyderabad<br />
-                Telangana, India
-              </li>
-              <li className="pt-2">
-                <span className="text-neutral-500">Contact:</span>{' '}
-                <a href="mailto:hello@leansystem.co" className="font-mono-num font-medium text-neutral-300 hover:text-brand-orange transition-colors">
-                  hello@leansystem.co
-                </a>
-              </li>
-              <li>
-                <span className="text-neutral-500">Service Hours:</span> 24/7 Autonomous Systems Monitoring
               </li>
             </ul>
           </div>
