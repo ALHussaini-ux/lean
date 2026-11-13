@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Page } from './types';
-import { SERVICES, PRICING_TIERS, COMPANY_VALUES, GENERAL_FAQS, PRICING_FAQS } from './data';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import LeadPortal from './components/LeadPortal';
@@ -17,15 +16,13 @@ import ContactPremium from './components/ContactPremium';
 import HelloPrivateCard from './components/HelloPrivateCard';
 import MinimalHero from './components/MinimalHero';
 import PageMetadata from './components/PageMetadata';
-import { ArrowRight, Check, X, Shield, ChevronDown, ChevronUp, Clock, AlertTriangle, Layers, MessageSquare, Zap, Smartphone, Cpu } from './components/icons';
+import { ArrowRight } from './components/icons';
 import { motion, AnimatePresence } from 'motion/react';
 import { gsap, ScrollTrigger, prefersReducedMotion } from './utils/scroll';
 
 export default function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slideProgress, setSlideProgress] = useState(0);
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-  const [expandedPricingFaq, setExpandedPricingFaq] = useState<number | null>(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -154,14 +151,6 @@ export default function App() {
     }
   };
 
-  const toggleFaq = (index: number) => {
-    setExpandedFaq(expandedFaq === index ? null : index);
-  };
-
-  const togglePricingFaq = (index: number) => {
-    setExpandedPricingFaq(expandedPricingFaq === index ? null : index);
-  };
-
   return (
     <div id="lean-app" className="min-h-screen bg-white text-brand-dark flex flex-col justify-between selection:bg-brand-orange selection:text-white">
       
@@ -206,67 +195,6 @@ export default function App() {
 
                 {/* REDESIGNED HOW IT WORKS TIMELINE */}
                 <HowItWorksTimeline />
-
-                {/* GENERAL FAQ SECTION */}
-                <motion.section 
-                  id="general-faqs" 
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="max-w-4xl mx-auto px-6 scroll-mt-24"
-                >
-                  <div className="text-center mb-12 space-y-2">
-                    <span className="text-brand-orange text-xs tracking-widest font-sans-clean font-bold uppercase inline-block border-b-2 border-brand-orange pb-2 mb-2">
-                      HAVE QUESTIONS?
-                    </span>
-                    <h2 className="text-2xl md:text-3xl font-display font-bold text-brand-dark tracking-tight">
-                      Frequently Asked Questions
-                    </h2>
-                    <p className="font-sans-clean text-brand-gray text-xs sm:text-sm max-w-lg mx-auto">
-                      Direct, transparent answers regarding lead quality, timelines, ownership, and systems.
-                    </p>
-                  </div>
-
-                  <div className="space-y-4 border-t border-neutral-200 pt-6">
-                    {GENERAL_FAQS.map((faq, idx) => {
-                      const isOpen = expandedFaq === idx;
-                      return (
-                        <div key={idx} className="border-b border-neutral-200 pb-4 last:border-b-0">
-                          <button
-                            onClick={() => toggleFaq(idx)}
-                            className="w-full flex items-center justify-between text-left py-3 group cursor-pointer focus:outline-none"
-                          >
-                            <span className="font-sans-clean font-semibold text-sm sm:text-base text-brand-navy group-hover:text-brand-orange transition-colors duration-200">
-                              {faq.q}
-                            </span>
-                            {isOpen ? (
-                              <ChevronUp className="w-4 h-4 text-brand-orange shrink-0 ml-4" />
-                            ) : (
-                              <ChevronDown className="w-4 h-4 text-neutral-400 group-hover:text-brand-orange shrink-0 ml-4" />
-                            )}
-                          </button>
-                          
-                          <AnimatePresence initial={false}>
-                            {isOpen && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
-                                className="overflow-hidden"
-                              >
-                                <p className="font-sans-clean text-brand-gray text-xs sm:text-sm leading-relaxed pt-2 pb-4 px-1 bg-brand-light/50 rounded-sm">
-                                  {faq.a}
-                                </p>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </motion.section>
 
                 {/* BOTTOM CTA: DIRECT CONTACT CONVERSION */}
                 <motion.section 

@@ -329,10 +329,6 @@ function AdsVisual() {
 function LandingPageVisual() {
   return (
     <div className="space-y-3 font-sans-clean">
-      <div className="flex items-center justify-between text-[11px] text-neutral-400 font-bold border-b border-neutral-200/50 pb-2">
-        <span className="flex items-center gap-1.5">⚡ Lighthouse Score</span>
-        <span className="text-emerald-500 font-bold font-mono-num">99/100 Speed</span>
-      </div>
       <div className="bg-white/90 rounded-xl p-3 border border-neutral-100 shadow-sm space-y-2">
         <div className="h-3 w-2/3 bg-neutral-200 rounded animate-pulse" />
         <div className="h-2 w-full bg-neutral-100 rounded" />
@@ -351,7 +347,6 @@ function CRMVisual() {
     <div className="space-y-3 font-sans-clean">
       <div className="flex items-center justify-between text-[11px] text-neutral-400 font-bold border-b border-neutral-200/50 pb-2">
         <span>Pipeline Board</span>
-        <span className="text-xs font-bold text-[#FF6B00] font-mono-num">Airtable</span>
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between bg-white/90 p-2 rounded-xl border border-neutral-100 shadow-sm text-xs">

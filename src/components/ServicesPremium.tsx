@@ -10,9 +10,7 @@ import {
   Plus, 
   Minus, 
   Check, 
-  ArrowRight,
-  ChevronDown,
-  ChevronUp
+  ArrowRight
 } from './icons';
 
 interface FeatureBlock {
@@ -30,21 +28,11 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
   const engagementRef = useRef<HTMLDivElement>(null);
   const isEngagementInView = useInView(engagementRef, { once: true, amount: 0.15 });
 
-  const comparisonRef = useRef<HTMLDivElement>(null);
-
-  const faqsRef = useRef<HTMLDivElement>(null);
-
   const ctaRef = useRef<HTMLDivElement>(null);
   const isCtaInView = useInView(ctaRef, { once: true, amount: 0.15 });
 
   // Feature block expand states
   const [expandedFeature, setExpandedFeature] = useState<string | null>('ads');
-
-  // Comparison card expand states
-  const [expandedCompCategory, setExpandedCompCategory] = useState<string | null>('campaigns');
-
-  // FAQ states
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   const features: FeatureBlock[] = [
     {
@@ -125,72 +113,6 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
         'Formatting templates optimized for social platforms',
         'High-contrast layouts focusing purely on conversion'
       ]
-    }
-  ];
-
-  const comparisonCategories = [
-    {
-      id: 'campaigns',
-      name: 'Advertising Channels & Campaigns',
-      items: [
-        { name: 'Google Ads Search (Intent)', starter: 'Included', growth: 'Included', premium: 'Included' },
-        { name: 'Google Display Network (Remargining)', starter: 'Add-on', growth: 'Included', premium: 'Included' },
-        { name: 'Meta Campaigns (Facebook/Instagram)', starter: 'Add-on', growth: 'Included', premium: 'Included' },
-        { name: 'Performance Max Campaigns', starter: 'Unavailable', growth: 'Add-on', premium: 'Included' }
-      ]
-    },
-    {
-      id: 'conversion',
-      name: 'Conversion Infrastructure',
-      items: [
-        { name: 'High-Speed Project Landing Page', starter: '1 Template', growth: '2+ A/B Variations', premium: 'Bespoke Design' },
-        { name: 'Real-Time Lead Alert Dispatch', starter: 'Instant Email & Sheet sync', growth: 'Automated SMS & Webhook triggers', premium: 'Custom CRM API routing' },
-        { name: 'Brochure PDF Automatic Dispatch', starter: 'Included', growth: 'Included', premium: 'Included' },
-        { name: 'Domain & SSL Setup (Self-Owned)', starter: 'Included', growth: 'Included', premium: 'Included' }
-      ]
-    },
-    {
-      id: 'integrations',
-      name: 'Integrations & Databases',
-      items: [
-        { name: 'Google Sheets Live Sync', starter: 'Included', growth: 'Included', premium: 'Included' },
-        { name: 'Airtable Interactive Conversion Board', starter: 'Add-on', growth: 'Included', premium: 'Included' },
-        { name: 'Custom CRM API Webhooks Sync', starter: 'Unavailable', growth: 'Add-on', premium: 'Included' },
-        { name: 'Data Privacy Standards Alignment', starter: 'Included', growth: 'Included', premium: 'Included' }
-      ]
-    },
-    {
-      id: 'strategy_sync',
-      name: 'Strategy & Consultation support',
-      items: [
-        { name: 'Detailed Competitor Ad Audit', starter: 'Included', growth: 'Included', premium: 'Included' },
-        { name: 'Performance Sync Calls', starter: 'Monthly', growth: 'Bi-weekly', premium: 'Weekly' },
-        { name: 'Campaign Ad Account Ownership', starter: '100% Client-Owned', growth: '100% Client-Owned', premium: '100% Client-Owned' },
-        { name: 'Dedicated Account Strategist', starter: 'Unavailable', growth: 'Recommended', premium: 'Included' }
-      ]
-    }
-  ];
-
-  const faqs = [
-    {
-      q: 'How long does setup usually take?',
-      a: 'A typical foundational setup is completed and ready to launch within 7 to 10 days. This includes constructing the conversion landing page, configuring campaigns, establishing UTM parameters, and structuring initial lead notification triggers. We launch once campaign approvals and asset handovers are finalized.'
-    },
-    {
-      q: 'Can plans be customized?',
-      a: 'Yes. Our plans serve as frameworks for standard growth needs. If you require specialized tracking, multiple simultaneous project launches, or dedicated CRM webhook integrations, we can adjust features and deliverables to align with your specific roadmap.'
-    },
-    {
-      q: 'Do I need a long-term contract?',
-      a: 'No. We believe in transparency and performance-based retention. Our engagements operate on a monthly rolling basis with a simple 14-day notice period. This keeps our team highly focused on delivering consistent optimization and service quality.'
-    },
-    {
-      q: 'Who owns the advertising accounts?',
-      a: 'You do. We construct all campaigns, landing pages, and automated pipelines directly within ad accounts and domains owned by your business. If our engagement ends, you retain 100% ownership of your infrastructure, histories, and assets. No vendor lock-in.'
-    },
-    {
-      q: 'Can you work with our existing CRM?',
-      a: 'Yes. For our Growth and Premium partners, we construct webhook bridges that translate inquiry inputs directly into standard CRM fields (including HubSpot, Salesforce, Zoho, or local platforms). This prevents double-entry and speeds up sales follow-up times.'
     }
   ];
 
@@ -348,157 +270,7 @@ export default function ServicesPremium({ setCurrentPage }: { setCurrentPage: (p
       </section>
 
 
-      {/* SECTION 5: COMPARISON - EXPANDABLE CARDS */}
-      <section 
-        id="services-comparison" 
-        ref={comparisonRef}
-        className="max-w-4xl mx-auto px-6"
-      >
-        <div className="space-y-16">
-          <div className="text-center space-y-3">
-            <span className="text-[#FF6B00] text-xs tracking-[0.2em] font-sans-clean font-bold uppercase inline-block border-b-2 border-[#FF6B00] pb-2 mb-2">
-              FEATURE AUDIT
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight">
-              Compare Platform Capabilities
-            </h2>
-            <p className="font-sans-clean text-neutral-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-              Understand structural variations side-by-side. Click on a category to inspect available configurations.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {comparisonCategories.map((category) => {
-              const isCategoryExpanded = expandedCompCategory === category.id;
-              return (
-                <div
-                  key={category.id}
-                  className={`p-6 md:p-8 rounded-[24px] border bg-white transition-all duration-300 ${
-                    isCategoryExpanded 
-                      ? 'border-[#FF6B00]/30 shadow-[0_15px_35px_rgba(255,107,0,0.02)]' 
-                      : 'border-neutral-200/60 shadow-sm hover:border-[#FF6B00]/20'
-                  }`}
-                >
-                  <button
-                    onClick={() => setExpandedCompCategory(isCategoryExpanded ? null : category.id)}
-                    className="w-full flex items-center justify-between text-left focus:outline-none group cursor-pointer"
-                  >
-                    <span className="text-base font-sans-clean font-bold text-brand-dark group-hover:text-[#FF6B00] transition-colors">
-                      {category.name}
-                    </span>
-                    <div className="w-8 h-8 rounded-full bg-neutral-50 border border-neutral-100 flex items-center justify-center text-neutral-500">
-                      {isCategoryExpanded ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                    </div>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isCategoryExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25, ease: 'easeInOut' }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pt-6 border-t border-neutral-100/80 mt-6 space-y-4">
-                          {category.items.map((item, iIdx) => (
-                            <div 
-                              key={iIdx} 
-                              className="grid grid-cols-1 md:grid-cols-12 gap-4 py-3 items-center border-b border-neutral-50 last:border-0"
-                            >
-                              <div className="md:col-span-4">
-                                <span className="text-xs font-sans-clean font-semibold text-neutral-800">{item.name}</span>
-                              </div>
-                              <div className="md:col-span-8 grid grid-cols-3 gap-2 text-center text-[10px] font-sans-clean font-semibold">
-                                <div className="space-y-1 bg-neutral-50/50 p-2 rounded-lg border border-neutral-100/40">
-                                  <span className="text-neutral-400 uppercase tracking-wider block text-[8px] font-mono-num">Starter</span>
-                                  <span className="text-neutral-600 block">{item.starter}</span>
-                                </div>
-                                <div className="space-y-1 bg-orange-50/20 p-2 rounded-lg border border-[#FF6B00]/10">
-                                  <span className="text-[#FF6B00] uppercase tracking-wider block text-[8px] font-mono-num">Growth</span>
-                                  <span className="text-[#FF6B00] block">{item.growth}</span>
-                                </div>
-                                <div className="space-y-1 bg-neutral-900 text-white p-2 rounded-lg">
-                                  <span className="text-neutral-400 uppercase tracking-wider block text-[8px] font-mono-num">Premium</span>
-                                  <span className="text-white block">{item.premium}</span>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-
-      {/* SECTION 6: FREQUENTLY ASKED QUESTIONS */}
-      <section 
-        id="services-faqs" 
-        ref={faqsRef}
-        className="max-w-3xl mx-auto px-6"
-      >
-        <div className="space-y-12">
-          <div className="text-center space-y-3">
-            <span className="text-xs font-mono-num font-medium tracking-widest text-[#FF6B00] uppercase block">
-              SUPPORT & POLICIES
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-dark tracking-tight">
-              Frequently Asked Questions
-            </h2>
-          </div>
-
-          <div className="space-y-3 border-t border-neutral-200/60 pt-6">
-            {faqs.map((faq, idx) => {
-              const isOpen = expandedFaq === idx;
-              return (
-                <div 
-                  key={idx}
-                  className="border-b border-neutral-200/50 pb-4 last:border-0"
-                >
-                  <button
-                    onClick={() => setExpandedFaq(isOpen ? null : idx)}
-                    className="w-full flex items-center justify-between text-left py-4 group cursor-pointer focus:outline-none"
-                  >
-                    <span className="font-sans-clean font-semibold text-sm text-brand-dark group-hover:text-[#FF6B00] transition-colors duration-200">
-                      {faq.q}
-                    </span>
-                    {isOpen ? (
-                      <ChevronUp className="w-4 h-4 text-[#FF6B00] shrink-0 ml-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4 text-neutral-400 group-hover:text-[#FF6B00] shrink-0 ml-4" />
-                    )}
-                  </button>
-                  
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
-                      >
-                        <p className="font-sans-clean text-neutral-500 text-xs sm:text-sm leading-relaxed pb-4 px-3 bg-neutral-50 rounded-xl border border-neutral-100">
-                          {faq.a}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-
-      {/* SECTION 7: CLOSING CTA */}
+      {/* CLOSING CTA */}
       <section 
         id="services-cta" 
         ref={ctaRef}
