@@ -1,96 +1,187 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Syne", sans-serif;
-  --font-sans-clean: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono-num: "JetBrains Mono", monospace;
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Default site font mappings to Plus Jakarta Sans and JetBrains Mono */
-  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-body: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  /* Surfaces */
+  --color-paper: #F6F5F1;
+  --color-paper-2: #EEECE6;
+  --color-card: #FBFAF8;
 
-  --color-brand-dark: #0F0F11;
-  --color-brand-navy: #151B26;
-  --color-brand-orange: #FF7A1A;
-  --color-brand-light: #F8F9FA;
-  --color-brand-gray: #8A94A6;
+  /* Ink */
+  --color-ink: #141412;
+  --color-ink-2: #3D3C38;
+  --color-muted: #75736C;
+  --color-faint: #A6A39B;
+  --color-line: #DEDBD3;
+
+  /* Accent: the Lean orange, used sparingly */
+  --color-accent: #F2641C;
+  --color-accent-dark: #D4520E;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Explicit CSS classes as requested */
-.font-display {
-  font-family: 'Syne', sans-serif;
-}
-
-.font-sans-clean {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-
-.font-mono-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Base style resets and scrollbar layout */
-body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #FFFFFF;
-  color: #0F0F11;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-
-/* Custom smooth scroll and transitions */
-html {
-  scroll-behavior: smooth;
-}
-
-::selection {
-  background-color: #FF8C42;
-  color: #FFFFFF;
-}
-
-@keyframes caret-blink {
-  0%, 42% {
-    opacity: 1;
+@layer base {
+  html {
+    background: var(--color-paper);
+    -webkit-text-size-adjust: 100%;
   }
-  54%, 88% {
-    opacity: 0;
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
   }
-  100% {
-    opacity: 1;
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  input,
+  textarea,
+  select {
+    font: inherit;
   }
 }
 
-.animate-caret-blink {
-  animation: caret-blink 1.05s ease-in-out infinite;
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .container-x {
+      padding-inline: 40px;
+    }
+  }
+
+  /* Display type: tight, large, confident */
+  .display {
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+
+  .h-section {
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    font-size: clamp(2rem, 4.4vw, 3.5rem);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--color-muted);
+  }
+
+  .lede {
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    line-height: 1.55;
+    color: var(--color-ink-2);
+    letter-spacing: -0.01em;
+  }
+
+  .serif-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Animated underline link */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s var(--ease-out-expo);
+  }
+
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* Form fields */
+  .field {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-line);
+    padding: 14px 0 12px;
+    font-size: 16px;
+    color: var(--color-ink);
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+  }
+
+  .field::placeholder {
+    color: var(--color-faint);
+  }
+
+  .field:focus {
+    outline: none;
+    border-bottom-color: var(--color-ink);
+  }
+
+  .field-label {
+    display: block;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+}
+
+/* Long-form article body */
+.article-body p {
+  margin-top: 1.4em;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--color-ink-2);
+}
+
+.article-body p:first-child {
+  margin-top: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-caret-blink {
-    animation: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
-
-/* Refined custom brand scrollbar */
-::-webkit-scrollbar {
-  width: 7px;
-}
-::-webkit-scrollbar-track {
-  background: #FAFAFA;
-}
-::-webkit-scrollbar-thumb {
-  background: #D1D5DB;
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #FF7A1A;
-}
-
-

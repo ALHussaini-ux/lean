@@ -1,295 +1,149 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Page } from '../types';
-import { Menu, X } from './icons';
-import { motion, AnimatePresence } from 'motion/react';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
+import { Button, Wordmark } from './ui';
+import { EASE, useLenis } from '../lib/motion';
 
-interface HeaderProps {
-  currentPage?: Page;
-  setCurrentPage?: (page: Page) => void;
-}
+const NAV = [
+  { to: '/services', label: 'Services' },
+  { to: '/about', label: 'About' },
+  { to: '/blog', label: 'Journal' },
+  { to: '/contact', label: 'Contact' },
+];
 
-export default function Header({ currentPage, setCurrentPage }: HeaderProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Header() {
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isOverDarkBg, setIsOverDarkBg] = useState(true);
-
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
   const location = useLocation();
-  const navigate = useNavigate();
+  const lenis = useLenis();
 
-  // Dynamically compute active page state from route pathname
-  let activePage: Page = 'home';
-  if (location.pathname === '/about') activePage = 'about';
-  else if (location.pathname === '/services') activePage = 'services';
-  else if (location.pathname === '/blog') activePage = 'blog';
-  else if (location.pathname === '/contact') activePage = 'contact';
-  else if (location.pathname === '/get-started') activePage = 'get-started';
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const prev = scrollY.getPrevious() ?? 0;
+    setScrolled(y > 12);
+    setHidden(y > 240 && y > prev && !open);
+  });
 
+  // Close the menu whenever the route changes
+  useEffect(() => setOpen(false), [location.pathname]);
+
+  // Lock scrolling while the mobile menu is open
   useEffect(() => {
-    const checkBackground = () => {
-      const darkSections = document.querySelectorAll('[data-header-theme="dark"]');
-      let overDark = false;
-      const headerHeight = 90;
-
-      darkSections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= headerHeight && rect.bottom >= 20) {
-          overDark = true;
-        }
-      });
-
-      setIsOverDarkBg(overDark);
-    };
-
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-      checkBackground();
-    };
-
-    checkBackground();
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', checkBackground, { passive: true });
-
-    const observer = new MutationObserver(checkBackground);
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', checkBackground);
-      observer.disconnect();
-    };
-  }, [location.pathname]);
-
-  const navItems = [
-    { label: 'Home', path: '/' },
-    { label: 'About', path: '/about' },
-    { label: 'Services', path: '/services' },
-    { label: 'How It Works', path: '/', hash: 'how-it-works' },
-    { label: 'Blog', path: '/blog' },
-    { label: 'Contact', path: '/contact' }
-  ];
-
-  const handleNav = (path: string, hash?: string) => {
-    setIsOpen(false);
-    if (location.pathname !== path) {
-      navigate(path);
-      if (hash) {
-        setTimeout(() => {
-          const el = document.getElementById(hash);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 300);
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    } else {
-      if (hash) {
-        const el = document.getElementById(hash);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
-
-    // Call legacy prop if provided
-    if (setCurrentPage) {
-      let pageVal: Page = 'home';
-      if (path === '/about') pageVal = 'about';
-      else if (path === '/services') pageVal = 'services';
-      else if (path === '/blog') pageVal = 'blog';
-      else if (path === '/contact') pageVal = 'contact';
-      setCurrentPage(pageVal);
-    }
-  };
+    if (open) lenis?.stop();
+    else lenis?.start();
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  }, [open, lenis]);
 
   return (
-    <header 
-      id="app-header" 
-      className={`fixed top-3 sm:top-4 inset-x-0 mx-auto max-w-[94%] sm:max-w-[88%] lg:max-w-5xl w-full z-50 transition-all duration-300 font-sans-clean ${
-        isOpen ? 'rounded-2xl sm:rounded-3xl' : 'rounded-full'
-      } ${
-        isOverDarkBg 
-          ? 'bg-neutral-900/90 backdrop-blur-2xl border border-white/20 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.25),0_12px_40px_rgba(0,0,0,0.35)]' 
-          : 'bg-white/90 backdrop-blur-2xl border border-neutral-200/80 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.8),0_12px_40px_rgba(0,0,0,0.08)]'
-      } ${
-        scrolled ? 'py-1.5' : 'py-2'
-      }`}
-    >
-      <div className="px-3.5 sm:px-6 h-12 sm:h-14 flex items-center justify-between relative">
-        
-        {/* Left Side Logo */}
-        <a 
-          id="brand-logo"
-          href="/"
-          aria-label="Lean System Home"
-          className="flex items-center gap-2.5 cursor-pointer select-none group pl-1.5"
-          onClick={(e) => {
-            e.preventDefault();
-            handleNav('/');
-          }}
-        >
-          <img 
-            src="https://lh3.googleusercontent.com/d/1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5" 
-            alt="Lean System"
-            referrerPolicy="no-referrer"
-            className={`h-7 sm:h-8 w-auto object-contain transition-all duration-300 group-hover:scale-[1.04] ${
-              isOverDarkBg ? 'brightness-0 invert' : 'brightness-0'
-            }`}
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = "https://drive.google.com/thumbnail?id=1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5&sz=w1000";
-            }}
-          />
-        </a>
+    <>
+      <motion.header
+        initial={{ y: -24, opacity: 0 }}
+        animate={{ y: hidden ? '-100%' : 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: EASE }}
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 border-b ${
+          scrolled || open ? 'bg-paper/85 backdrop-blur-md border-line/70' : 'bg-transparent border-transparent'
+        }`}
+      >
+        <div className="container-x flex h-[68px] items-center justify-between">
+          <Link to="/" aria-label="Lean System, home" className="text-ink">
+            <Wordmark />
+          </Link>
 
-        {/* Centered Desktop Navigation */}
-        <nav id="desktop-nav" className="hidden lg:flex items-center space-x-6 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
-          {navItems.map((item, index) => {
-            const isMatch = activePage === 'home' && item.path === '/' && item.hash 
-              ? false 
-              : activePage === 'home' && item.path === '/' && !item.hash
-                ? true
-                : item.path !== '/' && location.pathname.startsWith(item.path);
-
-            const isContact = item.label === 'Contact';
-            return (
-              <React.Fragment key={index}>
-                {isContact && (
-                  <span className={`select-none font-light text-[13px] mx-1 transition-colors duration-300 ${
-                    isOverDarkBg ? 'text-white/20' : 'text-neutral-300'
-                  }`}>|</span>
+          <nav className="hidden md:flex items-center gap-9" aria-label="Main">
+            {NAV.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `relative text-[15px] tracking-[-0.01em] transition-colors duration-300 ${isActive ? 'text-ink' : 'text-muted hover:text-ink'}`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    {item.label}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-dot"
+                        className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent"
+                        transition={{ duration: 0.5, ease: EASE }}
+                      />
+                    )}
+                  </>
                 )}
-                <a
-                  id={`nav-item-${index}`}
-                  href={item.hash ? `${item.path}#${item.hash}` : item.path}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav(item.path, item.hash);
-                  }}
-                  className={`relative py-1 text-[13px] font-sans-clean font-medium tracking-wide transition-colors duration-300 cursor-pointer select-none ${
-                    isMatch 
-                      ? 'text-brand-orange font-bold' 
-                      : isOverDarkBg 
-                        ? 'text-white/85 hover:text-white' 
-                        : 'text-neutral-700 hover:text-brand-orange'
-                  }`}
-                >
-                  {item.label}
-                  {isMatch && (
-                    <motion.div
-                      layoutId="activeNavLine"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-orange rounded-full"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </a>
-              </React.Fragment>
-            );
-          })}
-        </nav>
+              </NavLink>
+            ))}
+          </nav>
 
-        {/* Right Side Call To Action */}
-        <div className="flex items-center gap-3 pr-1">
-          <div className="hidden sm:block">
-            <a
-              id="cta-get-started-desktop"
-              href="/contact"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNav('/contact');
-              }}
-              className="inline-block bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white px-5 py-2 rounded-full font-sans-clean font-bold text-[13px] tracking-wide shadow-[0_4px_14px_rgba(255,140,66,0.3)] hover:shadow-[0_6px_20px_rgba(255,140,66,0.45)] hover:scale-[1.02] transition-all duration-300 cursor-pointer active:scale-[0.98] focus:outline-none"
-            >
-              Get started
-            </a>
+          <div className="hidden md:block">
+            <Button to="/contact" className="!h-10 !px-5 !text-[14px]">
+              Book a call
+            </Button>
           </div>
 
-          {/* Hamburger Menu Toggle (Mobile) - Generous 44px+ touch target */}
-          <div className="lg:hidden flex items-center">
-            <button
-              id="mobile-menu-toggle"
-              onClick={() => setIsOpen(!isOpen)}
-              className={`min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center rounded-full cursor-pointer transition-colors duration-200 active:scale-95 ${
-                isOverDarkBg ? 'text-white hover:bg-white/10' : 'text-neutral-800 hover:bg-neutral-100'
-              }`}
-              aria-label="Toggle Menu"
-            >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Mobile Expanding Drawer */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            id="mobile-menu-container"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="overflow-hidden lg:hidden px-4 pb-4 max-h-[80vh] overflow-y-auto"
+          <button
+            type="button"
+            className="md:hidden -mr-2 flex h-11 w-11 items-center justify-center"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? 'Close menu' : 'Open menu'}
           >
-            <div className={`flex flex-col space-y-1.5 pt-3 border-t ${
-              isOverDarkBg ? 'border-white/10' : 'border-neutral-200/60'
-            }`}>
-              {navItems.map((item, index) => {
-                const isMatch = activePage === 'home' && item.path === '/' && item.hash 
-                  ? false 
-                  : activePage === 'home' && item.path === '/' && !item.hash
-                    ? true
-                    : item.path !== '/' && location.pathname.startsWith(item.path);
+            <span className="relative block h-3 w-6">
+              <span
+                className={`absolute left-0 h-[1.5px] w-6 bg-ink transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  open ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-0'
+                }`}
+              />
+              <span
+                className={`absolute left-0 h-[1.5px] w-6 bg-ink transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  open ? 'top-1/2 -translate-y-1/2 -rotate-45' : 'bottom-0'
+                }`}
+              />
+            </span>
+          </button>
+        </div>
+      </motion.header>
 
-                return (
-                  <a
-                    key={index}
-                    id={`mobile-nav-item-${index}`}
-                    href={item.hash ? `${item.path}#${item.hash}` : item.path}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNav(item.path, item.hash);
-                    }}
-                    className={`w-full text-left font-sans-clean font-medium text-base min-h-[44px] px-3.5 py-2.5 rounded-xl transition-all flex items-center justify-between active:scale-[0.99] ${
-                      isMatch
-                        ? 'text-brand-orange font-bold bg-brand-orange/10'
-                        : isOverDarkBg
-                          ? 'text-white/90 hover:text-white hover:bg-white/10'
-                          : 'text-neutral-800 hover:text-brand-orange hover:bg-neutral-100'
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    {isMatch && <span className="w-2 h-2 rounded-full bg-brand-orange" />}
-                  </a>
-                );
-              })}
-              
-              <div className="pt-3">
-                <a
-                  id="mobile-nav-cta"
-                  href="/contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('/contact');
-                  }}
-                  className="w-full min-h-[48px] bg-gradient-to-r from-brand-orange to-orange-500 hover:from-orange-500 hover:to-brand-orange text-white py-3 rounded-full font-sans-clean font-bold text-sm tracking-wide shadow-md flex items-center justify-center transition-all duration-300 active:scale-[0.98]"
-                >
-                  Get started
-                </a>
-              </div>
-            </div>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            className="fixed inset-0 z-40 bg-paper md:hidden"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            <nav className="container-x flex h-full flex-col justify-between pt-28 pb-10" aria-label="Mobile">
+              <ul className="space-y-1">
+                {[{ to: '/', label: 'Home' }, ...NAV].map((item, i) => (
+                  <li key={item.to} className="overflow-hidden">
+                    <motion.div
+                      initial={{ y: '100%' }}
+                      animate={{ y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.15 + i * 0.05, ease: EASE }}
+                    >
+                      <Link to={item.to} className="block py-2 text-[44px] font-medium leading-tight tracking-[-0.03em]">
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  </li>
+                ))}
+              </ul>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="space-y-1 text-muted"
+              >
+                <a href="mailto:hello@leansystem.co" className="block text-ink">hello@leansystem.co</a>
+                <p>Hyderabad, India</p>
+              </motion.div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

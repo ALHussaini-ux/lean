@@ -1,200 +1,66 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Page } from '../types';
-import { ArrowRight, Check } from './icons';
+import { Link } from 'react-router-dom';
+import { ArrowIcon, Wordmark } from './ui';
+import { Reveal } from '../lib/motion';
 
-interface FooterProps {
-  setCurrentPage?: (page: Page) => void;
-}
-
-export default function Footer({ setCurrentPage }: FooterProps) {
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-  const navigate = useNavigate();
-
-  const handleNav = (path: string, legacyPage?: Page) => {
-    navigate(path);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    if (setCurrentPage && legacyPage) {
-      setCurrentPage(legacyPage);
-    }
-  };
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      setSubscribed(true);
-      setTimeout(() => setSubscribed(false), 5000);
-      setEmail('');
-    }
-  };
+export default function Footer({ showCta = true }: { showCta?: boolean }) {
+  const year = new Date().getFullYear();
 
   return (
-    <footer id="app-footer" data-header-theme="dark" className="bg-brand-dark text-white pt-16 pb-12 border-t border-neutral-800">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 border-b border-neutral-800">
-          
-          {/* Logo and Tagline Column */}
-          <div className="md:col-span-1 space-y-4">
-            <a 
-              id="footer-logo"
-              href="/"
-              aria-label="Lean System Home"
-              className="flex flex-col items-start cursor-pointer select-none group"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNav('/', 'home');
-              }}
-            >
-              <img 
-                src="https://lh3.googleusercontent.com/d/1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5" 
-                alt="Lean System"
-                referrerPolicy="no-referrer"
-                className="h-9 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] brightness-0 invert"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = "https://drive.google.com/thumbnail?id=1LFCv9BinE7S_-D4Fuf2MrPLf_KAUA-K5&sz=w1000";
-                }}
-              />
-              <span className="text-[7px] md:text-[8px] text-neutral-400 font-sans-clean tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 h-0 group-hover:h-3 mt-0 group-hover:mt-1 overflow-hidden whitespace-nowrap">
-                Built for Real Estate Growth
-              </span>
-            </a>
-            <p className="font-sans-clean text-xs text-neutral-400 leading-relaxed max-w-xs">
-              Architecting high-conversion lead ingestion systems and automated communication infrastructure for modern builders and developers.
+    <footer className="bg-ink text-paper">
+      <div className={`container-x pb-10 ${showCta ? 'pt-24 md:pt-32' : 'pt-16'}`}>
+        {showCta && (
+        <Reveal>
+          <p className="eyebrow !text-faint">Have a project launching soon?</p>
+          <Link
+            to="/contact"
+            className="group mt-5 inline-flex items-end gap-4 md:gap-6 text-[clamp(2.75rem,8vw,7rem)] font-medium leading-[0.95] tracking-[-0.045em]"
+          >
+            <span>
+              Let&apos;s talk<span className="text-accent">.</span>
+            </span>
+            <ArrowIcon className="mb-[0.18em] h-[0.5em] w-[0.5em] -rotate-45 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-0" />
+          </Link>
+        </Reveal>
+        )}
+
+        <div className={`${showCta ? 'mt-20 md:mt-28 border-t border-paper/15 pt-10' : ''} grid grid-cols-2 gap-y-10 gap-x-6 md:grid-cols-12 text-[15px]`}>
+          <div className="col-span-2 md:col-span-5">
+            <Wordmark className="text-paper" />
+            <p className="mt-4 max-w-xs text-faint leading-relaxed">
+              Ads, landing pages and lead tracking for real estate developers in Hyderabad.
             </p>
           </div>
 
-          {/* Quick Navigation links */}
-          <div className="space-y-4">
-            <h3 className="font-sans-clean font-bold text-xs tracking-widest uppercase text-neutral-300">NAVIGATION</h3>
-            <ul className="space-y-2 font-sans-clean text-xs sm:text-sm text-neutral-400">
-              <li>
-                <a 
-                  href="/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('/', 'home');
-                  }} 
-                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/about"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('/about', 'about');
-                  }} 
-                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/services"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('/services', 'services');
-                  }} 
-                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/#how-it-works"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate('/');
-                    setTimeout(() => {
-                      document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 150);
-                    if (setCurrentPage) setCurrentPage('home');
-                  }} 
-                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
-                >
-                  How It Works
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/blog"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('/blog', 'blog');
-                  }} 
-                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
-                >
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('/contact', 'contact');
-                  }} 
-                  className="inline-block hover:text-brand-orange transition-colors cursor-pointer text-left py-0.5"
-                >
-                  Contact
-                </a>
-              </li>
+          <div className="md:col-span-3">
+            <p className="eyebrow !text-faint mb-4">Pages</p>
+            <ul className="space-y-2">
+              {[
+                ['/services', 'Services'],
+                ['/about', 'About'],
+                ['/blog', 'Journal'],
+                ['/contact', 'Contact'],
+              ].map(([to, label]) => (
+                <li key={to}>
+                  <Link to={to} className="link-underline">{label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Interactive Automation Bulletin Sign-up */}
-          <div className="space-y-4">
-            <h3 className="font-sans-clean font-bold text-xs tracking-widest uppercase text-neutral-300 font-bold">AUTOMATION INSIGHTS</h3>
-            <p className="font-sans-clean text-sm text-neutral-400 leading-relaxed">
-              Subscribe to receive telemetry briefs regarding local real estate lead-capture benchmarks.
-            </p>
-            
-            <form onSubmit={handleSubscribe} className="flex flex-col space-y-2">
-              <div className="relative flex">
-                <input
-                  type="email"
-                  required
-                  placeholder="name@agency.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-neutral-900 border border-neutral-800 focus:border-brand-orange px-4 py-3 text-sm rounded-sm text-white focus:outline-none font-sans-clean placeholder-neutral-600 transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="bg-brand-orange hover:bg-opacity-95 text-white px-4 flex items-center justify-center rounded-sm transition-opacity cursor-pointer"
-                  aria-label="Submit Email"
-                >
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-              {subscribed && (
-                <div className="flex items-center gap-2 text-brand-orange text-xs font-sans-clean font-semibold animate-fade-in">
-                  <Check className="w-3 h-3" />
-                  <span>Subscribed! Ingestion systems configured.</span>
-                </div>
-              )}
-            </form>
+          <div className="md:col-span-4">
+            <p className="eyebrow !text-faint mb-4">Contact</p>
+            <ul className="space-y-2">
+              <li>
+                <a href="mailto:hello@leansystem.co" className="link-underline">hello@leansystem.co</a>
+              </li>
+              <li className="text-faint">Hyderabad, Telangana</li>
+            </ul>
           </div>
-
         </div>
 
-        {/* Bottom copyright and legal note */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500 font-sans-clean tracking-wide space-y-4 md:space-y-0">
-          <div>
-            © <span className="font-mono-num">2026</span> Lean System. All rights reserved.
-          </div>
-          <div className="flex space-x-6">
-            <span className="hover:text-white cursor-pointer transition-colors">Privacy Telemetry</span>
-            <span className="hover:text-white cursor-pointer transition-colors">System Security</span>
-            <span className="hover:text-white cursor-pointer transition-colors">SLA Standards</span>
-          </div>
+        <div className="mt-16 flex flex-col gap-2 text-[13px] text-faint sm:flex-row sm:justify-between">
+          <p>© {year} Lean System</p>
+          <p>Built in Hyderabad</p>
         </div>
       </div>
     </footer>
