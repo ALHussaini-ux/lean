@@ -458,3 +458,242 @@ export function ResponseCompare() {
     </div>
   );
 }
+
+/* -------------------------------------------------------------------------- */
+/* Hero: enquiries arriving from across west Hyderabad                         */
+/* -------------------------------------------------------------------------- */
+
+// Positions are in a 640 × 440 space, shared by the SVG lines and the HTML labels.
+const MAP_W = 640;
+const MAP_H = 440;
+const AREAS = [
+  { name: 'Kokapet', x: 150, y: 262 },
+  { name: 'Gachibowli', x: 262, y: 190 },
+  { name: 'Tellapur', x: 92, y: 140 },
+  { name: 'Kondapur', x: 318, y: 112 },
+  { name: 'Narsingi', x: 214, y: 330 },
+  { name: 'Financial District', x: 200, y: 222 },
+  { name: 'Kukatpally', x: 420, y: 64 },
+  { name: 'Manikonda', x: 300, y: 276 },
+];
+const SALES = { x: 488, y: 236 };
+const CONFIGS = ['3 BHK', '2 BHK', '4 BHK', 'Villa', '3 BHK', 'Plot'];
+const SOURCES = ['Google Ads', 'Meta', 'Google Ads', 'Your website'];
+
+function curve(a: { x: number; y: number }) {
+  const cx = (a.x + SALES.x) / 2;
+  const cy = Math.min(a.y, SALES.y) - 70;
+  return { d: `M${a.x},${a.y} Q${cx},${cy} ${SALES.x},${SALES.y}`, cx, cy };
+}
+
+function bezierPoints(a: { x: number; y: number }, steps = 14) {
+  const { cx, cy } = curve(a);
+  const xs: number[] = [];
+  const ys: number[] = [];
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    xs.push((1 - t) ** 2 * a.x + 2 * (1 - t) * t * cx + t ** 2 * SALES.x);
+    ys.push((1 - t) ** 2 * a.y + 2 * (1 - t) * t * cy + t ** 2 * SALES.y);
+  }
+  return { xs, ys };
+}
+
+const pct = (v: number, of: number) => `${(v / of) * 100}%`;
+
+interface Enquiry {
+  id: number;
+  area: number;
+  config: string;
+  source: string;
+}
+
+const ORDER = [1, 0, 3, 5, 2, 7, 4, 6];
+const makeEnquiry = (id: number): Enquiry => ({
+  id,
+  area: ORDER[id % ORDER.length],
+  config: CONFIGS[id % CONFIGS.length],
+  source: SOURCES[id % SOURCES.length],
+});
+
+export function HeroMap() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.3 });
+  const reduce = useReducedMotion();
+  const [events, setEvents] = useState<Enquiry[]>(() => [makeEnquiry(0), makeEnquiry(1)]);
+
+  useEffect(() => {
+    if (reduce || !inView) return;
+    const id = setInterval(() => {
+      setEvents((prev) => [...prev.slice(-3), makeEnquiry(prev[prev.length - 1].id + 1)]);
+    }, 1900);
+    return () => clearInterval(id);
+  }, [inView, reduce]);
+
+  const latest = events[events.length - 1];
+  const recent = events.slice(-2);
+  const feed = events.slice(-2).reverse();
+
+  return (
+    <figure
+      ref={ref}
+      aria-label="Animation: enquiries from areas across west Hyderabad travel to your sales team"
+      className="relative w-full overflow-hidden rounded-2xl border border-line bg-card"
+      style={{ aspectRatio: `${MAP_W} / ${MAP_H}` }}
+    >
+      <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} className="absolute inset-0 h-full w-full" aria-hidden="true">
+        <defs>
+          <pattern id="hero-dots" width="16" height="16" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="1" fill="var(--color-line)" />
+          </pattern>
+        </defs>
+        <rect width={MAP_W} height={MAP_H} fill="url(#hero-dots)" />
+
+        {/* Outer Ring Road */}
+        <motion.ellipse
+          cx="300"
+          cy="215"
+          rx="270"
+          ry="178"
+          fill="none"
+          stroke="var(--color-ink)"
+          strokeOpacity="0.14"
+          strokeWidth="6"
+          strokeLinecap="round"
+          initial={reduce ? false : { pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2.4, delay: 0.4, ease: [0.65, 0, 0.35, 1] }}
+        />
+        {/* A couple of arterial roads */}
+        <path d="M30,300 C160,250 300,240 620,210" fill="none" stroke="var(--color-ink)" strokeOpacity="0.07" strokeWidth="3" />
+        <path d="M240,20 C260,160 250,300 300,430" fill="none" stroke="var(--color-ink)" strokeOpacity="0.07" strokeWidth="3" />
+
+        {/* Enquiry paths */}
+        <AnimatePresence>
+          {recent.map((e) => {
+            const a = AREAS[e.area];
+            const { xs, ys } = bezierPoints(a);
+            return (
+              <motion.g key={e.id} initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
+                <motion.path
+                  d={curve(a).d}
+                  fill="none"
+                  stroke="var(--color-accent)"
+                  strokeWidth="1.5"
+                  strokeDasharray="3 4"
+                  initial={reduce ? false : { pathLength: 0, opacity: 0.9 }}
+                  animate={{ pathLength: 1, opacity: e.id === latest.id ? 0.9 : 0.25 }}
+                  transition={{ duration: 1, ease: [0.65, 0, 0.35, 1] }}
+                />
+                {!reduce && (
+                  <motion.circle
+                    r="4.5"
+                    fill="var(--color-accent)"
+                    initial={{ cx: xs[0], cy: ys[0], opacity: 1 }}
+                    animate={{ cx: xs, cy: ys, opacity: [1, 1, 0] }}
+                    transition={{ duration: 1, ease: [0.65, 0, 0.35, 1], opacity: { duration: 1.2, times: [0, 0.8, 1] } }}
+                  />
+                )}
+              </motion.g>
+            );
+          })}
+        </AnimatePresence>
+      </svg>
+
+      {/* ORR label */}
+      <span className="absolute text-[10px] tracking-wide text-faint" style={{ left: pct(548, MAP_W), top: pct(96, MAP_H) }}>
+        ORR
+      </span>
+
+      {/* Areas */}
+      {AREAS.map((a, i) => {
+        const active = latest.area === i;
+        return (
+          <div key={a.name} className="absolute" style={{ left: pct(a.x, MAP_W), top: pct(a.y, MAP_H) }}>
+            <span className="absolute -left-[4px] -top-[4px] block h-2 w-2">
+              <span className={`absolute inset-0 rounded-full transition-colors duration-500 ${active ? 'bg-accent' : 'bg-ink/50'}`} />
+              <AnimatePresence>
+                {active && !reduce && (
+                  <motion.span
+                    key={latest.id}
+                    className="absolute inset-0 rounded-full bg-accent"
+                    initial={{ scale: 1, opacity: 0.6 }}
+                    animate={{ scale: 5, opacity: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 1.3, ease: 'easeOut' }}
+                  />
+                )}
+              </AnimatePresence>
+            </span>
+            <span
+              className={`absolute left-2 top-1 hidden whitespace-nowrap text-[11px] transition-colors duration-500 sm:block ${
+                active ? 'text-ink' : 'text-muted'
+              }`}
+            >
+              {a.name}
+            </span>
+          </div>
+        );
+      })}
+
+      {/* Sales team node */}
+      <div className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: pct(SALES.x, MAP_W), top: pct(SALES.y, MAP_H) }}>
+        <motion.div
+          key={latest.id}
+          initial={reduce ? false : { scale: 1 }}
+          animate={reduce ? undefined : { scale: [1, 1.06, 1] }}
+          transition={{ duration: 0.5, delay: 0.95 }}
+          className="relative flex items-center gap-2 whitespace-nowrap rounded-full bg-ink py-1.5 pl-2 pr-3 text-[11px] font-medium text-paper sm:text-[12px]"
+        >
+          <span className="relative flex h-5 w-5 items-center justify-center rounded-full bg-paper/15">
+            <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" aria-hidden="true">
+              <path d="M3 13.5V12a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1.5M8 7a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+          </span>
+          <span className="hidden sm:inline">Your sales team</span>
+          <span className="sm:hidden">Sales team</span>
+          <AnimatePresence>
+            {!reduce && (
+              <motion.span
+                key={latest.id}
+                className="absolute -right-2 -top-2 rounded-full bg-accent px-1.5 py-0.5 text-[10px] text-paper"
+                initial={{ opacity: 0, y: 4, scale: 0.6 }}
+                animate={{ opacity: [0, 1, 1, 0], y: [4, 0, 0, -4], scale: 1 }}
+                transition={{ duration: 1.4, delay: 0.9, times: [0, 0.15, 0.75, 1] }}
+              >
+                +1
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+
+      {/* Live feed */}
+      <div className="absolute bottom-4 right-4 hidden w-[min(240px,40%)] sm:block">
+        <ul className="flex flex-col gap-1.5">
+          <AnimatePresence initial={false}>
+            {feed.map((e, i) => (
+              <motion.li
+                key={e.id}
+                layout
+                initial={{ opacity: 0, y: -10, scale: 0.97 }}
+                animate={{ opacity: i === 0 ? 1 : 0.55, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.97 }}
+                transition={{ duration: 0.5, ease: EASE, delay: i === 0 && !reduce ? 0.9 : 0 }}
+                className="flex items-center gap-2.5 rounded-xl border border-line bg-paper/95 px-3 py-2 shadow-[0_6px_18px_rgba(20,20,18,0.06)] backdrop-blur"
+              >
+                <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${i === 0 ? 'bg-accent' : 'bg-ink/30'}`} />
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[11px] font-medium sm:text-[12px]">
+                    {e.config} · {AREAS[e.area].name}
+                  </span>
+                  <span className="block truncate text-[10px] text-muted sm:text-[11px]">via {e.source}</span>
+                </span>
+                <span className="shrink-0 text-[10px] text-muted">{i === 0 ? 'now' : '2s'}</span>
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </ul>
+      </div>
+    </figure>
+  );
+}
