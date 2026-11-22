@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { ResponseCompare, SERVICE_GRAPHICS } from '../components/graphics';
 import PageMetadata from '../components/PageMetadata';
 import { ArrowIcon, Button, Eyebrow } from '../components/ui';
 import { EASE, Lines, Page, Reveal, ScrollText } from '../lib/motion';
@@ -20,40 +21,94 @@ const JOURNEY = [
 
 function Journey() {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.4 });
+  const last = JOURNEY.length - 1;
+  const [step, setStep] = useState(reduce ? last : -1);
+
+  // Walk through the steps, hold on "visit booked", then start again
+  useEffect(() => {
+    if (reduce || !inView) return;
+    let i = -1;
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      i = i >= last ? -1 : i + 1;
+      setStep(i);
+      timer = setTimeout(tick, i === last ? 3200 : i === -1 ? 700 : 1100);
+    };
+    timer = setTimeout(tick, 900);
+    return () => clearTimeout(timer);
+  }, [inView, reduce, last]);
+
+  const progress = Math.max(0, step) / last;
+
   return (
-    <div className="relative">
-      <p className="eyebrow mb-6">What should happen to every enquiry</p>
-      {/* Track */}
+    <div ref={ref} className="relative">
+      <div className="mb-6 flex items-baseline justify-between gap-4">
+        <p className="eyebrow">What should happen to every enquiry</p>
+        <p className="text-[13px] tabular-nums text-muted" aria-hidden="true">
+          <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-accent align-middle animate-pulse" />
+          {step >= 0 ? JOURNEY[step].time : '0:00'}
+        </p>
+      </div>
       <div className="relative">
+        {/* Track: horizontal on desktop, vertical on phones */}
         <div className="absolute left-0 right-0 top-[5px] hidden h-px bg-line md:block" aria-hidden="true" />
         <motion.div
           className="absolute left-0 right-0 top-[5px] hidden h-px origin-left bg-ink md:block"
           aria-hidden="true"
-          initial={reduce ? false : { scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 2.2, delay: 1.1, ease: [0.65, 0, 0.35, 1] }}
+          animate={{ scaleX: progress }}
+          transition={{ duration: step === -1 ? 0.4 : 1, ease: [0.65, 0, 0.35, 1] }}
         />
         <div className="absolute bottom-2 left-[5px] top-2 w-px bg-line md:hidden" aria-hidden="true" />
+        <motion.div
+          className="absolute bottom-2 left-[5px] top-2 w-px origin-top bg-ink md:hidden"
+          aria-hidden="true"
+          animate={{ scaleY: progress }}
+          transition={{ duration: step === -1 ? 0.4 : 1, ease: [0.65, 0, 0.35, 1] }}
+        />
         <ol className="relative grid grid-cols-1 gap-6 md:grid-cols-5 md:gap-6">
-          {JOURNEY.map((step, i) => (
-            <motion.li
-              key={i}
-              className="flex gap-5 md:block"
-              initial={reduce ? false : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 + i * 0.4, ease: EASE }}
-            >
-              <span
-                className={`relative z-10 mt-[1px] block h-[11px] w-[11px] shrink-0 rounded-full border md:mt-0 ${
-                  i === JOURNEY.length - 1 ? 'border-accent bg-accent' : 'border-ink bg-paper'
-                }`}
-              />
-              <div className="md:mt-5">
-                <p className="font-mono text-[12px] text-muted">{step.time}</p>
-                <p className="mt-1 text-[15px] leading-snug text-ink-2 md:pr-4">{step.label}</p>
-              </div>
-            </motion.li>
-          ))}
+          {JOURNEY.map((s, i) => {
+            const active = i <= step;
+            const current = i === step;
+            const final = i === last;
+            return (
+              <li key={i} className="flex gap-5 md:block">
+                <span className="relative z-10 mt-[1px] block h-[11px] w-[11px] shrink-0 md:mt-0">
+                  <span
+                    className={`absolute inset-0 rounded-full border transition-colors duration-500 ${
+                      active ? (final ? 'border-accent bg-accent' : 'border-ink bg-ink') : 'border-ink/40 bg-paper'
+                    }`}
+                  />
+                  <AnimatePresence>
+                    {current && (
+                      <motion.span
+                        key={step}
+                        className={`absolute inset-0 rounded-full ${final ? 'bg-accent' : 'bg-ink'}`}
+                        initial={{ scale: 1, opacity: 0.5 }}
+                        animate={{ scale: 3.2, opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1, ease: 'easeOut' }}
+                      />
+                    )}
+                  </AnimatePresence>
+                </span>
+                <div className={`md:mt-5 transition-opacity duration-500 ${active || step === -1 ? 'opacity-100' : 'opacity-40'}`}>
+                  <p className="text-[12px] tabular-nums text-muted">{s.time}</p>
+                  <p className="mt-1 text-[15px] leading-snug text-ink-2 md:pr-4">{s.label}</p>
+                  {final && (
+                    <motion.span
+                      animate={{ opacity: step === last ? 1 : 0, y: step === last ? 0 : 4 }}
+                      transition={{ duration: 0.5, ease: EASE }}
+                      className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-2.5 py-1 text-[12px] font-medium text-accent-dark"
+                    >
+                      ✓ Visit booked
+                    </motion.span>
+                  )}
+                </div>
+              </li>
+            );
+          })}
         </ol>
       </div>
     </div>
@@ -143,6 +198,9 @@ function Statement() {
               the leaks in between.
             </p>
           </Reveal>
+          <Reveal className="mt-16 md:mt-24 border-t border-line pt-10">
+            <ResponseCompare />
+          </Reveal>
         </div>
       </div>
     </section>
@@ -154,6 +212,9 @@ function Statement() {
 /* -------------------------------------------------------------------------- */
 
 function Services() {
+  const [active, setActive] = useState(0);
+  const Graphic = SERVICE_GRAPHICS[SERVICES[active].slug];
+
   return (
     <section className="py-24 md:py-32 border-t border-line">
       <div className="container-x">
@@ -169,27 +230,51 @@ function Services() {
           </Reveal>
         </div>
 
-        <ul className="mt-16 md:mt-20 border-t border-line">
-          {SERVICES.map((s, i) => (
-            <Reveal as="li" key={s.slug} delay={i * 0.05} className="border-b border-line">
-              <Link
-                to={`/services#${s.slug}`}
-                className="group grid grid-cols-12 gap-4 py-8 md:py-10 transition-colors duration-500"
-              >
-                <span className="col-span-2 md:col-span-3 font-mono text-[13px] text-muted pt-2">0{i + 1}</span>
-                <span className="col-span-10 md:col-span-4 text-[26px] md:text-[32px] font-medium tracking-[-0.025em] leading-tight transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2">
-                  {s.title}
-                </span>
-                <span className="col-span-10 col-start-3 md:col-span-4 md:col-start-auto text-muted leading-relaxed md:pt-2">
-                  {s.summary}
-                </span>
-                <span className="hidden md:flex md:col-span-1 justify-end pt-2">
-                  <ArrowIcon className="h-5 w-5 -translate-x-2 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100" />
-                </span>
-              </Link>
-            </Reveal>
-          ))}
-        </ul>
+        <div className="mt-16 md:mt-20 grid grid-cols-1 gap-12 lg:grid-cols-12">
+          <ul className="border-t border-line lg:col-span-7">
+            {SERVICES.map((s, i) => (
+              <Reveal as="li" key={s.slug} delay={i * 0.05} className="border-b border-line">
+                <Link
+                  to={`/services#${s.slug}`}
+                  onMouseEnter={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  className="group grid grid-cols-12 gap-4 py-8 md:py-9"
+                >
+                  <span className={`col-span-2 text-[13px] tabular-nums pt-2 transition-colors duration-300 ${active === i ? 'text-accent' : 'text-muted'}`}>
+                    0{i + 1}
+                  </span>
+                  <span className="col-span-10">
+                    <span
+                      className={`block text-[26px] md:text-[30px] font-medium tracking-[-0.025em] leading-tight transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                        active === i ? 'translate-x-1 text-ink' : 'text-ink/55'
+                      }`}
+                    >
+                      {s.title}
+                    </span>
+                    <span className="mt-2 block max-w-md text-muted leading-relaxed">{s.summary}</span>
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </ul>
+
+          <div className="hidden lg:block lg:col-span-5">
+            <div className="sticky top-28">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active}
+                  initial={{ opacity: 0, y: 12, filter: 'blur(4px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -8, filter: 'blur(4px)' }}
+                  transition={{ duration: 0.45, ease: EASE }}
+                >
+                  <Graphic />
+                </motion.div>
+              </AnimatePresence>
+              <p className="mt-4 text-[13px] text-muted">{SERVICES[active].title}: how it works</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

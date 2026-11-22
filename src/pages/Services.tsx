@@ -4,6 +4,7 @@ import PageMetadata from '../components/PageMetadata';
 import { Button, Eyebrow } from '../components/ui';
 import { Lines, Page, Reveal, scrollToTarget, useLenis } from '../lib/motion';
 import { SERVICES, Service } from '../data';
+import { SERVICE_GRAPHICS } from '../components/graphics';
 
 function ServiceBlock({ s, i, onActive }: { s: Service; i: number; onActive: (i: number) => void }) {
   const ref = useRef<HTMLElement>(null);
@@ -12,27 +13,34 @@ function ServiceBlock({ s, i, onActive }: { s: Service; i: number; onActive: (i:
     if (inView) onActive(i);
   }, [inView, i, onActive]);
 
+  const Graphic = SERVICE_GRAPHICS[s.slug];
+
   return (
     <section ref={ref} id={s.slug} className="scroll-mt-28 border-t border-line pt-10 pb-20 md:pb-28">
-      <p className="font-mono text-[13px] text-muted">0{i + 1}</p>
+      <p className="text-[13px] tabular-nums text-muted">0{i + 1}</p>
       <Lines className="mt-4 text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.05] tracking-[-0.03em]" lines={[s.title]} />
       <Reveal className="mt-6">
         <p className="lede max-w-2xl">{s.summary}</p>
       </Reveal>
-      <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
-        <Reveal delay={0.05}>
-          <p className="text-ink-2 leading-relaxed">{s.detail}</p>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="eyebrow mb-4">Included</p>
-          <ul className="border-t border-line">
-            {s.includes.map((item) => (
-              <li key={item} className="flex gap-4 border-b border-line py-3.5 text-[15px] text-ink-2">
-                <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-accent" aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
+      <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="space-y-10">
+          <Reveal delay={0.05}>
+            <p className="text-ink-2 leading-relaxed">{s.detail}</p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="eyebrow mb-4">Included</p>
+            <ul className="border-t border-line">
+              {s.includes.map((item) => (
+                <li key={item} className="flex gap-4 border-b border-line py-3.5 text-[15px] text-ink-2">
+                  <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+        <Reveal delay={0.15}>
+          <Graphic />
         </Reveal>
       </div>
     </section>
