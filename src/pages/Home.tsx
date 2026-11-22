@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react';
-import { HeroMap, ResponseCompare, SERVICE_GRAPHICS } from '../components/graphics';
+import { ResponseCompare, SERVICE_GRAPHICS } from '../components/graphics';
 import PageMetadata from '../components/PageMetadata';
 import { ArrowIcon, Button, Eyebrow } from '../components/ui';
 import { EASE, Lines, Page, Reveal, ScrollText } from '../lib/motion';
@@ -122,7 +122,7 @@ function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2]);
 
   return (
-    <section ref={ref} className="relative pt-32 md:pt-36 pb-20 md:pb-28">
+    <section ref={ref} className="relative pt-36 md:pt-44 pb-20 md:pb-28">
       <motion.div style={{ y, opacity }} className="container-x">
         <motion.div
           initial={{ opacity: 0 }}
@@ -136,7 +136,7 @@ function Hero() {
           as="h1"
           immediate
           delay={0.15}
-          className="display mt-6 text-[clamp(3rem,8.4vw,7.5rem)]"
+          className="display mt-8 text-[clamp(3rem,9.5vw,8.75rem)]"
           lines={[
             'Real estate leads,',
             <>
@@ -145,36 +145,26 @@ function Hero() {
           ]}
         />
 
-        <div className="mt-10 md:mt-12 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12 lg:items-start">
-          <div className="lg:col-span-5 space-y-8 lg:pt-2">
-            <motion.p
-              className="lede max-w-xl"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.55, ease: EASE }}
-            >
-              We run your Google and Meta ads, build the page buyers land on, and make sure every enquiry is answered
-              and followed up. Built for developers who want more site visits, not more clicks.
-            </motion.p>
-            <motion.div
-              className="flex flex-wrap gap-3"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.7, ease: EASE }}
-            >
-              <Button to="/contact">Book a call</Button>
-              <Button to="/services" variant="outline" arrow={false}>
-                See what we do
-              </Button>
-            </motion.div>
-          </div>
-          <motion.div
-            className="lg:col-span-7"
-            initial={{ opacity: 0, y: 24, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.5, ease: EASE }}
+        <div className="mt-10 md:mt-14 grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
+          <motion.p
+            className="lede md:col-span-6 lg:col-span-5"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.55, ease: EASE }}
           >
-            <HeroMap />
+            We run your Google and Meta ads, build the page buyers land on, and make sure every enquiry is answered
+            and followed up. Built for developers who want more site visits, not more clicks.
+          </motion.p>
+          <motion.div
+            className="flex flex-wrap gap-3 md:col-span-6 lg:col-span-7 md:justify-end"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.7, ease: EASE }}
+          >
+            <Button to="/contact">Book a call</Button>
+            <Button to="/services" variant="outline" arrow={false}>
+              See what we do
+            </Button>
           </motion.div>
         </div>
 
