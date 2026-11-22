@@ -108,7 +108,7 @@ export const PRINCIPLES = [
 export const FAQS = [
   {
     q: 'Who do you work with?',
-    a: 'Real estate developers and builders, mostly in and around Hyderabad: apartment projects, villas, plotted developments and some commercial. If you have a project to sell and want enquiries you can actually follow up, we should talk.',
+    a: 'Real estate developers and builders: apartment projects, villas, plotted developments and some commercial. If you have a project to sell and want enquiries you can actually follow up, we should talk.',
   },
   {
     q: 'How soon will we see leads?',

@@ -12,7 +12,7 @@ export function BlogIndex() {
     <Page>
       <PageMetadata
         title="Journal | Lean System"
-        description="Short, practical notes on real estate advertising, landing pages and lead follow-up for developers in India."
+        description="Short, practical notes on real estate advertising, landing pages and lead follow-up for real estate developers."
       />
       <section className="container-x pt-36 md:pt-44 pb-24 md:pb-32">
         <Eyebrow>Journal</Eyebrow>

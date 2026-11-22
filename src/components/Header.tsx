@@ -138,7 +138,6 @@ export default function Header() {
                 className="space-y-1 text-muted"
               >
                 <a href="mailto:hello@leansystem.co" className="block text-ink">hello@leansystem.co</a>
-                <p>Hyderabad, India</p>
               </motion.div>
             </nav>
           </motion.div>

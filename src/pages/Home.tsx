@@ -129,7 +129,7 @@ function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.1 }}
         >
-          <Eyebrow>Lead generation for real estate · Hyderabad</Eyebrow>
+          <Eyebrow>Lead generation for real estate developers</Eyebrow>
         </motion.div>
 
         <Lines
@@ -422,8 +422,8 @@ export default function Home() {
   return (
     <Page>
       <PageMetadata
-        title="Lean System | Real Estate Lead Generation in Hyderabad"
-        description="Lean System runs Google and Meta ads, builds project landing pages and sets up lead tracking for real estate developers in Hyderabad, so every enquiry gets followed up."
+        title="Lean System | Real Estate Lead Generation"
+        description="Lean System runs Google and Meta ads, builds project landing pages and sets up lead tracking for real estate developers, so every enquiry gets followed up."
       />
       <Hero />
       <Statement />

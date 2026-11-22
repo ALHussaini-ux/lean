@@ -6,7 +6,7 @@ import { ArrowIcon, Button, Wordmark } from '../components/ui';
 import { EASE, Lines, Page } from '../lib/motion';
 
 /**
- * /hello — the page behind the QR code on Numair's business card. Not indexed.
+ * /hello — the page behind the QR code on the business card. Not indexed.
  */
 const EMAIL = 'hello@leansystem.co';
 // TODO: replace with the real number before printing more cards.
@@ -40,8 +40,8 @@ export default function Hello() {
   return (
     <Page>
       <PageMetadata
-        title="Numair, Lean System"
-        description="Contact details for Numair, founder of Lean System."
+        title="Lean System"
+        description="Contact details for Lean System."
         noindex
       />
       <section className="container-x pt-32 md:pt-40 pb-24">
@@ -61,7 +61,7 @@ export default function Hello() {
             immediate
             delay={0.15}
             className="display mt-14 text-[clamp(2.75rem,10vw,4.5rem)]"
-            lines={['Hi, I’m Numair.', <span className="text-muted">Good to meet you.</span>]}
+            lines={['Good to meet you.', <span className="text-muted">Here’s how to reach us.</span>]}
           />
 
           <motion.div
@@ -70,7 +70,7 @@ export default function Hello() {
             transition={{ duration: 0.9, delay: 0.45, ease: EASE }}
           >
             <p className="lede mt-8">
-              I run Lean System. We help real estate developers get more site visits from their marketing: ads that reach
+              Lean System helps real estate developers get more site visits from their marketing: ads that reach
               real buyers, a fast page for each project, and a simple way to make sure every enquiry gets a call back.
             </p>
 
@@ -80,7 +80,7 @@ export default function Hello() {
             </div>
 
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Button href={`tel:${PHONE.replace(/\s+/g, '')}`} className="sm:flex-1">Call me</Button>
+              <Button href={`tel:${PHONE.replace(/\s+/g, '')}`} className="sm:flex-1">Call us</Button>
               <Button to="/" variant="outline" arrow={false} className="sm:flex-1">
                 Visit the website
               </Button>

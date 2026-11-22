@@ -42,10 +42,6 @@ export default function Contact({ canonicalPath, noindex }: ContactProps) {
                 </a>
               </div>
               <div>
-                <p className="eyebrow">Based in</p>
-                <p className="mt-1 text-[18px]">Hyderabad, Telangana</p>
-              </div>
-              <div>
                 <p className="eyebrow">Replies</p>
                 <p className="mt-1 text-[18px]">Within one working day</p>
               </div>
