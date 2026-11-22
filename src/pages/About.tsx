@@ -8,7 +8,7 @@ export default function About() {
     <Page>
       <PageMetadata
         title="About | Lean System"
-        description="Lean System is a Hyderabad studio that helps real estate developers turn ad spend into site visits with ads, landing pages and lead tracking."
+        description="Lean System is a studio that helps real estate developers turn ad spend into site visits with ads, landing pages and lead tracking."
       />
 
       <section className="container-x pt-36 md:pt-44 pb-20 md:pb-32">
@@ -23,8 +23,8 @@ export default function About() {
         <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-12">
           <Reveal delay={0.4} className="md:col-span-6 md:col-start-7">
             <p className="lede">
-              Lean System is a Hyderabad studio, founded by Numair, that does one thing: helps real estate developers
-              turn ad spend into site visits. We don’t do restaurants, apps or e-commerce. Just property.
+              Lean System is a studio that does one thing: helps real estate developers turn ad spend into site
+              visits. We don’t do restaurants, apps or e-commerce. Just property.
             </p>
           </Reveal>
         </div>

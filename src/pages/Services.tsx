@@ -55,7 +55,7 @@ export default function Services() {
     <Page>
       <PageMetadata
         title="Services | Lean System"
-        description="Google and Meta ads, project landing pages, lead tracking and weekly reporting for real estate developers in Hyderabad."
+        description="Google and Meta ads, project landing pages, lead tracking and weekly reporting for real estate developers."
       />
 
       <section className="container-x pt-36 md:pt-44 pb-20 md:pb-28">

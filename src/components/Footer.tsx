@@ -27,7 +27,7 @@ export default function Footer({ showCta = true }: { showCta?: boolean }) {
           <div className="col-span-2 md:col-span-5">
             <Wordmark className="text-paper" />
             <p className="mt-4 max-w-xs text-faint leading-relaxed">
-              Ads, landing pages and lead tracking for real estate developers in Hyderabad.
+              Ads, landing pages and lead tracking for real estate developers.
             </p>
           </div>
 
@@ -53,14 +53,13 @@ export default function Footer({ showCta = true }: { showCta?: boolean }) {
               <li>
                 <a href="mailto:hello@leansystem.co" className="link-underline">hello@leansystem.co</a>
               </li>
-              <li className="text-faint">Hyderabad, Telangana</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-16 flex flex-col gap-2 text-[13px] text-faint sm:flex-row sm:justify-between">
           <p>© {year} Lean System</p>
-          <p>Built in Hyderabad</p>
+          <p>Real estate lead generation</p>
         </div>
       </div>
     </footer>
