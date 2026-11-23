@@ -1,22 +1,17 @@
 import PageMetadata from '../components/PageMetadata';
+import { PAGES } from '../seo';
 import ContactForm, { CONTACT_EMAIL } from '../components/ContactForm';
 import { Eyebrow } from '../components/ui';
 import { Lines, Page, Reveal } from '../lib/motion';
 
 interface ContactProps {
-  canonicalPath?: string;
   noindex?: boolean;
 }
 
-export default function Contact({ canonicalPath, noindex }: ContactProps) {
+export default function Contact({ noindex }: ContactProps) {
   return (
     <Page>
-      <PageMetadata
-        title="Contact | Lean System"
-        description="Tell us about your real estate project. Book a 30-minute call or send an enquiry and we'll reply within one working day."
-        canonicalPath={canonicalPath}
-        noindex={noindex}
-      />
+      <PageMetadata meta={noindex ? PAGES.getStarted : PAGES.contact} />
 
       <section className="container-x pt-36 md:pt-44 pb-24 md:pb-32">
         <Eyebrow>Contact</Eyebrow>

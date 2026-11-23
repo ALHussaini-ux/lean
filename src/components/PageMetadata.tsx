@@ -1,67 +1,45 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { OG_IMAGE, PageMeta, SITE_URL } from '../seo';
 
-const CANONICAL_ORIGIN = 'https://www.leansystem.co';
-
-interface PageMetadataProps {
-  title: string;
-  description: string;
-  canonicalPath?: string;
-  noindex?: boolean;
-}
-
-function setOrCreateMeta(attrName: 'name' | 'property', attrValue: string, content: string) {
-  let tag = document.querySelector(`meta[${attrName}="${attrValue}"]`);
+function setMeta(attr: 'name' | 'property', key: string, content: string) {
+  let tag = document.querySelector(`meta[${attr}="${key}"]`);
   if (!tag) {
     tag = document.createElement('meta');
-    tag.setAttribute(attrName, attrValue);
+    tag.setAttribute(attr, key);
     document.head.appendChild(tag);
   }
   tag.setAttribute('content', content);
 }
 
-export default function PageMetadata({
-  title,
-  description,
-  canonicalPath,
-  noindex = false,
-}: PageMetadataProps) {
-  const location = useLocation();
+/**
+ * Keeps the document head in sync while navigating in the browser.
+ * The same values are written into the static HTML at build time (scripts/prerender.mjs).
+ */
+export default function PageMetadata({ meta }: { meta: PageMeta }) {
+  const { title, description, path, noindex = false } = meta;
 
   useEffect(() => {
-    // 1. Update Document Title
+    const url = `${SITE_URL}${path === '/' ? '/' : path}`;
     document.title = title;
+    setMeta('name', 'description', description);
+    setMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large');
 
-    // 2. Normalize path and construct strict canonical URL on https://www.leansystem.co
-    const rawPath = canonicalPath ?? location.pathname;
-    const normalizedPath =
-      rawPath === '/' || rawPath === ''
-        ? '/'
-        : `/${rawPath.replace(/^\/+|\/+$/g, '')}`;
-    const canonicalUrl = `${CANONICAL_ORIGIN}${normalizedPath}`;
-
-    // 3. Meta Description
-    setOrCreateMeta('name', 'description', description);
-
-    // 4. Canonical Link Tag
-    let canonicalLink = document.querySelector('link[rel="canonical"]');
-    if (!canonicalLink) {
-      canonicalLink = document.createElement('link');
-      canonicalLink.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonicalLink);
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
     }
-    canonicalLink.setAttribute('href', canonicalUrl);
+    canonical.setAttribute('href', url);
 
-    // 5. Search Engine Indexing (Robots meta)
-    setOrCreateMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
-
-    // 6. Keep OpenGraph & Twitter Card metadata synchronized across SPA navigations
-    setOrCreateMeta('property', 'og:title', title);
-    setOrCreateMeta('property', 'og:description', description);
-    setOrCreateMeta('property', 'og:url', canonicalUrl);
-    setOrCreateMeta('name', 'twitter:title', title);
-    setOrCreateMeta('name', 'twitter:description', description);
-  }, [title, description, canonicalPath, location.pathname, noindex]);
+    setMeta('property', 'og:title', title);
+    setMeta('property', 'og:description', description);
+    setMeta('property', 'og:url', url);
+    setMeta('property', 'og:image', OG_IMAGE);
+    setMeta('name', 'twitter:title', title);
+    setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', OG_IMAGE);
+  }, [title, description, path, noindex]);
 
   return null;
 }

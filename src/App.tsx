@@ -46,7 +46,7 @@ function Shell() {
             <Route path="/blog" element={<BlogIndex />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/get-started" element={<Contact canonicalPath="/contact" noindex />} />
+            <Route path="/get-started" element={<Contact noindex />} />
             <Route path="/hello" element={<Hello />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -116,6 +116,8 @@ export function Lines({ lines, className, delay = 0, stagger = 0.08, as = 'h2', 
           >
             {line}
           </motion.span>
+          {/* keeps words apart when the heading is read as plain text (search engines, screen readers) */}
+          {i < lines.length - 1 && ' '}
         </span>
       ))}
     </Tag>

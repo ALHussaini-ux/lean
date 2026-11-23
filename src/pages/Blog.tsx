@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion, useScroll, useSpring } from 'motion/react';
 import PageMetadata from '../components/PageMetadata';
+import { PAGES, postMeta } from '../seo';
 import { ArrowIcon, Button, Eyebrow } from '../components/ui';
 import { Lines, Page, Reveal } from '../lib/motion';
 import { POSTS } from '../posts';
@@ -10,10 +11,7 @@ import NotFound from './NotFound';
 export function BlogIndex() {
   return (
     <Page>
-      <PageMetadata
-        title="Journal | Lean System"
-        description="Short, practical notes on real estate advertising, landing pages and lead follow-up for real estate developers."
-      />
+      <PageMetadata meta={PAGES.blog} />
       <section className="container-x pt-36 md:pt-44 pb-24 md:pb-32">
         <Eyebrow>Journal</Eyebrow>
         <Lines
@@ -80,7 +78,7 @@ export function BlogPost() {
 
   return (
     <Page>
-      <PageMetadata title={`${post.title} | Lean System`} description={post.summary} canonicalPath={`/blog/${post.slug}`} />
+      <PageMetadata meta={postMeta(post)} />
       <motion.div style={{ scaleX: progress }} className="fixed left-0 right-0 top-0 z-[60] h-[2px] origin-left bg-accent" aria-hidden="true" />
 
       <article className="container-x pt-36 md:pt-44 pb-24">
