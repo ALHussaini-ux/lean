@@ -25,27 +25,33 @@ export function BlogIndex() {
           <p className="lede">Practical things we’ve learned about selling property online. No fluff.</p>
         </Reveal>
 
-        <ul className="mt-20 md:mt-28 border-t border-line">
-          {POSTS.map((post, i) => (
-            <Reveal as="li" key={post.slug} delay={i * 0.06} className="border-b border-line">
-              <Link to={`/blog/${post.slug}`} className="group grid grid-cols-12 gap-4 py-10 md:py-12">
-                <div className="col-span-12 md:col-span-3 flex gap-4 md:block font-mono text-[13px] text-muted">
-                  <p>{post.date}</p>
-                  <p className="md:mt-1">{post.category}</p>
-                </div>
-                <div className="col-span-12 md:col-span-8">
-                  <h2 className="text-[26px] md:text-[34px] font-medium leading-[1.12] tracking-[-0.03em] transition-colors duration-300 group-hover:text-accent">
-                    {post.title}
-                  </h2>
-                  <p className="mt-4 max-w-2xl text-muted leading-relaxed">{post.summary}</p>
-                </div>
-                <div className="hidden md:flex md:col-span-1 justify-end pt-3">
-                  <ArrowIcon className="h-5 w-5 -translate-x-2 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100" />
-                </div>
-              </Link>
-            </Reveal>
-          ))}
-        </ul>
+        {POSTS.length === 0 ? (
+          <Reveal delay={0.5} className="mt-20 md:mt-28 border-y border-line">
+            <p className="py-10 md:py-12 text-[15px] text-muted">Nothing published yet.</p>
+          </Reveal>
+        ) : (
+          <ul className="mt-20 md:mt-28 border-t border-line">
+            {POSTS.map((post, i) => (
+              <Reveal as="li" key={post.slug} delay={i * 0.06} className="border-b border-line">
+                <Link to={`/blog/${post.slug}`} className="group grid grid-cols-12 gap-4 py-10 md:py-12">
+                  <div className="col-span-12 md:col-span-3 flex gap-4 md:block font-mono text-[13px] text-muted">
+                    <p>{post.date}</p>
+                    <p className="md:mt-1">{post.category}</p>
+                  </div>
+                  <div className="col-span-12 md:col-span-8">
+                    <h2 className="text-[26px] md:text-[34px] font-medium leading-[1.12] tracking-[-0.03em] transition-colors duration-300 group-hover:text-accent">
+                      {post.title}
+                    </h2>
+                    <p className="mt-4 max-w-2xl text-muted leading-relaxed">{post.summary}</p>
+                  </div>
+                  <div className="hidden md:flex md:col-span-1 justify-end pt-3">
+                    <ArrowIcon className="h-5 w-5 -translate-x-2 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100" />
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </ul>
+        )}
       </section>
     </Page>
   );

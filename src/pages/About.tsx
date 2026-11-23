@@ -16,13 +16,14 @@ export default function About() {
           immediate
           delay={0.1}
           className="display mt-8 text-[clamp(2.75rem,7.5vw,6.5rem)]"
-          lines={['One industry.', <span className="text-muted">One job.</span>]}
+          lines={['Ads, pages', <span className="text-muted">and follow-up.</span>]}
         />
         <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-12">
           <Reveal delay={0.4} className="md:col-span-6 md:col-start-7">
             <p className="lede">
-              Lean System is a studio that does one thing: helps real estate developers turn ad spend into site
-              visits. We don’t do restaurants, apps or e-commerce. Just property.
+              Lean System runs ads on Google and Meta, builds the pages people land on, and sets up the tracking
+              that makes sure every enquiry gets a reply. We keep the setup simple, report on what actually happened,
+              and improve it every week.
             </p>
           </Reveal>
         </div>

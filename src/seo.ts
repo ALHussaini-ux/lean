@@ -34,7 +34,7 @@ export const PAGES = {
     path: '/about',
     title: 'About Lean System | Lead Generation Studio for Real Estate Developers',
     description:
-      'Lean System is a studio that does one thing: helps real estate developers turn ad spend into site visits with ads, landing pages and lead tracking.',
+      'Lean System runs ads on Google and Meta, builds the pages people land on, and sets up the tracking that makes sure every enquiry gets a reply.',
   },
   blog: {
     path: '/blog',
@@ -159,7 +159,9 @@ export function pageLd(path: string): object | null {
           name: 'Lean System Journal',
           url: `${SITE_URL}/blog`,
           publisher: { '@id': ORG_ID },
-          blogPost: POSTS.map((p) => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE_URL}/blog/${p.slug}` })),
+          ...(POSTS.length
+            ? { blogPost: POSTS.map((p) => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE_URL}/blog/${p.slug}` })) }
+            : {}),
         },
         breadcrumbs([['Home', '/'], ['Journal', '/blog']]),
       ],

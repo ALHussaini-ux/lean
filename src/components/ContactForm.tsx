@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Button } from './ui';
+import PhoneField from './PhoneField';
 import { EASE } from '../lib/motion';
 
 export const CONTACT_EMAIL = 'hello@leansystem.co';
@@ -15,6 +16,8 @@ const PROJECT_TYPES = ['Apartments', 'Villas', 'Plots', 'Commercial', 'Something
 export default function ContactForm() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', type: PROJECT_TYPES[0], message: '' });
   const [sent, setSent] = useState(false);
+
+  const setPhone = useCallback((phone: string) => setForm((f) => ({ ...f, phone })), []);
 
   const update = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }));
@@ -48,10 +51,7 @@ export default function ContactForm() {
             <span className="field-label">Your name</span>
             <input required className="field" value={form.name} onChange={update('name')} autoComplete="name" />
           </label>
-          <label className="block">
-            <span className="field-label">Phone</span>
-            <input required type="tel" className="field" value={form.phone} onChange={update('phone')} autoComplete="tel" placeholder="+91" />
-          </label>
+          <PhoneField onChange={setPhone} />
           <label className="block">
             <span className="field-label">Email</span>
             <input required type="email" className="field" value={form.email} onChange={update('email')} autoComplete="email" />
