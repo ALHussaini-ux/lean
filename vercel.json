@@ -28,34 +28,5 @@
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/about",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/services",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/blog",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/blog/:slug",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/contact",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/get-started",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/hello",
-      "destination": "/index.html"
-    }
-  ]
+  "cleanUrls": true
 }

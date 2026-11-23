@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'motion/react';
 import PageMetadata from '../components/PageMetadata';
+import { PAGES } from '../seo';
 import { Button, Eyebrow } from '../components/ui';
 import { Lines, Page, Reveal, scrollToTarget, useLenis } from '../lib/motion';
 import { SERVICES, Service } from '../data';
@@ -53,10 +54,7 @@ export default function Services() {
 
   return (
     <Page>
-      <PageMetadata
-        title="Services | Lean System"
-        description="Google and Meta ads, project landing pages, lead tracking and weekly reporting for real estate developers."
-      />
+      <PageMetadata meta={PAGES.services} />
 
       <section className="container-x pt-36 md:pt-44 pb-20 md:pb-28">
         <Eyebrow>Services</Eyebrow>

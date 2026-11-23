@@ -1,4 +1,5 @@
 import PageMetadata from '../components/PageMetadata';
+import { PAGES } from '../seo';
 import { Button, Eyebrow } from '../components/ui';
 import { Lines, Page, Reveal, ScrollText } from '../lib/motion';
 import { PRINCIPLES } from '../data';
@@ -6,10 +7,7 @@ import { PRINCIPLES } from '../data';
 export default function About() {
   return (
     <Page>
-      <PageMetadata
-        title="About | Lean System"
-        description="Lean System is a studio that helps real estate developers turn ad spend into site visits with ads, landing pages and lead tracking."
-      />
+      <PageMetadata meta={PAGES.about} />
 
       <section className="container-x pt-36 md:pt-44 pb-20 md:pb-32">
         <Eyebrow>About</Eyebrow>

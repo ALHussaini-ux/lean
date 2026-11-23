@@ -1,11 +1,12 @@
 import PageMetadata from '../components/PageMetadata';
+import { PAGES } from '../seo';
 import { Button } from '../components/ui';
 import { Lines, Page, Reveal } from '../lib/motion';
 
 export default function NotFound() {
   return (
     <Page>
-      <PageMetadata title="Page not found | Lean System" description="This page doesn't exist." noindex />
+      <PageMetadata meta={PAGES.notFound} />
       <section className="container-x flex min-h-[80vh] flex-col justify-center pt-36 pb-24">
         <p className="eyebrow">404</p>
         <Lines

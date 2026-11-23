@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import PageMetadata from '../components/PageMetadata';
+import { PAGES } from '../seo';
 import { ArrowIcon, Button, Wordmark } from '../components/ui';
 import { EASE, Lines, Page } from '../lib/motion';
 
@@ -39,11 +40,7 @@ function CopyRow({ label, value, href }: { label: string; value: string; href: s
 export default function Hello() {
   return (
     <Page>
-      <PageMetadata
-        title="Lean System"
-        description="Contact details for Lean System."
-        noindex
-      />
+      <PageMetadata meta={PAGES.hello} />
       <section className="container-x pt-32 md:pt-40 pb-24">
         <div className="mx-auto max-w-[560px]">
           <motion.div

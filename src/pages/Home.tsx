@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ResponseCompare, SERVICE_GRAPHICS } from '../components/graphics';
 import PageMetadata from '../components/PageMetadata';
+import { PAGES } from '../seo';
 import { ArrowIcon, Button, Eyebrow } from '../components/ui';
 import { EASE, Lines, Page, Reveal, ScrollText } from '../lib/motion';
 import { FAQS, PRINCIPLES, SERVICES, STEPS } from '../data';
@@ -421,10 +422,7 @@ function FAQ() {
 export default function Home() {
   return (
     <Page>
-      <PageMetadata
-        title="Lean System | Real Estate Lead Generation"
-        description="Lean System runs Google and Meta ads, builds project landing pages and sets up lead tracking for real estate developers, so every enquiry gets followed up."
-      />
+      <PageMetadata meta={PAGES.home} />
       <Hero />
       <Statement />
       <Services />
