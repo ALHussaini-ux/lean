@@ -22,35 +22,35 @@ export const PAGES = {
     path: '/',
     title: 'Real Estate Lead Generation for Developers | Lean System',
     description:
-      'Google and Meta ads, fast project landing pages and lead tracking for real estate developers and builders. Every enquiry answered and followed up, so you get more site visits, not more clicks.',
+      'Google and Meta ads, fast project landing pages and lead tracking for real estate developers. Every enquiry answered and followed up.',
   },
   services: {
     path: '/services',
-    title: 'Real Estate Marketing Services: Google Ads, Meta Ads, Landing Pages & Lead Tracking | Lean System',
+    title: 'Real Estate Marketing Services | Lean System',
     description:
-      'Real estate Google Ads and Meta Ads management, project landing pages, lead tracking and weekly reporting for property developers. See what each service includes.',
+      'Google and Meta Ads, project landing pages, lead tracking and weekly reporting for real estate developers. See what each service includes.',
   },
   about: {
     path: '/about',
-    title: 'About Lean System | Lead Generation Studio for Real Estate Developers',
+    title: 'About Lean System | Real Estate Lead Generation',
     description:
       'Lean System runs ads on Google and Meta, builds the pages people land on, and sets up the tracking that makes sure every enquiry gets a reply.',
   },
   blog: {
     path: '/blog',
-    title: 'Real Estate Marketing Journal: Ads, Landing Pages & Lead Follow-up | Lean System',
+    title: 'Journal: Real Estate Marketing Notes | Lean System',
     description:
       'Practical notes on real estate advertising, project landing pages and lead follow-up for property developers and builders.',
   },
   contact: {
     path: '/contact',
-    title: 'Contact Lean System | Book a Real Estate Lead Generation Call',
+    title: 'Contact Lean System | Book a Call',
     description:
       'Tell us about your real estate project. Book a 30-minute call or send an enquiry and we’ll reply within one working day.',
   },
   getStarted: {
     path: '/contact',
-    title: 'Contact Lean System | Book a Real Estate Lead Generation Call',
+    title: 'Contact Lean System | Book a Call',
     description:
       'Tell us about your real estate project. Book a 30-minute call or send an enquiry and we’ll reply within one working day.',
     noindex: true,
