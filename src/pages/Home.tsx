@@ -191,7 +191,7 @@ function Statement() {
         <div className="md:col-span-9">
           <ScrollText
             className="text-[clamp(1.75rem,3.6vw,3.25rem)] font-medium leading-[1.12] tracking-[-0.03em]"
-            text="Most developers don’t have a lead problem. They have a follow-up problem. Enquiries come in from five places, sit in a WhatsApp group, and get a call back two days later, after the buyer has already visited someone else’s site."
+            text="Most developers don’t need more leads. They need better follow-up. Enquiries arrive from several places, nobody owns them, and the call back comes days later, after the buyer has already visited another project."
           />
           <Reveal className="mt-10 md:mt-14 max-w-md">
             <p className="text-muted leading-relaxed">
