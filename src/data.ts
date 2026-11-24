@@ -116,7 +116,7 @@ export const FAQS = [
   },
   {
     q: 'What does it cost?',
-    a: 'Plans start at ₹20,000 a month for one project. Your ad budget is separate and paid directly to Google and Meta. We’ll recommend a budget on the first call based on your project and location.',
+    a: 'It depends on the project and what you need from us. We’ll give you a clear quote after the first call. Your ad budget is separate and paid directly to Google and Meta.',
   },
   {
     q: 'Do we need to change our CRM?',
